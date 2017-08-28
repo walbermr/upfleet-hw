@@ -1,4 +1,4 @@
-import serial, json, h5py
+import serial, json, h5py, time
 
 def configEnvoirement(_config_file):
 	json_data = open(_config_file).read()
@@ -69,14 +69,14 @@ def sendSerialData(arduino, batch, variables, n):
 	for i in range(0, len(variables)):
 		data += str(batch[variables[i]][n])
 		if(i == len(variables) - 1):
-			data += '\n'
+			pass
 		else:
 			data += " "
 	
 	wb = arduino.write(data)
 
 	if(wb == len(data)):
-		print("Data sucessfully sent.")
+		print("Data sucessfully sent. %d bytes" %(wb))
 	else:
 		print("Data size missmatched.")
 
@@ -106,22 +106,21 @@ def main():
 	
 	#envia informacoes sobre a leitura dos sensores
 	while True:
-		arduino.close()
 		batch, _batch_size = readVariables(_log_files[_index], _variables, _log_names[_index])
 		print("Batch size: %dx%d" %(_batch_size[0], _batch_size[1]))
-		arduino.open()
 
 		for i in range(0, _batch_size[1]):
 			data_sent = sendSerialData(arduino, batch, _variables, i)
-
-
-
+			print("Data sent %s" %(data_sent))
 			data_received = getSerialData(arduino)
 
 			if data_received:
-				print("Data sent %s" %(data_sent))
 				print("Data received %s\n" %(data_received))
 				data_received = 0
+		
+		arduino.close()
+		print("Restarting serial...")
+		arduino.open()
 
 	return -1
 
