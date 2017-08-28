@@ -1,0 +1,2 @@
+#remove all log files from gitignore
+log/**
