@@ -1,4 +1,4 @@
-import serial, json, serial, h5py
+import serial, json, h5py
 
 def configEnvoirement(_config_file):
 	json_data = open(_config_file).read()
