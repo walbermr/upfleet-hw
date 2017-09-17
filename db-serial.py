@@ -1,6 +1,9 @@
-import serial, json, h5py, time
+import serial, json, h5py, time, sys, math
+
+global ARGS, DEBUG, NO_SERIAL
 
 def configEnvoirement(_config_file):
+
 	json_data = open(_config_file).read()
 	data = json.loads(json_data)
 	_log_files = []
@@ -36,14 +39,17 @@ def configEnvoirement(_config_file):
 		for i in range(0, len(_variables)):
 			_variables[i] = str(_variables[i])
 			print(_variables[i])
+	print('\n')
 
 	#inicializa o arduino
-	new_arduino = serial.Serial(port, boud_rate, timeout=timeout)
+	if(NO_SERIAL == False):
+		new_arduino = serial.Serial(port, boud_rate, timeout=timeout)
+		if(new_arduino is not None):
+			print("Arduino serial ready...")
+		return new_arduino, _logs_path, _log_names, _log_files, _variables
 
-	if(new_arduino is not None):
-		print("Arduino serial ready...")
-
-	return new_arduino, _logs_path, _log_names, _log_files, _variables
+	else:
+		return _logs_path, _log_names, _log_files, _variables
 		
 def readVariables(log_file, variables, filename):
 	json = {}
@@ -54,6 +60,10 @@ def readVariables(log_file, variables, filename):
 			json[variables[i]] = list(log_file[variables[i]])
 			size[1] = len(json[variables[i]])
 			print("DONE")
+
+			if(DEBUG):
+				print(json[variables[i]])
+
 		except KeyError:
 			print("At file " + filename + " no variable named " + variables[i] + ", skipping.")
 		except:
@@ -63,22 +73,31 @@ def readVariables(log_file, variables, filename):
 
 	return json, size
 
+##terminar
+def data2bytes(rpm, spd, brk):
+	b = int(round(rpm))<<8
+	b += int(round(spd*3.6))<<2
+	b += int(round(brk))
 
+	if(DEBUG):
+		print("rpm: %d; spd: %d; brk: %d;" %(rpm, spd, brk))
+
+	return b.to_bytes(4, byteorder='big')
+
+##terminar
 def sendSerialData(arduino, batch, variables, n):
-	data = ""
+	d = []
+
 	for i in range(0, len(variables)):
-		data += str(batch[variables[i]][n])
-		if(i == len(variables) - 1):
-			pass
-		else:
-			data += " "
-	
+		d.append(batch[variables[i]][n])
+
+	data = data2bytes(d[0], d[1], d[2])
 	wb = arduino.write(data)
 
-	if(wb == len(data)):
-		print("Data sucessfully sent. %d bytes" %(wb))
+	if(wb == 4):
+		print("%d bytes sent." %(wb))
 	else:
-		print("Data size missmatched.")
+		print("Data size missmatched. Data size %d." %(wb))
 
 	return data
 
@@ -100,30 +119,51 @@ def main():
 
 	_index = 0
 	try:
-		arduino, _logs_path, _log_names, _log_files, _variables = configEnvoirement(_config_file)
+		if(NO_SERIAL):
+			_logs_path, _log_names, _log_files, _variables = configEnvoirement(_config_file)
+		else:
+			arduino, _logs_path, _log_names, _log_files, _variables = configEnvoirement(_config_file)
 	except:
 		raise
 	
 	#envia informacoes sobre a leitura dos sensores
 	while True:
+		print("Reading file #%d: %s" %(_index, _log_names[_index]))
 		batch, _batch_size = readVariables(_log_files[_index], _variables, _log_names[_index])
 		print("Batch size: %dx%d" %(_batch_size[0], _batch_size[1]))
 
-		for i in range(0, _batch_size[1]):
-			data_sent = sendSerialData(arduino, batch, _variables, i)
-			print("Data sent %s" %(data_sent))
-			data_received = getSerialData(arduino)
+		if(NO_SERIAL == False):
+			for i in range(0, _batch_size[1]):
+				data_sent = sendSerialData(arduino, batch, _variables, i)
+				print("Data sent %s" %(data_sent))
+				data_received = getSerialData(arduino)
 
-			if data_received:
-				print("Data received %s\n" %(data_received))
-				data_received = 0
+				if data_received:
+					print("Data received %s\n" %(data_received))
+					data_received = 0
+				else:
+					print('\n')
 		
-		arduino.close()
-		print("Restarting serial...")
-		arduino.open()
+			arduino.close()
+			print("Restarting serial...")
+			arduino.open()
+
+		_index += 1
 
 	return -1
 
 
 if __name__ == "__main__":
+	ARGS = ["debug", "no-serial"]
+	DEBUG = False
+	NO_SERIAL = False
+
+	args = sys.argv[1:]	#captura os parametros para execucao
+
+	for a in args:
+		if(a == ARGS[0]):
+			DEBUG = True
+		elif(a == ARGS[1]):
+			NO_SERIAL = True
+
 	main()
