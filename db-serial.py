@@ -180,6 +180,7 @@ if __name__ == "__main__":
 	ARGS = ["debug", "serial", "tcp"]
 	DEBUG = False
 	SERIAL = False
+	TCP = False
 
 	args = sys.argv[1:]	#captura os parametros para execucao
 

@@ -1,9 +1,23 @@
 #include <stdio.h>
 #include "tcpclient.hpp"
 
+void printHex(unsigned char *buf)
+{
+    int sum = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        if (i > 0) printf(":");
+        printf("%02X", buf[i]);
+        sum += buf[i];
+    }
+
+    printf("\n");
+    return;
+}
+
 int main(int argc , char *argv[])
 {
-    char *server_reply;
+    unsigned char *server_reply;
 
     SOCKET scoket;
 
@@ -13,14 +27,14 @@ int main(int argc , char *argv[])
 
     while(true)
     {
-        server_reply = recData(scoket, 1024, true);
+        server_reply = (unsigned char *) recData(scoket, 4, true);
         if(server_reply == NULL)
         {
             printf("Servidor desconectado.\n");
             return 0;
         }
-        printf(server_reply);
 
+        printHex(server_reply);
     	sendData(scoket, "teste");
     }
 

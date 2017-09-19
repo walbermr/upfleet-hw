@@ -58,34 +58,19 @@ int sendData(SOCKET s, char const *message)
         printf("Send failed\n");
         return 1;
     }
-    printf("Data Send\n");
     return 0;
 }
 
-char *recData(SOCKET s, int size, bool too_string)
+char *recData(SOCKET s, int size, bool to_string)
 {
     int recv_size;
     char *server_reply;
-    if(too_string)
-    {
-        server_reply = (char *) malloc((size+1)*sizeof(char));
-    }
-    else
-    {
-        server_reply = (char *) malloc(size*sizeof(char));
-    }
+    server_reply = (char *) malloc((size + 1)*sizeof(char));
 
     if((recv_size = recv(s , server_reply , size , 0)) == SOCKET_ERROR)
     {
         printf("Recv failed\n");
         return NULL;
-    }
-         
-    printf("Reply received\n");
-
-    if(too_string)
-    {
-        server_reply[recv_size] = '\0';
     }
 
     return server_reply;
