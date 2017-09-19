@@ -84,8 +84,8 @@ def readVariables(log_file, variables, filename):
 
 ##terminar
 def data2bytes(rpm, spd, brk):
-	b = int(round(rpm))<<8
-	b += int(round(spd*3.6))<<2
+	b = int(round(rpm))<<16
+	b += int(round(spd*3.6))<<8
 	b += int(round(brk))
 
 	if(DEBUG):
