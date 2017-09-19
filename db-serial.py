@@ -1,7 +1,7 @@
 import serial, json, h5py, time, sys, math
-from ipc import tcpServer
+from ipc.tcpserver import tcpServer
 
-global ARGS, DEBUG, NO_SERIAL
+global ARGS, DEBUG, SERIAL, TCP
 
 def configEnvoirement(_config_file):
 
@@ -43,14 +43,22 @@ def configEnvoirement(_config_file):
 	print('\n')
 
 	#inicializa o arduino
-	if(NO_SERIAL == False):
+	if(SERIAL):
 		new_arduino = serial.Serial(port, boud_rate, timeout=timeout)
 		if(new_arduino is not None):
 			print("Arduino serial ready...")
-		return new_arduino, _logs_path, _log_names, _log_files, _variables
+		return new_arduino, _logs_path, _log_names, _log_files, _variables, sendSerialData, getSerialData
 
+	#inicializa conexao tcp		
+	elif(TCP):
+		print("Strating tcp connection.")
+		socket = tcpServer()
+		socket.listen(1)
+		return socket, _logs_path, _log_names, _log_files, _variables, sendTCPData, getTCPData
+
+	#nao retorna nenhum dispotivivo conectado
 	else:
-		return _logs_path, _log_names, _log_files, _variables
+		return None, _logs_path, _log_names, _log_files, _variables, None, None
 		
 def readVariables(log_file, variables, filename):
 	json = {}
@@ -86,45 +94,55 @@ def data2bytes(rpm, spd, brk):
 	return b.to_bytes(4, byteorder='big')
 
 ##terminar
-def sendSerialData(arduino, batch, variables, n):
-	d = []
-
-	for i in range(0, len(variables)):
-		d.append(batch[variables[i]][n])
-
-	data = data2bytes(d[0], d[1], d[2])
+def sendSerialData(arduino, data):
 	wb = arduino.write(data)
 
-	if(wb == 4):
-		print("%d bytes sent." %(wb))
-	else:
-		print("Data size missmatched. Data size %d." %(wb))
+	if(DEBUG):
+		if(wb == 4):
+			print("%d bytes sent." %(wb))
+		else:
+			print("Data size missmatched. Data size %d." %(wb))
 
-	return data
+	return
 
 def getSerialData(arduino):
 	data = arduino.readline()[:-2] #the last bit gets rid of the new-line chars
 	return data
 
+def restartSerial(arduino):
+	arduino.close()
+	print("Restarting serial...")
+	arduino.open()
+	return
+
+
+def sendTCPData(socket, data):
+	socket.sendData(data);
+	return
+
+def getTCPData(socket):
+	data = socket.receiveData(1024)
+	return
+
 def main():
-	arduino = None
-	batch = {}			#contem todos os valores das variaveis para aquele arquivo de log
-	socket = tcpServer()
+	batch = {}				#contem todos os valores das variaveis para aquele arquivo de log
+
+	device = None 			#dispositivo pelo qual se enviara os dados
+	send_function = None 	#funcao de envio do dispositivo
+	recv_function = None 	#funcao de recebimento do dispositivo
 
 	#configuration variables#
 	_config_file = "./config.json"
 	_logs_path = None
-	_log_names = []		#nome dos arquivos de log
-	_log_files = []		#descritores dos arquivos de logs
+	_log_names = []			#nome dos arquivos de log
+	_log_files = []			#descritores dos arquivos de logs
 	_variables = []
-	##########################
+	#########################
 
 	_index = 0
 	try:
-		if(NO_SERIAL):
-			_logs_path, _log_names, _log_files, _variables = configEnvoirement(_config_file)
-		else:
-			arduino, _logs_path, _log_names, _log_files, _variables = configEnvoirement(_config_file)
+		device, _logs_path, _log_names, _log_files, _variables, send_function, recv_function = configEnvoirement(_config_file)
+			
 	except:
 		raise
 	
@@ -134,21 +152,24 @@ def main():
 		batch, _batch_size = readVariables(_log_files[_index], _variables, _log_names[_index])
 		print("Batch size: %dx%d" %(_batch_size[0], _batch_size[1]))
 
-		if(NO_SERIAL == False):
+		if(device != None):
 			for i in range(0, _batch_size[1]):
-				data_sent = sendSerialData(arduino, batch, _variables, i)
-				print("Data sent %s" %(data_sent))
-				data_received = getSerialData(arduino)
+				d = []
+
+				for j in range(0, len(_variables)):
+					d.append(batch[_variables[j]][i])
+
+				data = data2bytes(d[0], d[1], d[2])
+				send_function(device, data)
+				print("Data sent %s" %(data))
+
+				data_received = recv_function(device)
 
 				if data_received:
 					print("Data received %s\n" %(data_received))
 					data_received = 0
 				else:
 					print('\n')
-		
-			arduino.close()
-			print("Restarting serial...")
-			arduino.open()
 
 		_index += 1
 
@@ -156,9 +177,9 @@ def main():
 
 
 if __name__ == "__main__":
-	ARGS = ["debug", "no-serial"]
+	ARGS = ["debug", "serial", "tcp"]
 	DEBUG = False
-	NO_SERIAL = False
+	SERIAL = False
 
 	args = sys.argv[1:]	#captura os parametros para execucao
 
@@ -166,6 +187,12 @@ if __name__ == "__main__":
 		if(a == ARGS[0]):
 			DEBUG = True
 		elif(a == ARGS[1]):
-			NO_SERIAL = True
+			SERIAL = True
+		elif(a == ARGS[2]):
+			TCP = True
 
-	main()
+	if(SERIAL and TCP):
+		print("Can't send through serial and tcp at the same time.")
+
+	else:
+		main()

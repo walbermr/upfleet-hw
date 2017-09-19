@@ -1,1 +1,1 @@
-from tcpserver import tcpServer
+from ipc import tcpserver

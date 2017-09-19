@@ -21,6 +21,7 @@ class tcpServer:
 
 	def listen(self, requests):
 		# queue up to n requests
+		print("Listening from socket...")
 		self.serversocket.listen(requests)
 		self.clientsocket, self.addr = self.serversocket.accept()
 		print("Got a connection from %s" % str(self.addr))

@@ -10,7 +10,7 @@ int initWINSOCK()
     printf("\nInitialising Winsock...");
     if (WSAStartup(MAKEWORD(2,2),&wsa) != 0)
     {
-        printf("Failed. Error Code : %d",WSAGetLastError());
+        printf("Failed. Error Code : %d\n",WSAGetLastError());
         return 1;
     }
      
@@ -24,7 +24,7 @@ void initSocket(SOCKET *s)
     //Create a socket
     if((*s = socket(AF_INET , SOCK_STREAM , 0 )) == INVALID_SOCKET)
     {
-        printf("Could not create socket : %d" , WSAGetLastError());
+        printf("Could not create socket : %d\n" , WSAGetLastError());
     }
  
     printf("Socket created.\n");
@@ -43,11 +43,11 @@ int connect(SOCKET s, char const *ip, int port)
     //Connect to remote server
     if (connect(s , (struct sockaddr *)&server , sizeof(server)) < 0)
     {
-        printf("connect error");
+        printf("Connect error\n");
         return 1;
     }
      
-    printf("Connected");
+    printf("Connected\n");
     return 0;
 }
 
@@ -55,7 +55,7 @@ int sendData(SOCKET s, char const *message)
 {
     if( send(s , message , strlen(message) , 0) < 0)
     {
-        printf("Send failed");
+        printf("Send failed\n");
         return 1;
     }
     printf("Data Send\n");

@@ -13,14 +13,15 @@ int main(int argc , char *argv[])
 
     while(true)
     {
+        server_reply = recData(scoket, 1024, true);
+        if(server_reply == NULL)
+        {
+            printf("Servidor desconectado.\n");
+            return 0;
+        }
+        printf(server_reply);
+
     	sendData(scoket, "teste");
-    	server_reply = recData(scoket, 1024, true);
-    	if(server_reply == NULL)
-    	{
-    		printf("Servidor desconectado.\n");
-    		return 0;
-    	}
-    	printf(server_reply);
     }
 
     return 0;
