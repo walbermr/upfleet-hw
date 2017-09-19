@@ -8,6 +8,11 @@ port = 5000
 # connection to hostname on the port.
 s.connect((host, port))
 # Receive no more than 1024 bytes
-tm = s.recv(1024)
+while True:
+	data = s.recv(1024)
+	if data:
+		print("The time got from the server is %s" %(data.decode('ascii')))
+	else:
+		break
+
 s.close()
-print("The time got from the server is %s" % tm.decode('ascii'))

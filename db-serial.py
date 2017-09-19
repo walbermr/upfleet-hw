@@ -1,4 +1,5 @@
 import serial, json, h5py, time, sys, math
+from ipc import tcpServer
 
 global ARGS, DEBUG, NO_SERIAL
 
@@ -108,6 +109,7 @@ def getSerialData(arduino):
 def main():
 	arduino = None
 	batch = {}			#contem todos os valores das variaveis para aquele arquivo de log
+	socket = tcpServer()
 
 	#configuration variables#
 	_config_file = "./config.json"
