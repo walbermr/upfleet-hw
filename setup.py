@@ -4,11 +4,12 @@ from ipc.tcpserver import tcpServer
 FAIL = False
 
 def Init(ARGS):
-	global DEBUG, SERIAL, TCP
+	global DEBUG, SERIAL, TCP, SAVEFIG
 
 	DEBUG = False
 	SERIAL = False
 	TCP = False
+	SAVEFIG = False
 
 	args = sys.argv[1:]	#captura os parametros para execucao
 
@@ -19,6 +20,8 @@ def Init(ARGS):
 			SERIAL = True
 		elif(a == ARGS[2]):
 			TCP = True
+		elif(a == ARGS[3]):
+			SAVEFIG = True
 
 	if(SERIAL and TCP):
 		print("Can't send through serial and tcp at the same time.")
