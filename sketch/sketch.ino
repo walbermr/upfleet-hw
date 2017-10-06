@@ -96,8 +96,18 @@ void loop() {
 	}
 
 	count = 0;
+	sendWear();
 	resetWear(3);
 
+}
+
+
+static void sendWear()
+{
+	/*
+		ENVIA DADOS DO DESGASTE PARA A INTERNET
+	*/
+	return;
 }
 
 
