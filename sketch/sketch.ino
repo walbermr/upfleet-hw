@@ -3,13 +3,17 @@
 #include <TinyGPS.h>
 
 #include "mcp_can.h"
-#include "abrasion.h"
+extern "C"
+{
+	#include "abrasion.h"	
+} 
 
 static const byte RXPin = 3;
 static const byte TXPin = 4;
 float LASTVALIDLON = TinyGPS::GPS_INVALID_F_ANGLE;
 float LASTVALIDLAT = TinyGPS::GPS_INVALID_F_ANGLE;
 unsigned long LASTVALIDage = TinyGPS::GPS_INVALID_AGE;
+unsigned char count = 0;
 
 unsigned char stmp[8] = {0x02, 0x01, 0x0C, 0, 0, 0, 0, 0};
 
@@ -45,45 +49,55 @@ void loop() {
 	unsigned long age;
 	int rpm_engine_value = 0;
 
-	gps.f_get_position(&flat, &flon, &age);
+	while(count < 4096)
+	{
+		gps.f_get_position(&flat, &flon, &age);
 
-	LASTVALIDLAT = (flat == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLAT : flat;
-	LASTVALIDLON = (flon == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLON : flon;
-	LASTVALIDage = (age == TinyGPS::GPS_INVALID_AGE) ? LASTVALIDage : age;
+		LASTVALIDLAT = (flat == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLAT : flat;
+		LASTVALIDLON = (flon == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLON : flon;
+		LASTVALIDage = (age == TinyGPS::GPS_INVALID_AGE) ? LASTVALIDage : age;
 
-	print_float(LASTVALIDLAT, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
-	print_float(LASTVALIDLON, TinyGPS::GPS_INVALID_F_ANGLE, 11, 6);
-	print_int(age, TinyGPS::GPS_INVALID_AGE, 5);
+		print_float(LASTVALIDLAT, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
+		print_float(LASTVALIDLON, TinyGPS::GPS_INVALID_F_ANGLE, 11, 6);
+		print_int(age, TinyGPS::GPS_INVALID_AGE, 5);
 
-	Serial.println();
-                  
-    CAN.sendMsgBuf(0x7DF, 0, 0, 8, stmp);
+		Serial.println();
 
-    // iterate over all pending messages
-    // If either the bus is saturated or the MCU is busy,
-    // both RX buffers may be in use and reading a single
-    // message does not clear the IRQ conditon.
-    while (CAN_MSGAVAIL == CAN.checkReceive()) 
-    {
-        // read data,  len: data length, buf: data buf
-        CAN.readMsgBuf(&len, buf);
+		CAN.sendMsgBuf(0x7DF, 0, 0, 8, stmp);
 
-        // print the data
-        for(int i = 0; i<len; i++)
-        {
-            Serial.print(buf[i]);Serial.print("\t");
-        }
-        Serial.println();
+		// iterate over all pending messages
+		// If either the bus is saturated or the MCU is busy,
+		// both RX buffers may be in use and reading a single
+		// message does not clear the IRQ conditon.
+		while (CAN_MSGAVAIL == CAN.checkReceive()) 
+		{
+		// read data,  len: data length, buf: data buf
+		CAN.readMsgBuf(&len, buf);
 
-        Serial.println();
-        rpm_engine_value = 0;
-        rpm_engine_value = ((buf[3]*256)+buf[4])/4;
-        Serial.print("RPM: ");
-        Serial.print(rpm_engine_value);
-        Serial.print("\t");
-    }
+		// print the data
+		for(int i = 0; i<len; i++)
+		{
+			Serial.print(buf[i]);Serial.print("\t");
+		}
+			Serial.println();
 
-	smartdelay(100); // send data per 100ms
+			Serial.println();
+			rpm_engine_value = 0;
+			rpm_engine_value = ((buf[3]*256)+buf[4])/4;
+
+			accumulateWear(rpm_engine_value, 0, 0);
+
+			Serial.print("RPM: ");
+			Serial.print(rpm_engine_value);
+			Serial.println();
+		}
+
+		smartdelay(100); // atualiza dados a cada 100ms
+	}
+
+	count = 0;
+	resetWear(3);
+
 }
 
 
