@@ -2,7 +2,8 @@
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
-unsigned char count = 0;
+
+unsigned char count;
 
 void printHex(unsigned char *buf);
 void decode(unsigned char *msg, int *speed, int *rpm_engine_value, int *brk);
@@ -20,6 +21,7 @@ int main(int argc , char *argv[])
 
 	while(true)
 	{
+		count = 0;
 		while(count < 4096)
 		{
 			server_reply = (unsigned char *) recData(scoket, 4, true);
@@ -28,19 +30,23 @@ int main(int argc , char *argv[])
 				printf("Servidor desconectado.\n");
 				return 0;
 			}
+			sendData(scoket, "ACK");
+			//printHex(server_reply);
+			/*
+				DECODIFICA MENSAGEM
+			*/
+			decode(server_reply, &speed, &rpm_engine_value, &brk);
+			accumulateWear(rpm_engine_value, 0, 0);
+
+			/*
+				CALCULA DESGASTE
+			*/
+			count += 1;
 		}
-		//printHex(server_reply);
-		/*
-			DECODIFICA MENSAGEM
-		*/
-		decode(server_reply, &speed, &rpm_engine_value, &brk);
 
-		/*
-			CALCULA DESGASTE
-		*/
-		accumulateWear(rpm_engine_value, 0, 0);
+		sendData(scoket, "Done");
 
-		sendData(scoket, "teste");
+		count = 0;
 	}
 
 	return 0;
@@ -51,7 +57,7 @@ void decode(unsigned char *msg, int *rpm_engine_value, int *speed, int *brk)
 	*rpm_engine_value = msg[3];
 	*speed = msg[2];
 	*brk = msg[0];
-	*brk += msg[1]<<4;
+	*brk += msg[1]<<8;
 
 	printf("%d\n", rpm_engine_value);
 

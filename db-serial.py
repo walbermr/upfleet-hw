@@ -11,7 +11,7 @@ def data2bytes(rpm, spd, brk):
 	b += int(round(spd*1.6))<<8
 	b += int(round(brk))
 
-	if(DEBUG):
+	if(setup.DEBUG):
 		print("rpm: %d; spd: %d; brk: %d;" %(rpm, spd, brk))
 
 	return b.to_bytes(4, byteorder='big')
