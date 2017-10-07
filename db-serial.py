@@ -8,7 +8,7 @@ from setup import configEnvoirement, readVariables
 
 def data2bytes(rpm, spd, brk):
 	b = int(round(rpm))<<16
-	b += int(round(spd*3.6))<<8
+	b += int(round(spd*1.6))<<8
 	b += int(round(brk))
 
 	if(DEBUG):
