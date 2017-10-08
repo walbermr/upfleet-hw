@@ -59,14 +59,11 @@ void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *br
 
 	printHex(str);
 
-	for(int j = 1; i < 2; i++, j--)
-		*rpm_engine_value += (msg[i] << (j*8));
+	*rpm_engine_value = (msg[0] << 8) | msg[1];
 	
-	for(int j = 1; i < 4; i++, j--)
-		*speed += (msg[i] << (j*8));
+	*speed = (msg[2] << 8) | msg[3];
 
-	for(int j = 1; i < 6; i++, j--)
-		*brk += (msg[i] << (j*8));
+	*brk = (msg[4] << 8) | msg[5];
 
 	printf("\n");
 	return;
