@@ -32,27 +32,22 @@ int main(int argc , char *argv[])
 				return 0;
 			}
 			sendData(scoket, "ACK");
-			//printHex(server_reply);
-			/*
-				DECODIFICA MENSAGEM
-			*/
-			decode(server_reply, &speed, &rpm_engine_value, &brk);
+
+			decode(server_reply, &rpm_engine_value, &speed, &brk);
 			printf("engine: %d\n", rpm_engine_value);
 
-			/*
-				CALCULA DESGASTE
-			*/
 			accumulateWear(rpm_engine_value, 0, 0);
 			count += 1;
 		}
 
 		sendData(scoket, "Done");
-
+		resetWear(4);
 		count = 0;
 	}
 
 	return 0;
 }
+
 
 void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *brk)
 {
@@ -62,10 +57,11 @@ void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *br
 	*speed = 0;
 	*brk = 0;
 
+	printHex(str);
+
 	for(int j = 1; i < 2; i++, j--)
 		*rpm_engine_value += (msg[i] << (j*8));
-
-	printHex(str);
+	
 	for(int j = 1; i < 4; i++, j--)
 		*speed += (msg[i] << (j*8));
 

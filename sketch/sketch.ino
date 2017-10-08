@@ -42,6 +42,7 @@ void setup() {
 	Serial.println("CAN BUS Shield init ok!");
 }
 
+
 void loop() {
 	unsigned char len = 0;
 	unsigned char buf[8];
@@ -97,7 +98,7 @@ void loop() {
 
 	count = 0;
 	sendWear();
-	resetWear(3);
+	resetWear(4);
 
 }
 
@@ -121,6 +122,7 @@ static void smartdelay(unsigned long ms)
 	} while (millis() - start < ms);
 }
 
+
 static void print_float(float val, float invalid, int len, int prec)
 {
 	if (val == invalid)
@@ -140,6 +142,7 @@ static void print_float(float val, float invalid, int len, int prec)
 	}
 	smartdelay(0);
 }
+
 
 static void print_int(unsigned long val, unsigned long invalid, int len)
 {

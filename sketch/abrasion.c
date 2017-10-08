@@ -21,11 +21,13 @@ char discretize(int value, int thresh[], char len) {
 	return out;
 }
 
+
 char verifyWear(char high, char low, char low_bits, char wear[]) {
 	char i = (high << low_bits) + low;
 
 	return wear[i];
 }
+
 
 void accumulateWear(int engine, int clutch, int brake) {	//acumula valores de desgaste
 	CUMULATIVE_ENGINEWEAR[discretize(engine, ENGINEWEAR, 3)] += 1;
@@ -34,6 +36,7 @@ void accumulateWear(int engine, int clutch, int brake) {	//acumula valores de de
 
 	return;
 }
+
 
 void resetWear(char v_len) {
 	unsigned char *v[] = {CUMULATIVE_ENGINEWEAR, CUMULATIVE_CLUTCHWEAR, CUMULATIVE_BREAKWEAR};
