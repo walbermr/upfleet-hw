@@ -15,5 +15,5 @@
 							"2016-06-02--21-39-29.h5",
 							"2016-06-08--11-46-01.h5"
 						],
-	"variables"			: ["rpm", "brake_user", "speed"]
+	"variables"			: ["rpm", "speed", "brake_user"]
 }

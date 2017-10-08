@@ -7,14 +7,14 @@ from setup import configEnvoirement, readVariables
 
 
 def data2bytes(rpm, spd, brk):
-	b = int(round(rpm))<<16
-	b += int(round(spd*1.6))<<8
-	b += int(round(brk))
-
 	if(setup.DEBUG):
 		print("rpm: %d; spd: %d; brk: %d;" %(rpm, spd, brk))
 
-	return b.to_bytes(4, byteorder='big')
+	b = int(rpm).to_bytes(2, byteorder='big', signed=False)
+	b = b + int(spd).to_bytes(2, byteorder='big', signed=True)
+	b = b + int(brk).to_bytes(2, byteorder='big', signed=False)
+
+	return b
 
 
 def plotVar(var, name):
@@ -75,6 +75,12 @@ def main():
 
 				for j in range(0, len(_variables)):
 					d.append(batch[_variables[j]][i])
+
+				#existem problemas nas leituras do freio, isso acaba com tudo
+				if(d[2] > 4096):
+					d[2] = 4096
+				if(d[2] < 0):
+					d[2] = 0;
 
 				data = data2bytes(d[0], d[1], d[2])
 				send_function(device, data)

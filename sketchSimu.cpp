@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
@@ -6,12 +7,12 @@
 unsigned char count;
 
 void printHex(unsigned char *buf);
-void decode(unsigned char *msg, int *speed, int *rpm_engine_value, int *brk);
+void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *brk);
 
 int main(int argc , char *argv[])
 {
 	unsigned char *server_reply;
-	int speed, rpm_engine_value, brk;
+	short speed, rpm_engine_value, brk;
 
 	SOCKET scoket;
 
@@ -24,7 +25,7 @@ int main(int argc , char *argv[])
 		count = 0;
 		while(count < 4096)
 		{
-			server_reply = (unsigned char *) recData(scoket, 4, true);
+			server_reply = (unsigned char *) recData(scoket, 6, true);
 			if(server_reply == NULL)
 			{
 				printf("Servidor desconectado.\n");
@@ -36,11 +37,12 @@ int main(int argc , char *argv[])
 				DECODIFICA MENSAGEM
 			*/
 			decode(server_reply, &speed, &rpm_engine_value, &brk);
-			accumulateWear(rpm_engine_value, 0, 0);
+			printf("engine: %d\n", rpm_engine_value);
 
 			/*
 				CALCULA DESGASTE
 			*/
+			accumulateWear(rpm_engine_value, 0, 0);
 			count += 1;
 		}
 
@@ -52,22 +54,33 @@ int main(int argc , char *argv[])
 	return 0;
 }
 
-void decode(unsigned char *msg, int *rpm_engine_value, int *speed, int *brk)
+void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *brk)
 {
-	*rpm_engine_value = msg[3];
-	*speed = msg[2];
-	*brk = msg[0];
-	*brk += msg[1]<<8;
+	int i = 0;
+	unsigned char str[] = {msg[0], msg[1], msg[2], msg[3], msg[4], msg[5]};
+	*rpm_engine_value = 0;
+	*speed = 0;
+	*brk = 0;
 
-	printf("%d\n", rpm_engine_value);
+	for(int j = 1; i < 2; i++, j--)
+		*rpm_engine_value += (msg[i] << (j*8));
 
+	printHex(str);
+	for(int j = 1; i < 4; i++, j--)
+		*speed += (msg[i] << (j*8));
+
+	for(int j = 1; i < 6; i++, j--)
+		*brk += (msg[i] << (j*8));
+
+	printf("\n");
 	return;
 }
+
 
 void printHex(unsigned char *buf)
 {
 	int sum = 0;
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		if (i > 0) printf(":");
 		printf("%02X", buf[i]);
