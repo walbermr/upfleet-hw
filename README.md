@@ -1,8 +1,13 @@
 Primeiramente, boa noite.
 
-O projeto utiliza pythonn 2.7 e as seguintes dependências:
+O projeto utiliza pythonn 3.6.2 e as seguintes dependências:
 
-pyserial, json, h5py
+anaconda, pyserial, h5py
+
+Instale o anaconda adicionando às variáveis do sistema. Rode os comando para criar um ambiente e ativa-lo.
+
+$ conda create -n env python=3.6.2 seaborn pyserial h5py
+$ activate env
 
 Faça o download do banco de dados em:
 
@@ -10,7 +15,11 @@ https://github.com/commaai/research
 
 Crie uma pasta para os arquivos do dataset e atualize no arquivo de configurações config.json. Nesse arquivo também configure quais arquivos você quer que sejam enviados para o arduino, quais variáveis serão enviadas e as variáveis para a serial do arduino.
 
-Após configurado rode o arquivo db-serial.py para automaticamente enviar os bancos de dados para o arduino atravéz da porta serial.
+Após configurado rode o arquivo run.bat para automaticamente enviar os bancos de dados para o arduino atravéz da porta serial e criar as visualizações de dados.
+
+Argumentos:
+debug: Abilita mensagens de debug
+no-serial: Desativa comunicação serial com o arduino
 
 
 # variaveis (keys)

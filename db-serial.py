@@ -1,129 +1,107 @@
-import serial, json, h5py, time
-
-def configEnvoirement(_config_file):
-	json_data = open(_config_file).read()
-	data = json.loads(json_data)
-	_log_files = []
-
-	boud_rate = int(data["serial_boud_rate"])
-	port = str(data["serial_port"])
-	timeout = float(data["serial_timeout"])
-
-	_logs_path = data["logs_path"]
-	_log_names = data["log_names"]
-
-	#verifica todos os arquivos do dataset e coloca em _log_files
-	print("Checking log files")
-	for i in range(0, len(_log_names)):
-		s = str(_log_names[i])
-		_log_names[i] = s
-		try:
-			print("Log file: " + _log_names[i]),
-			_log_files.append(h5py.File(_logs_path + _log_names[i], 'r'))
-			print(" -- OK")
-		except:
-			print(" -- FAIL")
-			_log_names.pop(i)
-			raise
-
-	#identifica variaveis para serem lidas no batch
-	print("\nVariables to be read:")
-	_variables = data["variables"]
-	if(len(_variables) == 0):
-		print("NONE - Make sure to specify variables on config.json.")
-		raise NameError('No variables identified on config.json file.')
-	else:
-		for i in range(0, len(_variables)):
-			_variables[i] = str(_variables[i])
-			print(_variables[i])
-
-	#inicializa o arduino
-	new_arduino = serial.Serial(port, boud_rate, timeout=timeout)
-
-	if(new_arduino is not None):
-		print("Arduino serial ready...")
-
-	return new_arduino, _logs_path, _log_names, _log_files, _variables
-		
-def readVariables(log_file, variables, filename):
-	json = {}
-	size = [0, 0]
-	for i in range(0, len(variables)):
-		try:
-			print("Reading " + variables[i]),
-			json[variables[i]] = list(log_file[variables[i]])
-			size[1] = len(json[variables[i]])
-			print("DONE")
-		except KeyError:
-			print("At file " + filename + " no variable named " + variables[i] + ", skipping.")
-		except:
-			raise
-
-	size[0] = len(json)
-
-	return json, size
+import setup
+import numpy as np
+import pandas as pd
+import scipy.stats as sts
+import matplotlib.pyplot as plt
+from setup import configEnvoirement, readVariables
 
 
-def sendSerialData(arduino, batch, variables, n):
-	data = ""
-	for i in range(0, len(variables)):
-		data += str(batch[variables[i]][n])
-		if(i == len(variables) - 1):
-			pass
-		else:
-			data += " "
-	
-	wb = arduino.write(data)
+def data2bytes(rpm, spd, brk):
+	if(setup.DEBUG):
+		print("rpm: %d; spd: %d; brk: %d;" %(rpm, spd, brk))
 
-	if(wb == len(data)):
-		print("Data sucessfully sent. %d bytes" %(wb))
-	else:
-		print("Data size missmatched.")
+	b = int(rpm).to_bytes(2, byteorder='big', signed=False)
+	b = b + int(spd).to_bytes(2, byteorder='big', signed=True)
+	b = b + int(brk).to_bytes(2, byteorder='big', signed=False)
 
-	return data
+	return b
 
-def getSerialData(arduino):
-	data = arduino.readline()[:-2] #the last bit gets rid of the new-line chars
-	return data
+
+def plotVar(var, name):
+	plt.plot(var)
+	plt.savefig(('./figs/'+name), dpi=1000)
+	plt.cla()
+	#plt.figure(figsize = (15, 9.375)).savefig('teste.png', dpi=100)
+	return
+
+
+def smooth(y, box_pts):
+	limit = (box_pts - 1)/2
+	x = np.linspace(-limit, limit, box_pts)
+	box = sts.norm.pdf(x, 0, 2)
+	y_smooth = np.convolve(y, box, mode='same')
+	return y_smooth
+
 
 def main():
-	arduino = None
-	batch = {}			#contem todos os valores das variaveis para aquele arquivo de log
+	plt.rcParams["figure.figsize"] = [30, 22.5]
+	batch = {}				#contem todos os valores das variaveis para aquele arquivo de log
+
+	device = None 			#dispositivo pelo qual se enviara os dados
+	send_function = None 	#funcao de envio do dispositivo
+	recv_function = None 	#funcao de recebimento do dispositivo
 
 	#configuration variables#
 	_config_file = "./config.json"
 	_logs_path = None
-	_log_names = []		#nome dos arquivos de log
-	_log_files = []		#descritores dos arquivos de logs
+	_log_names = []			#nome dos arquivos de log
+	_log_files = []			#descritores dos arquivos de logs
 	_variables = []
-	##########################
+	#########################
 
 	_index = 0
 	try:
-		arduino, _logs_path, _log_names, _log_files, _variables = configEnvoirement(_config_file)
+		device, _logs_path, _log_names, _log_files, _variables, send_function, recv_function = configEnvoirement(_config_file)
+			
 	except:
 		raise
 	
 	#envia informacoes sobre a leitura dos sensores
-	while True:
-		batch, _batch_size = readVariables(_log_files[_index], _variables, _log_names[_index])
+	while _index < len(_log_files):
+		log_name = _log_names[_index]
+		print("Reading file #%d: %s" %(_index, log_name))
+		batch, _batch_size = readVariables(_log_files[_index], _variables, log_name)
 		print("Batch size: %dx%d" %(_batch_size[0], _batch_size[1]))
 
-		for i in range(0, _batch_size[1]):
-			data_sent = sendSerialData(arduino, batch, _variables, i)
-			print("Data sent %s" %(data_sent))
-			data_received = getSerialData(arduino)
+		if(setup.SAVEFIG):
+			for i in _variables:
+				name = log_name[:len(log_name)-3]+'-'+i+'.png'
+				print("Saving %s" %(name))
+				plotVar(smooth(batch[i], 31), name)
 
-			if data_received:
-				print("Data received %s\n" %(data_received))
-				data_received = 0
-		
-		arduino.close()
-		print("Restarting serial...")
-		arduino.open()
+		if(device != None):
+			for i in range(0, _batch_size[1]):
+				d = []
 
-	return -1
+				for j in range(0, len(_variables)):
+					d.append(batch[_variables[j]][i])
+
+				#existem problemas nas leituras do freio, isso acaba com tudo
+				if(d[2] > 4096):
+					d[2] = 4096
+				if(d[2] < 0):
+					d[2] = 0;
+
+				data = data2bytes(d[0], d[1], d[2])
+				send_function(device, data)
+				print("Data sent %s" %(data))
+
+				data_received = recv_function(device)
+
+				if data_received:
+					print("Data received %s\n" %(data_received))
+					data_received = 0
+				else:
+					print('\n')
+
+		_index += 1
+
+	return 0
 
 
 if __name__ == "__main__":
-	main()
+
+	if( setup.Init(ARGS = ["debug", "serial", "tcp", "savefigs"]) == setup.FAIL):
+		pass
+	else:
+		main()
