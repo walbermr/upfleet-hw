@@ -22,10 +22,15 @@ char discretize(int value, int thresh[], char len) {
 }
 
 
-char verifyWear(char high, char low, char low_bits, char wear[]) {
-	char i = (high << low_bits) + low;
+char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
+	char i, in = 0;
 
-	return wear[i];
+	for (i = 0; i < n_param; i++) {
+		in <<= param_bits[i];
+		in += param[i];
+	}
+
+	return wear[in];
 }
 
 
