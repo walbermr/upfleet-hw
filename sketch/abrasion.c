@@ -1,12 +1,16 @@
 #include "abrasion.h"
 
-int ENGINEWEAR[] = {2000, 3000, 4500};
-int CLUTCHWEAR[] = {500, 1500, 2000};
 int BRAKEWEAR[] = {1000, 2000, 3000};
+int CLUTCHWEAR[] = {500, 1500, 2000};
+int ENGINEWEAR[] = {2000, 3000, 4500};
 
-unsigned char CUMULATIVE_ENGINEWEAR[] = {0, 0, 0, 0};
+unsigned char BRAKE_WEAR[36]	= {};
+unsigned char CLUTCH_WEAR[8]	= {};
+unsigned char ENGINE_WEAR[16]	= {};
+
+unsigned char CUMULATIVE_BRAKEWEAR[] = {0, 0, 0, 0};
 unsigned char CUMULATIVE_CLUTCHWEAR[] = {0, 0, 0, 0};
-unsigned char CUMULATIVE_BREAKWEAR[] = {0, 0, 0, 0};
+unsigned char CUMULATIVE_ENGINEWEAR[] = {0, 0, 0, 0};
 
 
 char discretize(int value, int thresh[], char len) {
@@ -34,10 +38,22 @@ char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
 }
 
 
-void accumulateWear(int engine, int clutch, int brake) {	//acumula valores de desgaste
-	CUMULATIVE_ENGINEWEAR[discretize(engine, ENGINEWEAR, 3)] += 1;
-	CUMULATIVE_CLUTCHWEAR[discretize(clutch, CLUTCHWEAR, 3)] += 1;
-	CUMULATIVE_BREAKWEAR[discretize(brake, BRAKEWEAR, 3)] += 1;
+void accumulateWear(short rpm_sample[], short speed_sample[], short brake_sample[], short i) {	//acumula valores de desgaste
+	char brk_time, spd, brk_rate, rpm_rate, is_brk, rpm_time, rpm;
+
+	brk_time = discretize(brake_sample[i], BRAKEWEAR, 3);
+	spd = discretize(speed_sample[i], CLUTCHWEAR, 3);
+	brk_rate = rate(brake_sample[i], brake_sample[(BUF_SIZE + i) % BUF_SIZE], BRAKEWEAR);
+
+	rpm_rate = rate(rpm_sample[i], rpm_sample[(BUF_SIZE + i) % BUF_SIZE], ENGINEWEAR);
+	is_brk = brake_sample[i] > 0;
+
+	rpm_time = discretize(rpm_sample[i], ENGINEWEAR, 3);
+	rpm = discretize(rpm_sample[i], ENGINEWEAR, 3);
+
+	CUMULATIVE_BRAKEWEAR[verifyWear({brk_time, spd, brk_rate}, {2, 2, 2}, 3, BRAKE_WEAR)] += 1;
+	CUMULATIVE_CLUTCHWEAR[verifyWear({rpm_rate, is_brk}, {2, 1}, 2, CLUTCH_WEAR)] += 1;
+	CUMULATIVE_ENGINEWEAR[verifyWear({rpm_time, rpm}, {2, 2}, 2, ENGINE_WEAR)] += 1;
 
 	return;
 }
@@ -52,4 +68,11 @@ void resetWear(char v_len) {
 	}
 
 	return;
+}
+
+
+char rate(char x1, char x2, int vect[]) {
+	char dx = discretize(x2, vect, 3) - discretize(x1, vect, 3);
+
+	return (dx >= 0)? dx: -dx;
 }

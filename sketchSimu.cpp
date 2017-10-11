@@ -3,6 +3,7 @@
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
+#define	BUF_SIZE	4
 
 unsigned char count;
 
@@ -12,7 +13,7 @@ void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *br
 int main(int argc , char *argv[])
 {
 	unsigned char *server_reply;
-	short speed, rpm_engine_value, brk;
+	short speed[BUF_SIZE], rpm_engine_value[BUF_SIZE], brk[BUF_SIZE];
 
 	SOCKET scoket;
 
@@ -33,10 +34,10 @@ int main(int argc , char *argv[])
 			}
 			sendData(scoket, "ACK");
 
-			decode(server_reply, &rpm_engine_value, &speed, &brk);
-			printf("engine: %d\n", rpm_engine_value);
+			decode(server_reply, &rpm_engine_value[count % BUF_SIZE], &speed[count % BUF_SIZE], &brk[count % BUF_SIZE]);
+			printf("engine: %d\n", rpm_engine_value[count % BUF_SIZE]);
 
-			accumulateWear(rpm_engine_value, 0, 0);
+			accumulateWear(rpm_engine_value, speed, brk, count % BUF_SIZE);
 			count += 1;
 		}
 
