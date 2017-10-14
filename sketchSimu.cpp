@@ -3,7 +3,7 @@
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
-const char IP[] = "192.168.25.7";
+const char IP[] = "192.168.25.13";
 
 unsigned char count;
 
