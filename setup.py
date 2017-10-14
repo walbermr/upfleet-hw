@@ -135,5 +135,5 @@ def sendTCPData(socket, data):
 	return
 
 def getTCPData(socket):
-	data = socket.receiveData(1024)
-	return
+	data = socket.receiveData(5)
+	return data

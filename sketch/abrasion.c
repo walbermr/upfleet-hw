@@ -1,18 +1,37 @@
+#include <stdio.h>
 #include "abrasion.h"
 
-short RPM_THRESHOLD[] = {500, 1500, 2000};
+short RPM_THRESHOLD[] = {1000, 2500, 3500};
 short SPD_THRESHOLD[] = {2000, 3000, 4500};
 short BRK_THRESHOLD[] = {1000, 2000, 3000};
 
 char BRAKE_WEAR[36]	= {};
 char CLUTCH_WEAR[8]	= {};
-char ENGINE_WEAR[16]	= {};
+char ENGINE_WEAR[16]	= {0x3, 0x3, 0x3, 0x3, 
+							0x1, 0x1, 0x1, 0x1, 
+							0x2, 0x2, 0x2, 0x2, 
+							0x3, 0x3, 0x3, 0x3};
 
-unsigned char CUMULATIVE_BRAKE[] = {0, 0, 0, 0};
-unsigned char CUMULATIVE_CLUTCH[] = {0, 0, 0, 0};
-unsigned char CUMULATIVE_RPM[] = {0, 0, 0, 0};
+short CUMULATIVE_BRAKE[] = {0, 0, 0, 0};
+short CUMULATIVE_CLUTCH[] = {0, 0, 0, 0};
+short CUMULATIVE_RPM[] = {0, 0, 0, 0};
 
 char last_brk, last_rpm;
+
+
+void printhex(short *buf, char size)
+{
+	int sum = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (i > 0) printf(":");
+		printf("%04X", buf[i]);
+		sum += buf[i];
+	}
+
+	printf("\n");
+	return;
+}
 
 
 char discretize(short value, short thresh[], char len) {
@@ -28,7 +47,7 @@ char discretize(short value, short thresh[], char len) {
 }
 
 
-char verifyWear(short param[], char param_bits[], char n_param, char wear[]) {
+char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
 	char i, in = 0;
 
 	for (i = 0; i < n_param; i++) {
@@ -42,29 +61,31 @@ char verifyWear(short param[], char param_bits[], char n_param, char wear[]) {
 
 void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desgaste
 	char speed, has_brake, brake_rate, rpm_rate;
-
-	short brake_vars[] = {speed, brake_rate};
 	char brake_vars_bits[] = {2, 2};
-
-	short clutch_vars[] = {rpm_rate, has_brake};
 	char clutch_vars_bits[] = {2, 1};
 
 	speed = discretize(spd, SPD_THRESHOLD, 3);
 	brake_rate = rate(last_brk, brk, BRK_THRESHOLD);
-
 	rpm_rate = rate(last_rpm, rpm, RPM_THRESHOLD);
 	has_brake = brk > 0;
 
-	CUMULATIVE_BRAKE[verifyWear( brake_vars, brake_vars_bits, 2, BRAKE_WEAR)] += 1;
-	CUMULATIVE_CLUTCH[verifyWear( clutch_vars, clutch_vars_bits, 2, CLUTCH_WEAR)] += 1;
+	char brake_vars[] = {speed, brake_rate};
+	char clutch_vars[] = {rpm_rate, has_brake};
+	
+	CUMULATIVE_BRAKE[verifyWear(brake_vars, brake_vars_bits, 2, BRAKE_WEAR)] += 1;
+	CUMULATIVE_CLUTCH[verifyWear(clutch_vars, clutch_vars_bits, 2, CLUTCH_WEAR)] += 1;
 	CUMULATIVE_RPM[discretize(rpm, RPM_THRESHOLD, 3)] += 1;
+
+	printf("BRAKE: "); printhex(CUMULATIVE_BRAKE, 4);
+	printf("CLUTCH: "); printhex(CUMULATIVE_CLUTCH, 4);
+	printf("RPM: "); printhex(CUMULATIVE_RPM, 4);
 
 	return;
 }
 
 
 void resetWear(char v_len) {
-	unsigned char *v[] = {CUMULATIVE_RPM, CUMULATIVE_CLUTCH, CUMULATIVE_BRAKE};
+	short *v[] = {CUMULATIVE_RPM, CUMULATIVE_CLUTCH, CUMULATIVE_BRAKE};
 	for(char i = 0; i < 3; i++)
 	{
 		for(char j = 0; j < v_len; j++)
@@ -82,7 +103,7 @@ char rate(char x1, char x2, short vect[]) {
 }
 
 
-char average(unsigned char vect[]) {
+char average(short vect[]) {
 	char i;
 	short total = 0, value = 0, step;
 
@@ -92,14 +113,14 @@ char average(unsigned char vect[]) {
 	}
 
 	step = total / 2;
-	short v[] = {step, (short)(total + step), (short)(2*total + step)};
+	short v[] = {step, (short)(total + step), (short)(total + 2*step)};
 	return discretize(value, v, 3);
 }
 
 
-void wearData(char* data_ret) {
+void wearData(unsigned char* data_ret) {
 	char brake_wear, clutch_wear, engine_wear, rpm, rpm_time;
-	short engine_vars[] = {rpm, rpm_time};
+	char engine_vars[] = {rpm, rpm_time};
 	char engine_vars_bits[] = {2, 2};
 
 	rpm = average(CUMULATIVE_RPM);
@@ -109,14 +130,16 @@ void wearData(char* data_ret) {
 	clutch_wear = average(CUMULATIVE_CLUTCH);
 	engine_wear = verifyWear(engine_vars, engine_vars_bits, 2, ENGINE_WEAR);
 
-	data_ret[0] = brake_wear << 4 + clutch_wear << 2 + engine_wear;
+	data_ret[0] = (brake_wear << 4) + (clutch_wear << 2) + engine_wear;
 	data_ret[1] = '\0';
+	printf("ENGINE_WEAR: ");
+	printhex((short*)data_ret, 1);
 }
 
 
-char percent(unsigned char vect[], char idx, char len) {
+char percent(short vect[], char idx, char len) {
 	char i;
-	char total = 0, step;
+	short total = 0, step;
 
 	for (i = 0; i < 4; i++) {
 		total += vect[i];

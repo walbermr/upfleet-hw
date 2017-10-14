@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <string.h>
+#include <ctime>
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
 const char IP[] = "192.168.25.13";
 
-unsigned char count;
+short count;
 
-void printHex(unsigned char *buf);
+void printHex(unsigned char *buf, char size);
 void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *brk);
 
 int main(int argc , char *argv[])
 {
-	unsigned char *server_reply;
+	unsigned char *server_reply, data[2];
 	short speed, rpm_engine_value, brk;
 
 	SOCKET scoket;
@@ -26,13 +27,14 @@ int main(int argc , char *argv[])
 		count = 0;
 		while(count < 4096)
 		{
+			char ack[] = "ack";
 			server_reply = (unsigned char *) recData(scoket, 6, true);
 			if(server_reply == NULL)
 			{
 				printf("Servidor desconectado.\n");
 				return 0;
 			}
-			sendData(scoket, "ACK");
+			sendData(scoket, ack);
 
 			decode(server_reply, &rpm_engine_value, &speed, &brk);
 			printf("engine: %d\n", rpm_engine_value);
@@ -41,7 +43,13 @@ int main(int argc , char *argv[])
 			count += 1;
 		}
 
-		sendData(scoket, "Done");
+		wearData(data);
+		sendData(scoket, (char*) data);
+		
+		printf("Data sent: ");
+		printHex(data, 1);
+
+		Sleep(2);
 		resetWear(4);
 		count = 0;
 	}
@@ -58,7 +66,7 @@ void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *br
 	*speed = 0;
 	*brk = 0;
 
-	printHex(str);
+	printHex(str, 6);
 
 	*rpm_engine_value = (msg[0] << 8) | msg[1];
 	
@@ -71,10 +79,10 @@ void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *br
 }
 
 
-void printHex(unsigned char *buf)
+void printHex(unsigned char *buf, char size)
 {
 	int sum = 0;
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < size; i++)
 	{
 		if (i > 0) printf(":");
 		printf("%02X", buf[i]);

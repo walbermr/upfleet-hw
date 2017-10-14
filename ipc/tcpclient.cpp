@@ -51,13 +51,14 @@ int connect(SOCKET s, char const *ip, int port)
     return 0;
 }
 
-int sendData(SOCKET s, char const *message)
+int sendData(SOCKET s, char *message)
 {
     if( send(s , message , strlen(message) , 0) < 0)
     {
         printf("Send failed\n");
         return 1;
     }
+    printf("MESSAGE %s\n", message);
     return 0;
 }
 

@@ -7,7 +7,7 @@
 int initWINSOCK();
 void initSocket(SOCKET *s);
 int connect(SOCKET s, char const *ip, int port);
-int sendData(SOCKET s, char const *message);
+int sendData(SOCKET s, char *message);
 char *recData(SOCKET s, int size, bool too_string);
 
 #endif
