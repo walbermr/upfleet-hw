@@ -92,9 +92,9 @@ char average(unsigned char vect[]) {
 	}
 
 	step = total / 2;
-	short v[] = {step, total + step, 2*total + step};
+	short v[] = {step, (short)(total + step), (short)(2*total + step)};
 	return discretize(value, v, 3);
-	}
+}
 
 
 void wearData(char* data_ret) {
@@ -102,30 +102,15 @@ void wearData(char* data_ret) {
 	short engine_vars[] = {rpm, rpm_time};
 	char engine_vars_bits[] = {2, 2};
 
-	rpm = average(CUMULATIVE_RPM, 4);
+	rpm = average(CUMULATIVE_RPM);
 	rpm_time = percent(CUMULATIVE_RPM, rpm, 4);
 
-	brake_wear = average(CUMULATIVE_BRAKE, 4);
-	clutch_wear = average(CUMULATIVE_CLUTCH, 4);
+	brake_wear = average(CUMULATIVE_BRAKE);
+	clutch_wear = average(CUMULATIVE_CLUTCH);
 	engine_wear = verifyWear(engine_vars, engine_vars_bits, 2, ENGINE_WEAR);
 
 	data_ret[0] = brake_wear << 4 + clutch_wear << 2 + engine_wear;
 	data_ret[1] = '\0';
-}
-
-
-char average(unsigned char vect[]) {
-	char i;
-	short total = 0, value = 0, step;
-
-	for (i = 0; i < 4; i++) {
-		value += vect[i] * i;
-		total += vect[i];
-	}
-
-	step = total / 2;
-	short v[] = {step, total + step, 2*total + step};
-	return discretize(value, v, 3);
 }
 
 
@@ -138,6 +123,6 @@ char percent(unsigned char vect[], char idx, char len) {
 	}
 
 	step = total / 4;
-	short v[] = {step, 2*step, 3*step};
+	short v[] = {step, (short)(2*step), (short)(3*step)};
 	return discretize(vect[idx], v, 3);
 }
