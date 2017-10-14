@@ -40,8 +40,9 @@ char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
 }
 
 
-void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desgaste
-	char speed, brake_rate, rpm_rate, has_brake;
+void accumulateWear(char rpm, char spd, char brk) {	//acumula valores de desgaste
+	char speed, has_brake, brake_rate, rpm_rate;
+
 	char brake_vars[] = {speed, brake_rate};
 	char brake_vars_bits[] = {2, 2};
 
@@ -90,7 +91,7 @@ char average(unsigned char buf[], int size) {
 }
 
 
-char* wearData() {
+void wearData(char* data_ret) {
 	char brake_wear, clutch_wear, engine_wear, rpm, rpm_time;
 	char engine_vars[] = {rpm, rpm_time};
 	char engine_vars_bits[] = {2, 2};
@@ -102,7 +103,8 @@ char* wearData() {
 	clutch_wear = average(CUMULATIVE_CLUTCH, 4);
 	engine_wear = verifyWear(engine_vars, engine_vars_bits, 2, ENGINE_WEAR);
 
-	return {brake_wear << 4 + clutch_wear << 2 + engine_wear ,'\0'};
+	data_ret[0] = brake_wear << 4 + clutch_wear << 2 + engine_wear;
+	data_ret[1] = '\0';
 }
 
 
@@ -115,8 +117,8 @@ char average(unsigned char vect[]) {
 	}
 
 	step = total / 2;
-
-	return discretize(value, {step, total + step, 2*total + step}, 3);
+	int v[] = {step, total + step, 2*total + step};
+	return discretize(value, v, 3);
 }
 
 
@@ -128,6 +130,6 @@ char percent(unsigned char vect[], char idx, char len) {
 	}
 
 	step = total / 4;
-
-	return discretize(vect[idx], {step, 2*step, 3*step}, 3);
+	int v[] = {step, 2*step, 3*step};
+	return discretize(vect[idx], v, 3);
 }
