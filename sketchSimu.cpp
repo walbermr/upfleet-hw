@@ -3,6 +3,8 @@
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
+const char IP[] = "192.168.25.7";
+
 unsigned char count;
 
 void printHex(unsigned char *buf);
@@ -17,7 +19,7 @@ int main(int argc , char *argv[])
 
 	initWINSOCK();
 	initSocket(&scoket);
-	connect(scoket, "192.168.25.13", 5000); //ip do localhost
+	connect(scoket, IP, 5000); //ip do localhost
 
 	while(true)
 	{

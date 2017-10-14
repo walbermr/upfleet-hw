@@ -8,9 +8,9 @@ char BRAKE_WEAR[36]	= {};
 char CLUTCH_WEAR[8]	= {};
 char ENGINE_WEAR[16]	= {};
 
-short CUMULATIVE_BRAKE[] = {0, 0, 0, 0};
-short CUMULATIVE_CLUTCH[] = {0, 0, 0, 0};
-short CUMULATIVE_RPM[] = {0, 0, 0, 0};
+unsigned char CUMULATIVE_BRAKE[] = {0, 0, 0, 0};
+unsigned char CUMULATIVE_CLUTCH[] = {0, 0, 0, 0};
+unsigned char CUMULATIVE_RPM[] = {0, 0, 0, 0};
 
 char last_brk, last_rpm;
 
@@ -42,6 +42,11 @@ char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
 
 void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desgaste
 	char speed, brake_rate, rpm_rate, has_brake;
+	char brake_vars[] = {speed, brake_rate};
+	char brake_vars_bits[] = {2, 2};
+
+	char clutch_vars[] = {rpm_rate, has_brake};
+	char clutch_vars_bits[] = {2, 1};
 
 	speed = discretize(spd, SPD_THRESHOLD, 3);
 	brake_rate = rate(last_brk, brk, BRK_THRESHOLD);
@@ -49,8 +54,8 @@ void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desg
 	rpm_rate = rate(last_rpm, rpm, RPM_THRESHOLD);
 	has_brake = brk > 0;
 
-	CUMULATIVE_BRAKE[verifyWear({speed, brake_rate}, {2, 2}, 2, BRAKE_WEAR)] += 1;
-	CUMULATIVE_CLUTCH[verifyWear({rpm_rate, has_brake}, {2, 1}, 2, CLUTCH_WEAR)] += 1;
+	CUMULATIVE_BRAKE[verifyWear( brake_vars, brake_vars_bits, 2, BRAKE_WEAR)] += 1;
+	CUMULATIVE_CLUTCH[verifyWear( clutch_vars, clutch_vars_bits, 2, CLUTCH_WEAR)] += 1;
 	CUMULATIVE_RPM[discretize(rpm, RPM_THRESHOLD, 3)] += 1;
 
 	return;
@@ -76,7 +81,7 @@ char rate(char x1, char x2, int vect[]) {
 }
 
 
-char average(short buf[], int size) {
+char average(unsigned char buf[], int size) {
 	int i;
 
 	for (i = 0; i < 4; i++) {
@@ -87,19 +92,21 @@ char average(short buf[], int size) {
 
 char* wearData() {
 	char brake_wear, clutch_wear, engine_wear, rpm, rpm_time;
+	char engine_vars[] = {rpm, rpm_time};
+	char engine_vars_bits[] = {2, 2};
 
-	rpm = average(CUMULATIVE_RPM);
+	rpm = average(CUMULATIVE_RPM, 4);
 	rpm_time = percent(CUMULATIVE_RPM, rpm, 4);
 
-	brake_wear = average(CUMULATIVE_BRAKE);
-	clutch_wear = average(CUMULATIVE_CLUTCH);
-	engine_wear = verifyWear({rpm, rpm_time}, {2, 2}, 2, ENGINE_WEAR);
+	brake_wear = average(CUMULATIVE_BRAKE, 4);
+	clutch_wear = average(CUMULATIVE_CLUTCH, 4);
+	engine_wear = verifyWear(engine_vars, engine_vars_bits, 2, ENGINE_WEAR);
 
 	return {brake_wear << 4 + clutch_wear << 2 + engine_wear ,'\0'};
 }
 
 
-char average(short vect[]) {
+char average(unsigned char vect[]) {
 	int i, total = 0, value = 0, step;
 
 	for (i = 0; i < 4; i++) {
@@ -113,7 +120,7 @@ char average(short vect[]) {
 }
 
 
-char percent(short vect[], char idx, char len) {
+char percent(unsigned char vect[], char idx, char len) {
 	int i, total = 0, step;
 
 	for (i = 0; i < 4; i++) {
