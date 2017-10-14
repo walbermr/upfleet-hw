@@ -1,3 +1,5 @@
+# configuração do ambiente
+
 Primeiramente, boa noite.
 
 O projeto utiliza pythonn 3.6.2 e as seguintes dependências:
@@ -15,9 +17,14 @@ https://github.com/commaai/research
 
 Crie uma pasta para os arquivos do dataset e atualize no arquivo de configurações config.json. Nesse arquivo também configure quais arquivos você quer que sejam enviados para o arduino, quais variáveis serão enviadas e as variáveis para a serial do arduino.
 
-Após configurado rode o arquivo run.bat para automaticamente enviar os bancos de dados para o arduino atravéz da porta serial e criar as visualizações de dados.
+# como faço para rodar?
+
+Após configurado, abra o cmd (usar o powershell não funciona a ativação do ambiente virtual) rode o arquivo run.bat para automaticamente enviar os bancos de dados para o arduino atravéz da porta serial e criar as visualizações de dados.
+
+$ .\run.bat
 
 Argumentos:
+tcp: Necessário para ativar a comunicação por TCP
 debug: Abilita mensagens de debug
 no-serial: Desativa comunicação serial com o arduino
 

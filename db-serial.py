@@ -17,9 +17,9 @@ def data2bytes(rpm, spd, brk):
 	return b
 
 
-def plotVar(var, name):
+def plotVar(var, name, dpi):
 	plt.plot(var)
-	plt.savefig(('./figs/'+name), dpi=1000)
+	plt.savefig(('./figs/'+name), dpi=dpi)
 	plt.cla()
 	#plt.figure(figsize = (15, 9.375)).savefig('teste.png', dpi=100)
 	return
@@ -58,6 +58,7 @@ def main():
 	
 	#envia informacoes sobre a leitura dos sensores
 	while _index < len(_log_files):
+		output = []
 		log_name = _log_names[_index]
 		print("Reading file #%d: %s" %(_index, log_name))
 		batch, _batch_size = readVariables(_log_files[_index], _variables, log_name)
@@ -67,20 +68,22 @@ def main():
 			for i in _variables:
 				name = log_name[:len(log_name)-3]+'-'+i+'.png'
 				print("Saving %s" %(name))
-				plotVar(smooth(batch[i], 31), name)
+				plotVar(smooth(batch[i], 31), name, 100)
 
 		if(device != None):
 			for i in range(0, _batch_size[1]):
+				data_received = 0
 				d = []
 
 				for j in range(0, len(_variables)):
-					d.append(batch[_variables[j]][i])
+					#existem problemas nas leituras do freio, isso acaba com tudo
+					if(_variables[j] == "brake_user"):
+						if(batch[_variables[j]][i] > 4096):
+							batch[_variables[j]][i] = 4096
+						if(batch[_variables[j]][i] < 0):
+							batch[_variables[j]][i] = 0;
 
-				#existem problemas nas leituras do freio, isso acaba com tudo
-				if(d[2] > 4096):
-					d[2] = 4096
-				if(d[2] < 0):
-					d[2] = 0;
+					d.append(batch[_variables[j]][i])
 
 				data = data2bytes(d[0], d[1], d[2])
 				send_function(device, data)
@@ -88,13 +91,12 @@ def main():
 
 				data_received = recv_function(device)
 
-				if data_received:
+				if(data_received != str.encode('ack')):
 					print("Data received %s\n" %(data_received))
-					data_received = 0
-				else:
-					print('\n')
+					output.append(data_received[0])
 
 		_index += 1
+		print(output)
 
 	return 0
 

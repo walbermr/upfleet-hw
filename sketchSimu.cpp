@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <string.h>
-#include <ctime>
+#include <winsock2.h>
+#include <windows.h>
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
-const char IP[] = "192.168.25.13";
+const char IP[] = "192.168.25.13";	//MODIFIQUE O IP ANTES DE EXECUTAR
 
-short count;
+unsigned short count;
 
 void printHex(unsigned char *buf, char size);
 void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *brk);
@@ -15,19 +16,20 @@ int main(int argc , char *argv[])
 {
 	unsigned char *server_reply, data[2];
 	short speed, rpm_engine_value, brk;
+	char ack[] = "ack";
 
+	/* Inicialização do socket TCP */
 	SOCKET scoket;
-
 	initWINSOCK();
 	initSocket(&scoket);
 	connect(scoket, IP, 5000); //ip do localhost
+	//
 
 	while(true)
 	{
 		count = 0;
-		while(count < 4096)
+		while(count < 10)
 		{
-			char ack[] = "ack";
 			server_reply = (unsigned char *) recData(scoket, 6, true);
 			if(server_reply == NULL)
 			{
@@ -43,22 +45,22 @@ int main(int argc , char *argv[])
 			count += 1;
 		}
 
-		wearData(data);
+		wearData(data);				//calcula o desgaste e guarda na variavel data
+		data[0] = data[0] | 0xF0;	//envia pelo menos 4 bits com 1 por conta do tcp
 		sendData(scoket, (char*) data);
 		
 		printf("Data sent: ");
-		printHex(data, 1);
+		printHex(data, 2);
+		Sleep(2000);				//delay pra ver o q ta acontecendo
 
-		Sleep(2);
 		resetWear(4);
-		count = 0;
 	}
 
 	return 0;
 }
 
 
-void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *brk)
+void decode(unsigned char *msg, short *rpm_engine_value, short *speed, short *brk)	//decodifica os dados enviados do servidor
 {
 	int i = 0;
 	unsigned char str[] = {msg[0], msg[1], msg[2], msg[3], msg[4], msg[5]};
