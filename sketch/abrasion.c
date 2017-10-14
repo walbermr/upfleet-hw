@@ -1,8 +1,8 @@
 #include "abrasion.h"
 
-int RPM_THRESHOLD[] = {500, 1500, 2000};
-int SPD_THRESHOLD[] = {2000, 3000, 4500};
-int BRK_THRESHOLD[] = {1000, 2000, 3000};
+short RPM_THRESHOLD[] = {500, 1500, 2000};
+short SPD_THRESHOLD[] = {2000, 3000, 4500};
+short BRK_THRESHOLD[] = {1000, 2000, 3000};
 
 char BRAKE_WEAR[36]	= {};
 char CLUTCH_WEAR[8]	= {};
@@ -15,7 +15,7 @@ unsigned char CUMULATIVE_RPM[] = {0, 0, 0, 0};
 char last_brk, last_rpm;
 
 
-char discretize(int value, int thresh[], char len) {
+char discretize(short value, short thresh[], char len) {
 	char out;
 
 	for (out = 0; out < len; out++) {
@@ -28,7 +28,7 @@ char discretize(int value, int thresh[], char len) {
 }
 
 
-char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
+char verifyWear(short param[], char param_bits[], char n_param, char wear[]) {
 	char i, in = 0;
 
 	for (i = 0; i < n_param; i++) {
@@ -40,13 +40,13 @@ char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
 }
 
 
-void accumulateWear(char rpm, char spd, char brk) {	//acumula valores de desgaste
+void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desgaste
 	char speed, has_brake, brake_rate, rpm_rate;
 
-	char brake_vars[] = {speed, brake_rate};
+	short brake_vars[] = {speed, brake_rate};
 	char brake_vars_bits[] = {2, 2};
 
-	char clutch_vars[] = {rpm_rate, has_brake};
+	short clutch_vars[] = {rpm_rate, has_brake};
 	char clutch_vars_bits[] = {2, 1};
 
 	speed = discretize(spd, SPD_THRESHOLD, 3);
@@ -75,7 +75,7 @@ void resetWear(char v_len) {
 }
 
 
-char rate(char x1, char x2, int vect[]) {
+char rate(char x1, char x2, short vect[]) {
 	char dx = discretize(x2, vect, 3) - discretize(x1, vect, 3);
 
 	return (dx >= 0)? dx: -dx;
@@ -93,7 +93,7 @@ char average(unsigned char buf[], int size) {
 
 void wearData(char* data_ret) {
 	char brake_wear, clutch_wear, engine_wear, rpm, rpm_time;
-	char engine_vars[] = {rpm, rpm_time};
+	short engine_vars[] = {rpm, rpm_time};
 	char engine_vars_bits[] = {2, 2};
 
 	rpm = average(CUMULATIVE_RPM, 4);
@@ -109,7 +109,8 @@ void wearData(char* data_ret) {
 
 
 char average(unsigned char vect[]) {
-	int i, total = 0, value = 0, step;
+	char i;
+	short total = 0, value = 0, step;
 
 	for (i = 0; i < 4; i++) {
 		value += vect[i] * i;
@@ -117,19 +118,20 @@ char average(unsigned char vect[]) {
 	}
 
 	step = total / 2;
-	int v[] = {step, total + step, 2*total + step};
+	short v[] = {step, total + step, 2*total + step};
 	return discretize(value, v, 3);
 }
 
 
 char percent(unsigned char vect[], char idx, char len) {
-	int i, total = 0, step;
+	char i;
+	char total = 0, step;
 
 	for (i = 0; i < 4; i++) {
 		total += vect[i];
 	}
 
 	step = total / 4;
-	int v[] = {step, 2*step, 3*step};
+	short v[] = {step, 2*step, 3*step};
 	return discretize(vect[idx], v, 3);
 }
