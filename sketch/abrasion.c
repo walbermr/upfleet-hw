@@ -82,13 +82,19 @@ char rate(char x1, char x2, short vect[]) {
 }
 
 
-char average(unsigned char buf[], int size) {
-	int i;
+char average(unsigned char vect[]) {
+	char i;
+	short total = 0, value = 0, step;
 
 	for (i = 0; i < 4; i++) {
-
+		value += vect[i] * i;
+		total += vect[i];
 	}
-}
+
+	step = total / 2;
+	short v[] = {step, total + step, 2*total + step};
+	return discretize(value, v, 3);
+	}
 
 
 void wearData(char* data_ret) {
