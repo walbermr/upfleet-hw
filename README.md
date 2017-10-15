@@ -24,6 +24,7 @@ Após configurado, abra o cmd (usar o powershell não funciona a ativação do a
 $ .\run.bat
 
 Argumentos:
+
 | Código            | Descrição                                                                |
 |-------------------|--------------------------------------------------------------------------|
 | tcp               | Necessário para ativar a comunicação por TCP                             |
