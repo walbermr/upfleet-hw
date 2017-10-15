@@ -21,7 +21,7 @@ Crie uma pasta para os arquivos do dataset e atualize no arquivo de configuraç�
 
 Após configurado, abra o cmd (usar o powershell não funciona a ativação do ambiente virtual) rode o arquivo run.bat para automaticamente enviar os bancos de dados para o arduino atravéz da porta serial e criar as visualizações de dados.
 
-$ .\run.bat
+$ .\run.bat arg1 arg2
 
 Argumentos:
 
@@ -29,7 +29,7 @@ Argumentos:
 |-------------------|--------------------------------------------------------------------------|
 | tcp               | Necessário para ativar a comunicação por TCP                             |
 | debug             | Habilita mensagens de debug                                              |
-| no-serial         | Desativa comunicação serial com o arduino                                |
+| no-serial         | Desativa comunicação serial com o arduino (opcional)                     |
 
 
 # variaveis (keys)
