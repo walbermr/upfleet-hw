@@ -24,9 +24,11 @@ Após configurado, abra o cmd (usar o powershell não funciona a ativação do a
 $ .\run.bat
 
 Argumentos:
-tcp: Necessário para ativar a comunicação por TCP
-debug: Abilita mensagens de debug
-no-serial: Desativa comunicação serial com o arduino
+| Código            | Descrição                                                                |
+|-------------------|--------------------------------------------------------------------------|
+| tcp               | Necessário para ativar a comunicação por TCP                             |
+| debug             | Habilita mensagens de debug                                              |
+| no-serial         | Desativa comunicação serial com o arduino                                |
 
 
 # variaveis (keys)
