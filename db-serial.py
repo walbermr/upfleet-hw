@@ -32,6 +32,16 @@ def smooth(y, box_pts):
 	y_smooth = np.convolve(y, box, mode='same')
 	return y_smooth
 
+def decode(data):	#decodifica a informação recebida nos 3 valores de desgaste
+	d = int.from_bytes(data, byteorder='big')
+	print("DATA: %d" %(d))
+	brk = (d >> 4) & 0x3
+	clu = (d >> 2) & 0x3
+	eng = d & 0x3
+
+	return brk, clu, eng
+
+
 
 def main():
 	plt.rcParams["figure.figsize"] = [6, 4.5]
@@ -64,7 +74,7 @@ def main():
 		last_rpm = 0	#ultima leitura de rpm
 		last_brk = 0	#ultima leitura de freio
 
-		output = []
+		output = {"brk":[], "clu":[], "eng":[]}
 		log_name = _log_names[_index]
 		print("Reading file #%d: %s" %(_index, log_name))
 		batch, _batch_size = readVariables(_log_files[_index], _variables, log_name)
@@ -107,7 +117,10 @@ def main():
 
 				if(data_received != str.encode('ok')):
 					print("Data received %s\n" %(data_received))
-					output.append(data_received[0])
+					brk, clu, eng = decode(data_received)
+					output["brk"].append(brk)
+					output["clu"].append(clu)
+					output["eng"].append(eng)
 		
 		print(output)
 

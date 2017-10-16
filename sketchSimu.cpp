@@ -5,7 +5,7 @@
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
-const char IP[] = "172.22.68.34";	//MODIFIQUE O IP ANTES DE EXECUTAR
+const char IP[] = "192.168.25.13";	//MODIFIQUE O IP ANTES DE EXECUTAR
 
 unsigned short count;
 
@@ -28,7 +28,7 @@ int main(int argc , char *argv[])
 	while(true)
 	{
 		count = 0;
-		while(count < 10)
+		while(count < 4096)
 		{
 			server_reply = (unsigned char *) recData(scoket, 6, true);
 			if(server_reply == NULL)
@@ -49,8 +49,8 @@ int main(int argc , char *argv[])
 		sendData(scoket, (char*) data);
 		
 		printf("Data sent: ");
-		printHex(data, 2);
-		//Sleep(50);				//delay pra ver o q ta acontecendo
+		printHex(data, 1);
+		//Sleep(5000);				//delay pra ver o q ta acontecendo
 
 		resetWear(4);
 	}

@@ -6,7 +6,7 @@ short SPD_THRESHOLD[] = {2000, 3000, 4500};
 short BRK_THRESHOLD[] = {1000, 2000, 3000};
 
 short RPM_RATE_THRESHOLD[] = {15, 30, 45};
-short BRK_RATE_THRESHOLD[] = {19, 38, 76};
+short BRK_RATE_THRESHOLD[] = {16, 32, 64};
 
 
 /*	TODOS ESSES VALORES SÃO ARBITRÁRIOS PARA TESTE */
@@ -15,8 +15,8 @@ char BRAKE_WEAR[16]	= {0x0, 0x0, 0x0, 0x0,
 							0x2, 0x2, 0x2, 0x2, 
 							0x3, 0x3, 0x3, 0x3};
 
-char CLUTCH_WEAR[8]	= {0x0, 0x0, 0x0, 0x0, 
-							0x1, 0x1, 0x1, 0x1};
+char CLUTCH_WEAR[8]	= {0x0, 0x0, 0x0, 0x1, 
+							0x0, 0x2, 0x0, 0x3};
 
 char ENGINE_WEAR[16]	= {0x0, 0x0, 0x0, 0x0, 
 							0x1, 0x1, 0x1, 0x1, 
@@ -154,7 +154,6 @@ void wearData(unsigned char* data_ret) {
 
 	data_ret[0] = (brake_wear << 4) + (clutch_wear << 2) + engine_wear;
 	data_ret[1] = '\0';
-	printf("ENGINE_WEAR: %X\n", data_ret[0]);
 }
 
 
