@@ -7,14 +7,9 @@ short BRK_THRESHOLD[] = {1000, 2000, 3000};
 
 
 /*	TODOS ESSES VALORES SÃO ARBITRÁRIOS PARA TESTE */
-char BRAKE_WEAR[36]	= {0x0, 0x0, 0x0, 0x0, 
+char BRAKE_WEAR[16]	= {0x0, 0x0, 0x0, 0x0, 
 							0x1, 0x1, 0x1, 0x1, 
 							0x2, 0x2, 0x2, 0x2, 
-							0x3, 0x3, 0x3, 0x3,
-							0x0, 0x0, 0x0, 0x0, 
-							0x1, 0x1, 0x1, 0x1, 
-							0x2, 0x2, 0x2, 0x2, 
-							0x3, 0x3, 0x3, 0x3,
 							0x3, 0x3, 0x3, 0x3};
 
 char CLUTCH_WEAR[8]	= {0x0, 0x0, 0x0, 0x0, 
@@ -77,6 +72,8 @@ void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desg
 	char brake_vars_bits[] = {2, 2};
 	char clutch_vars_bits[] = {2, 1};
 
+	// printf("rpm: %d\nspd: %d\nbrk: %d\n", rpm, spd, brk);
+
 	speed = discretize(spd, SPD_THRESHOLD, 3);
 	brake_rate = rate(last_brk, brk, BRK_THRESHOLD);
 	rpm_rate = rate(last_rpm, rpm, RPM_THRESHOLD);
@@ -84,14 +81,23 @@ void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desg
 
 	char brake_vars[] = {speed, brake_rate};
 	char clutch_vars[] = {rpm_rate, has_brake};
+
+	char brake_idx = verifyWear(brake_vars, brake_vars_bits, 2, BRAKE_WEAR);
+	char clutch_idx = verifyWear(clutch_vars, clutch_vars_bits, 2, CLUTCH_WEAR);
+	char rpm_idx = discretize(rpm, RPM_THRESHOLD, 3);
+
+	// printf("brake_idx: %u\nclutch_idx: %u\nrpm_idx: %u\n", brake_idx, clutch_idx, rpm_idx);
 	
 	CUMULATIVE_BRAKE[verifyWear(brake_vars, brake_vars_bits, 2, BRAKE_WEAR)] += 1;
 	CUMULATIVE_CLUTCH[verifyWear(clutch_vars, clutch_vars_bits, 2, CLUTCH_WEAR)] += 1;
 	CUMULATIVE_RPM[discretize(rpm, RPM_THRESHOLD, 3)] += 1;
 
-	printf("BRAKE: "); printhex(CUMULATIVE_BRAKE, 4);
-	printf("CLUTCH: "); printhex(CUMULATIVE_CLUTCH, 4);
-	printf("RPM: "); printhex(CUMULATIVE_RPM, 4);
+	// printf("BRAKE: "); printhex(CUMULATIVE_BRAKE, 4);
+	// printf("CLUTCH: "); printhex(CUMULATIVE_CLUTCH, 4);
+	// printf("RPM: "); printhex(CUMULATIVE_RPM, 4);
+
+	last_brk = brk;
+	last_rpm = rpm;
 
 	return;
 }
@@ -145,8 +151,7 @@ void wearData(unsigned char* data_ret) {
 
 	data_ret[0] = (brake_wear << 4) + (clutch_wear << 2) + engine_wear;
 	data_ret[1] = '\0';
-	printf("ENGINE_WEAR: ");
-	printhex((short*)data_ret, 1);
+	printf("ENGINE_WEAR: %X\n", data_ret[0]);
 }
 
 

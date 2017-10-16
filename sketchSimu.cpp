@@ -5,7 +5,7 @@
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
-const char IP[] = "192.168.25.13";	//MODIFIQUE O IP ANTES DE EXECUTAR
+const char IP[] = "192.168.25.209";	//MODIFIQUE O IP ANTES DE EXECUTAR
 
 unsigned short count;
 
@@ -39,14 +39,13 @@ int main(int argc , char *argv[])
 			sendData(scoket, ack);
 
 			decode(server_reply, &rpm_engine_value, &speed, &brk);
-			printf("engine: %d\n", rpm_engine_value);
 
 			accumulateWear(rpm_engine_value, speed, brk);
 			count += 1;
 		}
 
 		wearData(data);				//calcula o desgaste e guarda na variavel data
-		data[0] = data[0] | 0xF0;	//envia pelo menos 4 bits com 1 por conta do tcp
+		data[0] = data[0] | 0xC0;	//envia pelo menos 4 bits com 1 por conta do tcp
 		sendData(scoket, (char*) data);
 		
 		printf("Data sent: ");
