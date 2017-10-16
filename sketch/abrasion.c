@@ -5,6 +5,9 @@ short RPM_THRESHOLD[] = {1000, 2500, 3500};
 short SPD_THRESHOLD[] = {2000, 3000, 4500};
 short BRK_THRESHOLD[] = {1000, 2000, 3000};
 
+short RPM_RATE_THRESHOLD[] = {15, 30, 45};
+short BRK_RATE_THRESHOLD[] = {19, 38, 76};
+
 
 /*	TODOS ESSES VALORES SÃO ARBITRÁRIOS PARA TESTE */
 char BRAKE_WEAR[16]	= {0x0, 0x0, 0x0, 0x0, 
@@ -72,11 +75,11 @@ void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desg
 	char brake_vars_bits[] = {2, 2};
 	char clutch_vars_bits[] = {2, 1};
 
-	// printf("rpm: %d\nspd: %d\nbrk: %d\n", rpm, spd, brk);
+	printf("rpm: %d\nspd: %d\nbrk: %d\n", rpm, spd, brk);
 
 	speed = discretize(spd, SPD_THRESHOLD, 3);
-	brake_rate = rate(last_brk, brk, BRK_THRESHOLD);
-	rpm_rate = rate(last_rpm, rpm, RPM_THRESHOLD);
+	brake_rate = rate(last_brk, brk, BRK_RATE_THRESHOLD);
+	rpm_rate = rate(last_rpm, rpm, RPM_RATE_THRESHOLD);
 	has_brake = brk > 0;
 
 	char brake_vars[] = {speed, brake_rate};
@@ -115,10 +118,10 @@ void resetWear(char v_len) {
 }
 
 
-char rate(char x1, char x2, short vect[]) {
-	char dx = discretize(x2, vect, 3) - discretize(x1, vect, 3);
+char rate(short x1, short x2, short vect[]) {
+	char dx = discretize(x2-x1, vect, 3);
 
-	return (dx >= 0)? dx: -dx;
+	return (dx >= 0)? dx: 0;
 }
 
 

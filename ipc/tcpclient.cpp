@@ -58,7 +58,7 @@ int sendData(SOCKET s, char *message)
         printf("Send failed\n");
         return 1;
     }
-    printf("MESSAGE %s\n", message);
+    //printf("MESSAGE %s\n", message);
     return 0;
 }
 

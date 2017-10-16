@@ -30,6 +30,8 @@ Argumentos:
 | tcp               | Necessário para ativar a comunicação por TCP                             |
 | debug             | Habilita mensagens de debug                                              |
 | no-serial         | Desativa comunicação serial com o arduino (opcional)                     |
+| savefigs          | Salva imagens dos datasets e das taxas de RPM e freio                    |
+
 
 
 # variaveis (keys)
