@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "abrasion.h"
 
-short RPM_THRESHOLD[] = {1000, 2500, 3500};
+short RPM_THRESHOLD[] = {1500, 2500, 3500};
 short SPD_THRESHOLD[] = {2000, 3000, 4500};
 short BRK_THRESHOLD[] = {1000, 2000, 3000};
 
@@ -15,13 +15,13 @@ char BRAKE_WEAR[16]	= {0x0, 0x0, 0x0, 0x0,
 							0x2, 0x2, 0x2, 0x2, 
 							0x3, 0x3, 0x3, 0x3};
 
-char CLUTCH_WEAR[8]	= {0x0, 0x0, 0x0, 0x1, 
-							0x0, 0x2, 0x0, 0x3};
+char CLUTCH_WEAR[8]	= {0x0, 0x0, 0x1, 0x0, 
+							0x2, 0x0, 0x3, 0x0};
 
-char ENGINE_WEAR[16]	= {0x0, 0x0, 0x0, 0x0, 
-							0x1, 0x1, 0x1, 0x1, 
-							0x2, 0x2, 0x2, 0x2, 
-							0x3, 0x3, 0x3, 0x3};
+char ENGINE_WEAR[16]	= {0x0, 0x0, 0x0, 0x0,
+							0x0, 0x0, 0x1, 0x1,
+							0x0, 0x1, 0x1, 0x2,
+							0x1, 0x2, 0x2, 0x3};
 
 short CUMULATIVE_BRAKE[] = {0, 0, 0, 0};
 short CUMULATIVE_CLUTCH[] = {0, 0, 0, 0};
@@ -65,7 +65,6 @@ char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
 		in <<= param_bits[i];
 		in += param[i];
 	}
-
 	return wear[in];
 }
 
@@ -142,11 +141,12 @@ char average(short vect[]) {
 
 void wearData(unsigned char* data_ret) {
 	char brake_wear, clutch_wear, engine_wear, rpm, rpm_time;
-	char engine_vars[] = {rpm, rpm_time};
 	char engine_vars_bits[] = {2, 2};
 
 	rpm = average(CUMULATIVE_RPM);
 	rpm_time = percent(CUMULATIVE_RPM, rpm, 4);
+	
+	char engine_vars[] = {rpm, rpm_time};
 
 	brake_wear = average(CUMULATIVE_BRAKE);
 	clutch_wear = average(CUMULATIVE_CLUTCH);

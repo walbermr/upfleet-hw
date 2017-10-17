@@ -50,7 +50,7 @@ int main(int argc , char *argv[])
 		
 		printf("Data sent: ");
 		printHex(data, 1);
-		//Sleep(5000);				//delay pra ver o q ta acontecendo
+		Sleep(100);				//delay pra ver o q ta acontecendo
 
 		resetWear(4);
 	}
