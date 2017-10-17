@@ -10,10 +10,10 @@ short BRK_RATE_THRESHOLD[] = {16, 32, 64};
 
 
 /*	TODOS ESSES VALORES SÃO ARBITRÁRIOS PARA TESTE */
-char BRAKE_WEAR[16]	= {0x0, 0x0, 0x0, 0x0, 
-							0x1, 0x1, 0x1, 0x1, 
-							0x2, 0x2, 0x2, 0x2, 
-							0x3, 0x3, 0x3, 0x3};
+char BRAKE_WEAR[16]	= {0x0, 0x0, 0x0, 0x1, 
+							0x0, 0x0, 0x1, 0x2, 
+							0x0, 0x1, 0x2, 0x3, 
+							0x0, 0x1, 0x2, 0x3};
 
 char CLUTCH_WEAR[8]	= {0x0, 0x0, 0x1, 0x0, 
 							0x2, 0x0, 0x3, 0x0};
@@ -90,9 +90,9 @@ void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desg
 
 	// printf("brake_idx: %u\nclutch_idx: %u\nrpm_idx: %u\n", brake_idx, clutch_idx, rpm_idx);
 	
-	CUMULATIVE_BRAKE[verifyWear(brake_vars, brake_vars_bits, 2, BRAKE_WEAR)] += 1;
-	CUMULATIVE_CLUTCH[verifyWear(clutch_vars, clutch_vars_bits, 2, CLUTCH_WEAR)] += 1;
-	CUMULATIVE_RPM[discretize(rpm, RPM_THRESHOLD, 3)] += 1;
+	CUMULATIVE_BRAKE[brake_idx] += 1;
+	CUMULATIVE_CLUTCH[clutch_idx] += 1;
+	CUMULATIVE_RPM[rpm_idx] += 1;
 
 	// printf("BRAKE: "); printhex(CUMULATIVE_BRAKE, 4);
 	// printf("CLUTCH: "); printhex(CUMULATIVE_CLUTCH, 4);
