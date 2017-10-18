@@ -143,14 +143,14 @@ char average(short vect[], short weight[]) {
 void wearData(unsigned char* data_ret) {
 	char brake_wear, clutch_wear, engine_wear, rpm, rpm_time;
 	char engine_vars_bits[] = {2, 2};
-	short weight[] = {0, 0, 0, 0}, clutch_weight[] = {0, 1, 6, 11};
+	short rpm_weight[] = {0, 0, 0, 0}, brake_weight[] = {0, 1, 5, 8}, clutch_weight[] = {0, 1, 5, 8};
 
-	rpm = average(CUMULATIVE_RPM, weight);
+	rpm = average(CUMULATIVE_RPM, rpm_weight);
 	rpm_time = percent(CUMULATIVE_RPM, rpm, 4);
 	
 	char engine_vars[] = {rpm, rpm_time};
 
-	brake_wear = average(CUMULATIVE_BRAKE, weight);
+	brake_wear = average(CUMULATIVE_BRAKE, brake_weight);
 	clutch_wear = average(CUMULATIVE_CLUTCH, clutch_weight);
 	engine_wear = verifyWear(engine_vars, engine_vars_bits, 2, ENGINE_WEAR);
 
