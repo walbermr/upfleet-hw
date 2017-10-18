@@ -5,7 +5,7 @@
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
-const char IP[] = "192.168.25.209";	//MODIFIQUE O IP ANTES DE EXECUTAR
+const char IP[] = "192.168.25.7";	//MODIFIQUE O IP ANTES DE EXECUTAR
 
 unsigned short count;
 
@@ -18,8 +18,9 @@ int main(int argc , char *argv[])
 	short speed, rpm_engine_value, brk;
 	char ack[] = "ok";
 	FILE *wear = fopen("wear.txt", "w");
+	short sample = 4096;
 
-	fprintf(wear, "wear = {sample_size: 4096, values = [\n");
+	fprintf(wear, "wear = {sample_size: %d, values = [\n", sample);
 
 	/* Inicialização do socket TCP */
 	SOCKET scoket;
@@ -31,7 +32,7 @@ int main(int argc , char *argv[])
 	while(true)
 	{
 		count = 0;
-		while(count < 4096)
+		while(count < sample)
 		{
 			server_reply = (unsigned char *) recData(scoket, 6, true);
 			if(server_reply == NULL)

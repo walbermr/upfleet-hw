@@ -8,8 +8,6 @@ short BRK_THRESHOLD[] = {1000, 2000, 3000};
 short RPM_RATE_THRESHOLD[] = {15, 30, 45};
 short BRK_RATE_THRESHOLD[] = {16, 32, 64};
 
-
-/*	TODOS ESSES VALORES SÃO ARBITRÁRIOS PARA TESTE */
 char BRAKE_WEAR[16]	= {0x0, 0x0, 0x0, 0x1, 
 							0x0, 0x0, 0x1, 0x2, 
 							0x0, 0x1, 0x2, 0x3, 
@@ -27,7 +25,7 @@ short CUMULATIVE_BRAKE[] = {0, 0, 0, 0};
 short CUMULATIVE_CLUTCH[] = {0, 0, 0, 0};
 short CUMULATIVE_RPM[] = {0, 0, 0, 0};
 
-char last_brk, last_rpm;
+short last_brk, last_rpm;
 
 
 void printhex(short *buf, char size)
@@ -79,7 +77,9 @@ void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desg
 	speed = discretize(spd, SPD_THRESHOLD, 3);
 	brake_rate = rate(last_brk, brk, BRK_RATE_THRESHOLD);
 	rpm_rate = rate(last_rpm, rpm, RPM_RATE_THRESHOLD);
-	has_brake = brk > 0;
+
+	printf("rpm_rate:%d\n", (rpm - last_rpm));
+	has_brake = (brk > 500)? 1: 0;
 
 	char brake_vars[] = {speed, brake_rate};
 	char clutch_vars[] = {rpm_rate, has_brake};
@@ -124,17 +124,18 @@ char rate(short x1, short x2, short vect[]) {
 }
 
 
-char average(short vect[]) {
+char average(short vect[], short weight[]) {
 	char i;
 	short total = 0, value = 0, step;
 
 	for (i = 0; i < 4; i++) {
+		vect[i] <<= weight[i];
 		value += vect[i] * i;
 		total += vect[i];
 	}
 
-	step = total / 2;
-	short v[] = {step, (short)(total + step), (short)(total + 2*step)};
+	step = 3*total / 4;
+	short v[] = {step, (short)(2*step), (short)(3*step)};
 	return discretize(value, v, 3);
 }
 
@@ -142,14 +143,15 @@ char average(short vect[]) {
 void wearData(unsigned char* data_ret) {
 	char brake_wear, clutch_wear, engine_wear, rpm, rpm_time;
 	char engine_vars_bits[] = {2, 2};
+	short weight[] = {0, 0, 0, 0}, clutch_weight[] = {0, 1, 6, 11};
 
-	rpm = average(CUMULATIVE_RPM);
+	rpm = average(CUMULATIVE_RPM, weight);
 	rpm_time = percent(CUMULATIVE_RPM, rpm, 4);
 	
 	char engine_vars[] = {rpm, rpm_time};
 
-	brake_wear = average(CUMULATIVE_BRAKE);
-	clutch_wear = average(CUMULATIVE_CLUTCH);
+	brake_wear = average(CUMULATIVE_BRAKE, weight);
+	clutch_wear = average(CUMULATIVE_CLUTCH, clutch_weight);
 	engine_wear = verifyWear(engine_vars, engine_vars_bits, 2, ENGINE_WEAR);
 
 	data_ret[0] = (brake_wear << 4) + (clutch_wear << 2) + engine_wear;

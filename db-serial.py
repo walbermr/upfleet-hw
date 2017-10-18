@@ -86,6 +86,9 @@ def main():
 				d = []
 
 				for j in _variables:
+					#converte de mph para kph
+					#if(j == "spd"):
+					#	batch[j][i] = batch[j][i] * 1.6
 					#existem problemas nas leituras do freio, isso acaba com tudo
 					if(j == "brake_user"):
 						if(batch[j][i] > 4096):
