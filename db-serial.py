@@ -4,6 +4,7 @@ import pandas as pd
 import scipy.stats as sts
 import matplotlib.pyplot as plt
 from setup import configEnvoirement, readVariables
+from math import floor
 
 
 def data2bytes(rpm, spd, brk):
@@ -17,8 +18,18 @@ def data2bytes(rpm, spd, brk):
 	return b
 
 
-def plotVar(var, name, dpi):
-	plt.plot(var)
+def plotVar(x1,y1, **kwargs):
+	dpi = kwargs.get('dpi', None)
+	name = kwargs.get('name', None)
+	x2 = kwargs.get('x2', None)
+	y2 = kwargs.get('y2', None)
+	trace2 = kwargs.get('trace2', None)
+
+	if(x2 == None and y2 == None):
+		plt.plot(x1,y1)
+	else:
+		plt.plot(x1,y1, x2,y2,trace2)
+
 	plt.savefig(('./figs/'+name), dpi=dpi)
 	plt.cla()
 	#plt.figure(figsize = (15, 9.375)).savefig('teste.png', dpi=100)
@@ -40,7 +51,6 @@ def decode(data):	#decodifica a informação recebida nos 3 valores de desgaste
 	eng = d & 0x3
 
 	return brk, clu, eng
-
 
 
 def main():
@@ -73,6 +83,8 @@ def main():
 
 		last_rpm = 0	#ultima leitura de rpm
 		last_brk = 0	#ultima leitura de freio
+
+		dpi = 100		#DPI do grafico
 
 		output = {"brk":[], "clu":[], "eng":[]}
 		log_name = _log_names[_index]
@@ -128,18 +140,42 @@ def main():
 		print(output)
 
 		if(setup.SAVEFIG):
+			size = len(output["eng"])
+			copy = round(_batch_size[1]/size)
+			outputx = {}
+
+			max_value = max(batch["rpm"])
+			outputx["rpm"] = []
+			for i in range(0, size):
+				for j in range(0, copy):
+					outputx["rpm"].append(floor(output["eng"][i]*max_value/3))
+			
 			for i in _variables:
+
 				name = log_name[:len(log_name)-3]+'-'+i+'.png'
 				print("Saving %s" %(name))
-				plotVar(smooth(batch[i], 31), name, 100)
+				x1 = range(0,len(batch[i]))
+				y1 = smooth(batch[i], 31)
+
+				if(i == "rpm"):
+					x2 = range(0,len(outputx[i]))
+					y2 = outputx[i]
+					trace2 = 'r--'
+
+					plotVar(x1, y1, x2=x2, y2=y2, trace2=trace2, name=name, dpi=dpi)
+
+				else:
+					plotVar(x1, y1, name=name, dpi=dpi)
 
 			var_names = ["rpm_rate", "brk_rate"]
 			rates= {"rpm_rate": rpm_rate, "brk_rate": brk_rate}
 
 			for i in var_names:
+				y = smooth(rates[i], 31)
+				x = range(0, len(y))
 				name = log_name[:len(log_name)-3]+'-'+i+'.png'
 				print("Saving %s" %(name))
-				plotVar(smooth(rates[i], 31), name, 100)
+				plotVar(x, y, name, dpi)
 
 		_index += 1
 		time.sleep(10)
