@@ -18,17 +18,9 @@ def data2bytes(rpm, spd, brk):
 	return b
 
 
-def plotVar(x1,y1, **kwargs):
-	dpi = kwargs.get('dpi', None)
-	name = kwargs.get('name', None)
-	x2 = kwargs.get('x2', None)
-	y2 = kwargs.get('y2', None)
-	trace2 = kwargs.get('trace2', None)
-
-	if(x2 == None and y2 == None):
-		plt.plot(x1,y1)
-	else:
-		plt.plot(x1,y1, x2,y2,trace2)
+def plotVar(name, dpi, *argv):
+	for x, y, trace in argv:
+		plt.plot(x, y, trace)
 
 	plt.savefig(('./figs/'+name), dpi=dpi)
 	plt.cla()
@@ -154,7 +146,7 @@ def main():
 
 				name = log_name[:len(log_name)-3]+'-'+i+'.png'
 				print("Saving %s" %(name))
-				x1 = range(0,len(batch[i]))
+				x1 = range(0, len(batch[i]))
 				y1 = smooth(batch[i], 31)
 
 				if(i == "rpm"):
@@ -162,10 +154,13 @@ def main():
 					y2 = outputx[i]
 					trace2 = 'r--'
 
-					plotVar(x1, y1, x2=x2, y2=y2, trace2=trace2, name=name, dpi=dpi)
+
+					plotVar(name, dpi, (x1, y1, 'b'), (x2, y2, 'r'), (x2, [0]*len(x2), 'r--'), \
+					 (x2, [max_value/3]*len(x2), 'r--'), (x2, [2*max_value/3]*len(x2), 'r--'), \
+					  (x2, [max_value]*len(x2), 'r--'))
 
 				else:
-					plotVar(x1, y1, name=name, dpi=dpi)
+					plotVar(name, dpi, (x1, y1, 'b'))
 
 			var_names = ["rpm_rate", "brk_rate"]
 			rates= {"rpm_rate": rpm_rate, "brk_rate": brk_rate}
@@ -175,10 +170,10 @@ def main():
 				x = range(0, len(y))
 				name = log_name[:len(log_name)-3]+'-'+i+'.png'
 				print("Saving %s" %(name))
-				plotVar(x, y, name, dpi)
+				plotVar(name, dpi, (x, y, 'b'))
 
 		_index += 1
-		time.sleep(10)
+		time.sleep(5)
 
 	return 0
 
