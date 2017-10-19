@@ -6,12 +6,19 @@
 extern "C"
 {
 	#include "abrasion.h"	
-} 
+}
+
+union Pos {  // union consegue definir vários tipos de dados na mesma posição de memória
+  char b[4];
+  float f;
+};
 
 static const byte RXPin = 3;
 static const byte TXPin = 4;
-float LASTVALIDLON = TinyGPS::GPS_INVALID_F_ANGLE;
-float LASTVALIDLAT = TinyGPS::GPS_INVALID_F_ANGLE;
+
+union Pos LASTVALIDLON;
+union Pos LASTVALIDLAT;
+
 unsigned long LASTVALIDage = TinyGPS::GPS_INVALID_AGE;
 unsigned char count = 0;
 
@@ -49,17 +56,19 @@ void loop() {
 	float flat, flon;
 	unsigned long age;
 	int rpm_engine_value = 0;
+	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
+	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
 
 	while(count < 4096)
 	{
 		gps.f_get_position(&flat, &flon, &age);
 
-		LASTVALIDLAT = (flat == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLAT : flat;
-		LASTVALIDLON = (flon == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLON : flon;
+		LASTVALIDLAT.f = (flat == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLAT.f : flat;
+		LASTVALIDLON.f = (flon == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLON.f : flon;
 		LASTVALIDage = (age == TinyGPS::GPS_INVALID_AGE) ? LASTVALIDage : age;
 
-		print_float(LASTVALIDLAT, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
-		print_float(LASTVALIDLON, TinyGPS::GPS_INVALID_F_ANGLE, 11, 6);
+		print_float(LASTVALIDLAT.f, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
+		print_float(LASTVALIDLON.f, TinyGPS::GPS_INVALID_F_ANGLE, 11, 6);
 		print_int(age, TinyGPS::GPS_INVALID_AGE, 5);
 
 		Serial.println();
