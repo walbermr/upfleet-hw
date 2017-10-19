@@ -1,9 +1,10 @@
-import setup
+import setup, time
 import numpy as np
 import pandas as pd
 import scipy.stats as sts
 import matplotlib.pyplot as plt
 from setup import configEnvoirement, readVariables
+from math import floor
 
 
 def data2bytes(rpm, spd, brk):
@@ -17,9 +18,11 @@ def data2bytes(rpm, spd, brk):
 	return b
 
 
-def plotVar(var, name):
-	plt.plot(var)
-	plt.savefig(('./figs/'+name), dpi=1000)
+def plotVar(name, dpi, *argv):
+	for x, y, trace in argv:
+		plt.plot(x, y, trace)
+
+	plt.savefig(('./figs/'+name), dpi=dpi)
 	plt.cla()
 	#plt.figure(figsize = (15, 9.375)).savefig('teste.png', dpi=100)
 	return
@@ -32,9 +35,18 @@ def smooth(y, box_pts):
 	y_smooth = np.convolve(y, box, mode='same')
 	return y_smooth
 
+def decode(data):	#decodifica a informação recebida nos 3 valores de desgaste
+	d = int.from_bytes(data, byteorder='big')
+	print("DATA: %d" %(d))
+	brk = (d >> 4) & 0x3
+	clu = (d >> 2) & 0x3
+	eng = d & 0x3
+
+	return brk, clu, eng
+
 
 def main():
-	plt.rcParams["figure.figsize"] = [30, 22.5]
+	plt.rcParams["figure.figsize"] = [6, 4.5]
 	batch = {}				#contem todos os valores das variaveis para aquele arquivo de log
 
 	device = None 			#dispositivo pelo qual se enviara os dados
@@ -58,29 +70,51 @@ def main():
 	
 	#envia informacoes sobre a leitura dos sensores
 	while _index < len(_log_files):
+		rpm_rate = []	#derivada do rpm
+		brk_rate = []	#derivada do freio
+
+		last_rpm = 0	#ultima leitura de rpm
+		last_brk = 0	#ultima leitura de freio
+
+		dpi = 100		#DPI do grafico
+
+		output = {"brk":[], "clu":[], "eng":[]}
 		log_name = _log_names[_index]
 		print("Reading file #%d: %s" %(_index, log_name))
 		batch, _batch_size = readVariables(_log_files[_index], _variables, log_name)
 		print("Batch size: %dx%d" %(_batch_size[0], _batch_size[1]))
 
-		if(setup.SAVEFIG):
-			for i in _variables:
-				name = log_name[:len(log_name)-3]+'-'+i+'.png'
-				print("Saving %s" %(name))
-				plotVar(smooth(batch[i], 31), name)
-
 		if(device != None):
 			for i in range(0, _batch_size[1]):
+				data_received = 0
 				d = []
 
-				for j in range(0, len(_variables)):
-					d.append(batch[_variables[j]][i])
+				for j in _variables:
+					#converte de mph para kph
+					#if(j == "spd"):
+					#	batch[j][i] = batch[j][i] * 1.6
+					#existem problemas nas leituras do freio, isso acaba com tudo
+					if(j == "brake_user"):
+						if(batch[j][i] > 4096):
+							batch[j][i] = 4096
+						if(batch[j][i] < 0):
+							batch[j][i] = 0;
 
-				#existem problemas nas leituras do freio, isso acaba com tudo
-				if(d[2] > 4096):
-					d[2] = 4096
-				if(d[2] < 0):
-					d[2] = 0;
+					d.append(batch[j][i])
+
+				#cria as variaveis de derivada
+				rpm_rate.append(batch["rpm"][i] - last_rpm)
+				brk_r = batch["brake_user"][i] - last_brk
+				if(brk_r > 300):
+					brk_rate.append(300)
+				elif(brk_r < -300):
+					brk_rate.append(-300)
+				else:
+					brk_rate.append(brk_r)
+
+				last_rpm = batch["rpm"][i]
+				last_brk = batch["brake_user"][i]
+				#################################
 
 				data = data2bytes(d[0], d[1], d[2])
 				send_function(device, data)
@@ -88,13 +122,58 @@ def main():
 
 				data_received = recv_function(device)
 
-				if data_received:
+				if(data_received != str.encode('ok')):
 					print("Data received %s\n" %(data_received))
-					data_received = 0
+					brk, clu, eng = decode(data_received)
+					output["brk"].append(brk)
+					output["clu"].append(clu)
+					output["eng"].append(eng)
+		
+		print(output)
+
+		if(setup.SAVEFIG):
+			size = len(output["eng"])
+			copy = round(_batch_size[1]/size)
+			outputx = {}
+
+			max_value = max(batch["rpm"])
+			outputx["rpm"] = []
+			for i in range(0, size):
+				for j in range(0, copy):
+					outputx["rpm"].append(floor(output["eng"][i]*max_value/3))
+			
+			for i in _variables:
+
+				name = log_name[:len(log_name)-3]+'-'+i+'.png'
+				print("Saving %s" %(name))
+				x1 = range(0, len(batch[i]))
+				y1 = smooth(batch[i], 31)
+
+				if(i == "rpm"):
+					x2 = range(0,len(outputx[i]))
+					y2 = outputx[i]
+					trace2 = 'r--'
+
+
+					plotVar(name, dpi, (x1, y1, 'b'), (x2, y2, 'r'), (x2, [0]*len(x2), 'r--'), \
+					 (x2, [max_value/3]*len(x2), 'r--'), (x2, [2*max_value/3]*len(x2), 'r--'), \
+					  (x2, [max_value]*len(x2), 'r--'))
+
 				else:
-					print('\n')
+					plotVar(name, dpi, (x1, y1, 'b'))
+
+			var_names = ["rpm_rate", "brk_rate"]
+			rates= {"rpm_rate": rpm_rate, "brk_rate": brk_rate}
+
+			for i in var_names:
+				y = smooth(rates[i], 31)
+				x = range(0, len(y))
+				name = log_name[:len(log_name)-3]+'-'+i+'.png'
+				print("Saving %s" %(name))
+				plotVar(name, dpi, (x, y, 'b'))
 
 		_index += 1
+		time.sleep(5)
 
 	return 0
 
