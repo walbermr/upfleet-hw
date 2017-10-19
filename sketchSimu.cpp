@@ -18,7 +18,7 @@ int main(int argc , char *argv[])
 	short speed, rpm_engine_value, brk;
 	char ack[] = "ok";
 	FILE *wear = fopen("wear.txt", "w");
-	short sample = 4096;
+	short sample = 1024;
 
 	fprintf(wear, "wear = {sample_size: %d, values = [\n", sample);
 
