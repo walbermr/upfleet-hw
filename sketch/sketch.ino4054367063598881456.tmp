@@ -33,21 +33,17 @@ MCP_CAN CAN(SPI_CS_PIN);
 
 TinyGPS gps;
 SoftwareSerial ss(TXPin, RXPin);
-//SoftwareSerial ssSigfox(SigTXPin, SigRXPin);
+SoftwareSerial ssSigfox(SigTXPin, SigRXPin);
 
 static void smartdelay(unsigned long ms);
 static void print_float(float val, float invalid, int len, int prec);
 static void print_int(unsigned long val, unsigned long invalid, int len);
 
 void setup() {
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
-  delay(1000);
-  digitalWrite(13, HIGH);
 	Serial.begin(115200); // use the same baud-rate as the python side
-	Serial.println("TinyGPS library v. "); Serial.println(TinyGPS::library_version());
-	//ss.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
-  //ssSigfox.begin(9600);
+	Serial.print("TinyGPS library v. "); Serial.println(TinyGPS::library_version());
+	ss.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
+  ssSigfox.begin(9600);
 
 	while (CAN_OK != CAN.begin(CAN_500KBPS))              // init can bus : baudrate = 500k
 	{
@@ -72,9 +68,9 @@ void loop() {
   
   while(1)
   {
-//    ssSigfox.write('a');
-//    char c = ssSigfox.read();
-//    Serial.println(c);
+    ssSigfox.write('a');
+    char c = ssSigfox.read();
+    Serial.println(c);
   }
 
 	while(count < 4096)
