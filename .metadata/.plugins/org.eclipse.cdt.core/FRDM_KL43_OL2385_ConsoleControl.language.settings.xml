@@ -4,13 +4,13 @@
 		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
 			<provider id="ilg.gnuarmeclipse.managedbuild.cross.GCCBuiltinSpecsDetector">
 				<language id="org.eclipse.cdt.core.gcc">
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include-fixed">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="__ACCUM_EPSILON__" value="0x1P-15K">
@@ -1041,22 +1041,22 @@
 					</entry>
 				</language>
 				<language id="org.eclipse.cdt.core.g++">
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4/arm-none-eabi/armv6-m">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4/arm-none-eabi/armv6-m">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4/backward">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4/backward">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include-fixed">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="__ACCUM_EPSILON__" value="0x1P-15K">
@@ -2108,13 +2108,13 @@
 		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
 			<provider id="ilg.gnuarmeclipse.managedbuild.cross.GCCBuiltinSpecsDetector">
 				<language id="org.eclipse.cdt.core.gcc">
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include-fixed">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="__ACCUM_EPSILON__" value="0x1P-15K">
@@ -3148,22 +3148,22 @@
 					</entry>
 				</language>
 				<language id="org.eclipse.cdt.core.g++">
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4/arm-none-eabi/armv6-m">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4/arm-none-eabi/armv6-m">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4/backward">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include/c++/4.8.4/backward">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include-fixed">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/lib/gcc/arm-none-eabi/4.8.4/include-fixed">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
-					<entry kind="includePath" name="F:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include">
+					<entry kind="includePath" name="D:/Program Files (x86)/Freescale/Toolchain/arm-none-eabi/include">
 						<flag value="BUILTIN|READONLY"/>
 					</entry>
 					<entry kind="macro" name="__ACCUM_EPSILON__" value="0x1P-15K">

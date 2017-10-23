@@ -1,19 +1,289 @@
-21:01:54 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+21:51:18 **** Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
 make -j4 all 
+Building file: ../utilities/fsl_notifier.c
+Building file: ../utilities/fsl_sbrk.c
+Building file: ../startup/startup_MKL43Z4.S
+Building file: ../utilities/fsl_debug_console.c
+Invoking: Cross ARM C Compiler
+Invoking: Cross ARM C Compiler
+Invoking: Cross ARM GNU Assembler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"utilities/fsl_notifier.d" -MT"utilities/fsl_notifier.o" -c -o "utilities/fsl_notifier.o" "../utilities/fsl_notifier.c"
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"utilities/fsl_sbrk.d" -MT"utilities/fsl_sbrk.o" -c -o "utilities/fsl_sbrk.o" "../utilities/fsl_sbrk.c"
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -x assembler-with-cpp -MMD -MP -MF"startup/startup_MKL43Z4.d" -MT"startup/startup_MKL43Z4.o" -c -o "startup/startup_MKL43Z4.o" "../startup/startup_MKL43Z4.S"
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"utilities/fsl_debug_console.d" -MT"utilities/fsl_debug_console.o" -c -o "utilities/fsl_debug_console.o" "../utilities/fsl_debug_console.c"
+Finished building: ../startup/startup_MKL43Z4.S
+Finished building: ../utilities/fsl_sbrk.c
+ 
+ 
+Building file: ../startup/system_MKL43Z4.c
+Building file: ../source/sf/sf.c
+Invoking: Cross ARM C Compiler
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"startup/system_MKL43Z4.d" -MT"startup/system_MKL43Z4.o" -c -o "startup/system_MKL43Z4.o" "../startup/system_MKL43Z4.c"
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/sf/sf.d" -MT"source/sf/sf.o" -c -o "source/sf/sf.o" "../source/sf/sf.c"
+In file included from ../source/sf/sf.h:46:0,
+                 from ../source/sf/sf.c:43:
+../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
+ #pragma message("Model OL2385 is selected.")
+         ^
+Finished building: ../utilities/fsl_notifier.c
+ 
+Building file: ../source/sf/sf_setup.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/sf/sf_setup.d" -MT"source/sf/sf_setup.o" -c -o "source/sf/sf_setup.o" "../source/sf/sf_setup.c"
+Finished building: ../utilities/fsl_debug_console.c
+ 
+Finished building: ../startup/system_MKL43Z4.c
+ 
+Building file: ../source/aml/wait_aml/wait_aml.c
+Invoking: Cross ARM C Compiler
+Building file: ../source/aml/spi_aml/spi_aml.c
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/aml/wait_aml/wait_aml.d" -MT"source/aml/wait_aml/wait_aml.o" -c -o "source/aml/wait_aml/wait_aml.o" "../source/aml/wait_aml/wait_aml.c"
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/aml/spi_aml/spi_aml.d" -MT"source/aml/spi_aml/spi_aml.o" -c -o "source/aml/spi_aml/spi_aml.o" "../source/aml/spi_aml/spi_aml.c"
+Finished building: ../source/sf/sf.c
+Finished building: ../source/sf/sf_setup.c
+ 
+ 
 Building file: ../source/main.c
+Building file: ../source/sf_cmd.c
+Invoking: Cross ARM C Compiler
 Invoking: Cross ARM C Compiler
 arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/sf_cmd.d" -MT"source/sf_cmd.o" -c -o "source/sf_cmd.o" "../source/sf_cmd.c"
+Finished building: ../source/aml/wait_aml/wait_aml.c
+ 
+Building file: ../drivers/fsl_adc16.c
+In file included from ../source/sf/sf.h:46:0,
+                 from ../source/sf_cmd.c:50:
+../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
+ #pragma message("Model OL2385 is selected.")
+         ^
+Invoking: Cross ARM C Compiler
+Finished building: ../source/aml/spi_aml/spi_aml.c
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_adc16.d" -MT"drivers/fsl_adc16.o" -c -o "drivers/fsl_adc16.o" "../drivers/fsl_adc16.c"
+ 
 In file included from ../source/sf/sf.h:46:0,
                  from ../source/main.c:51:
 ../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
  #pragma message("Model OL2385 is selected.")
          ^
+Building file: ../drivers/fsl_clock.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_clock.d" -MT"drivers/fsl_clock.o" -c -o "drivers/fsl_clock.o" "../drivers/fsl_clock.c"
 Finished building: ../source/main.c
+ 
+Building file: ../drivers/fsl_cmp.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_cmp.d" -MT"drivers/fsl_cmp.o" -c -o "drivers/fsl_cmp.o" "../drivers/fsl_cmp.c"
+Finished building: ../source/sf_cmd.c
+ 
+Building file: ../drivers/fsl_common.c
+Finished building: ../drivers/fsl_adc16.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_common.d" -MT"drivers/fsl_common.o" -c -o "drivers/fsl_common.o" "../drivers/fsl_common.c"
+ 
+Building file: ../drivers/fsl_cop.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_cop.d" -MT"drivers/fsl_cop.o" -c -o "drivers/fsl_cop.o" "../drivers/fsl_cop.c"
+Finished building: ../drivers/fsl_clock.c
+ 
+Building file: ../drivers/fsl_dac.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_dac.d" -MT"drivers/fsl_dac.o" -c -o "drivers/fsl_dac.o" "../drivers/fsl_dac.c"
+Finished building: ../drivers/fsl_common.c
+Finished building: ../drivers/fsl_cmp.c
+ 
+ 
+Building file: ../drivers/fsl_dma.c
+Building file: ../drivers/fsl_dmamux.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_dma.d" -MT"drivers/fsl_dma.o" -c -o "drivers/fsl_dma.o" "../drivers/fsl_dma.c"
+Finished building: ../drivers/fsl_cop.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_dmamux.d" -MT"drivers/fsl_dmamux.o" -c -o "drivers/fsl_dmamux.o" "../drivers/fsl_dmamux.c"
+ 
+Building file: ../drivers/fsl_flash.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flash.d" -MT"drivers/fsl_flash.o" -c -o "drivers/fsl_flash.o" "../drivers/fsl_flash.c"
+Finished building: ../drivers/fsl_dac.c
+ 
+Building file: ../drivers/fsl_flexio.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flexio.d" -MT"drivers/fsl_flexio.o" -c -o "drivers/fsl_flexio.o" "../drivers/fsl_flexio.c"
+Finished building: ../drivers/fsl_dmamux.c
+ 
+Finished building: ../drivers/fsl_dma.c
+Building file: ../drivers/fsl_flexio_i2c_master.c
+ 
+Invoking: Cross ARM C Compiler
+Building file: ../drivers/fsl_flexio_i2s.c
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flexio_i2c_master.d" -MT"drivers/fsl_flexio_i2c_master.o" -c -o "drivers/fsl_flexio_i2c_master.o" "../drivers/fsl_flexio_i2c_master.c"
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flexio_i2s.d" -MT"drivers/fsl_flexio_i2s.o" -c -o "drivers/fsl_flexio_i2s.o" "../drivers/fsl_flexio_i2s.c"
+Finished building: ../drivers/fsl_flash.c
+ 
+Building file: ../drivers/fsl_flexio_i2s_dma.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flexio_i2s_dma.d" -MT"drivers/fsl_flexio_i2s_dma.o" -c -o "drivers/fsl_flexio_i2s_dma.o" "../drivers/fsl_flexio_i2s_dma.c"
+Finished building: ../drivers/fsl_flexio.c
+ 
+Building file: ../drivers/fsl_flexio_spi.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flexio_spi.d" -MT"drivers/fsl_flexio_spi.o" -c -o "drivers/fsl_flexio_spi.o" "../drivers/fsl_flexio_spi.c"
+Finished building: ../drivers/fsl_flexio_i2c_master.c
+ 
+Building file: ../drivers/fsl_flexio_spi_dma.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flexio_spi_dma.d" -MT"drivers/fsl_flexio_spi_dma.o" -c -o "drivers/fsl_flexio_spi_dma.o" "../drivers/fsl_flexio_spi_dma.c"
+Finished building: ../drivers/fsl_flexio_i2s.c
+Finished building: ../drivers/fsl_flexio_i2s_dma.c
+ 
+ 
+Building file: ../drivers/fsl_flexio_uart.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flexio_uart.d" -MT"drivers/fsl_flexio_uart.o" -c -o "drivers/fsl_flexio_uart.o" "../drivers/fsl_flexio_uart.c"
+Building file: ../drivers/fsl_flexio_uart_dma.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_flexio_uart_dma.d" -MT"drivers/fsl_flexio_uart_dma.o" -c -o "drivers/fsl_flexio_uart_dma.o" "../drivers/fsl_flexio_uart_dma.c"
+Finished building: ../drivers/fsl_flexio_uart.c
+ 
+Finished building: ../drivers/fsl_flexio_uart_dma.c
+Finished building: ../drivers/fsl_flexio_spi.c
+ 
+Building file: ../drivers/fsl_gpio.c
+Finished building: ../drivers/fsl_flexio_spi_dma.c
+ 
+Invoking: Cross ARM C Compiler
+ 
+Building file: ../drivers/fsl_i2c.c
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_gpio.d" -MT"drivers/fsl_gpio.o" -c -o "drivers/fsl_gpio.o" "../drivers/fsl_gpio.c"
+Building file: ../drivers/fsl_i2c_dma.c
+Invoking: Cross ARM C Compiler
+Building file: ../drivers/fsl_llwu.c
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_i2c.d" -MT"drivers/fsl_i2c.o" -c -o "drivers/fsl_i2c.o" "../drivers/fsl_i2c.c"
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_i2c_dma.d" -MT"drivers/fsl_i2c_dma.o" -c -o "drivers/fsl_i2c_dma.o" "../drivers/fsl_i2c_dma.c"
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_llwu.d" -MT"drivers/fsl_llwu.o" -c -o "drivers/fsl_llwu.o" "../drivers/fsl_llwu.c"
+Finished building: ../drivers/fsl_gpio.c
+Finished building: ../drivers/fsl_llwu.c
+ 
+ 
+Building file: ../drivers/fsl_lptmr.c
+Building file: ../drivers/fsl_lpuart.c
+Invoking: Cross ARM C Compiler
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_lptmr.d" -MT"drivers/fsl_lptmr.o" -c -o "drivers/fsl_lptmr.o" "../drivers/fsl_lptmr.c"
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_lpuart.d" -MT"drivers/fsl_lpuart.o" -c -o "drivers/fsl_lpuart.o" "../drivers/fsl_lpuart.c"
+Finished building: ../drivers/fsl_i2c_dma.c
+ 
+Building file: ../drivers/fsl_lpuart_dma.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_lpuart_dma.d" -MT"drivers/fsl_lpuart_dma.o" -c -o "drivers/fsl_lpuart_dma.o" "../drivers/fsl_lpuart_dma.c"
+Finished building: ../drivers/fsl_i2c.c
+ 
+Building file: ../drivers/fsl_pit.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_pit.d" -MT"drivers/fsl_pit.o" -c -o "drivers/fsl_pit.o" "../drivers/fsl_pit.c"
+Finished building: ../drivers/fsl_lptmr.c
+ 
+Building file: ../drivers/fsl_pmc.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_pmc.d" -MT"drivers/fsl_pmc.o" -c -o "drivers/fsl_pmc.o" "../drivers/fsl_pmc.c"
+Finished building: ../drivers/fsl_lpuart.c
+ 
+Building file: ../drivers/fsl_rcm.c
+Finished building: ../drivers/fsl_lpuart_dma.c
+ 
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_rcm.d" -MT"drivers/fsl_rcm.o" -c -o "drivers/fsl_rcm.o" "../drivers/fsl_rcm.c"
+Building file: ../drivers/fsl_rtc.c
+Finished building: ../drivers/fsl_pit.c
+Invoking: Cross ARM C Compiler
+ 
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_rtc.d" -MT"drivers/fsl_rtc.o" -c -o "drivers/fsl_rtc.o" "../drivers/fsl_rtc.c"
+Building file: ../drivers/fsl_sai.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_sai.d" -MT"drivers/fsl_sai.o" -c -o "drivers/fsl_sai.o" "../drivers/fsl_sai.c"
+Finished building: ../drivers/fsl_pmc.c
+ 
+Building file: ../drivers/fsl_sai_dma.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_sai_dma.d" -MT"drivers/fsl_sai_dma.o" -c -o "drivers/fsl_sai_dma.o" "../drivers/fsl_sai_dma.c"
+Finished building: ../drivers/fsl_rcm.c
+ 
+Building file: ../drivers/fsl_sim.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_sim.d" -MT"drivers/fsl_sim.o" -c -o "drivers/fsl_sim.o" "../drivers/fsl_sim.c"
+Finished building: ../drivers/fsl_rtc.c
+ 
+Building file: ../drivers/fsl_slcd.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_slcd.d" -MT"drivers/fsl_slcd.o" -c -o "drivers/fsl_slcd.o" "../drivers/fsl_slcd.c"
+Finished building: ../drivers/fsl_sai.c
+ 
+Building file: ../drivers/fsl_smc.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_smc.d" -MT"drivers/fsl_smc.o" -c -o "drivers/fsl_smc.o" "../drivers/fsl_smc.c"
+Finished building: ../drivers/fsl_sai_dma.c
+ 
+Finished building: ../drivers/fsl_sim.c
+Building file: ../drivers/fsl_spi.c
+ 
+Invoking: Cross ARM C Compiler
+Building file: ../drivers/fsl_spi_dma.c
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_spi.d" -MT"drivers/fsl_spi.o" -c -o "drivers/fsl_spi.o" "../drivers/fsl_spi.c"
+Invoking: Cross ARM C Compiler
+Finished building: ../drivers/fsl_slcd.c
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_spi_dma.d" -MT"drivers/fsl_spi_dma.o" -c -o "drivers/fsl_spi_dma.o" "../drivers/fsl_spi_dma.c"
+ 
+Building file: ../drivers/fsl_tpm.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_tpm.d" -MT"drivers/fsl_tpm.o" -c -o "drivers/fsl_tpm.o" "../drivers/fsl_tpm.c"
+Finished building: ../drivers/fsl_smc.c
+ 
+Building file: ../drivers/fsl_uart.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_uart.d" -MT"drivers/fsl_uart.o" -c -o "drivers/fsl_uart.o" "../drivers/fsl_uart.c"
+Finished building: ../drivers/fsl_spi_dma.c
+Finished building: ../drivers/fsl_spi.c
+Finished building: ../drivers/fsl_uart.c
+Finished building: ../drivers/fsl_tpm.c
+ 
+ 
+ 
+ 
+Building file: ../drivers/fsl_uart_dma.c
+Building file: ../board/board.c
+Building file: ../drivers/fsl_vref.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_uart_dma.d" -MT"drivers/fsl_uart_dma.o" -c -o "drivers/fsl_uart_dma.o" "../drivers/fsl_uart_dma.c"
+Invoking: Cross ARM C Compiler
+Building file: ../board/clock_config.c
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"drivers/fsl_vref.d" -MT"drivers/fsl_vref.o" -c -o "drivers/fsl_vref.o" "../drivers/fsl_vref.c"
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"board/board.d" -MT"board/board.o" -c -o "board/board.o" "../board/board.c"
+Invoking: Cross ARM C Compiler
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"board/clock_config.d" -MT"board/clock_config.o" -c -o "board/clock_config.o" "../board/clock_config.c"
+Finished building: ../drivers/fsl_uart_dma.c
+Finished building: ../board/clock_config.c
+Finished building: ../drivers/fsl_vref.c
+ 
+ 
+ 
+Building file: ../board/pin_mux.c
+Finished building: ../board/board.c
+Invoking: Cross ARM C Compiler
+ 
+arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"board/pin_mux.d" -MT"board/pin_mux.o" -c -o "board/pin_mux.o" "../board/pin_mux.c"
+Finished building: ../board/pin_mux.c
  
 Building target: FRDM_KL43_OL2385_ConsoleControl.elf
 Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o  ./.metadata/.plugins/org.eclipse.cdt.make.core/specs.o   
-f:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
+arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
+d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
 Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
  
 Invoking: Cross ARM GNU Create Flash Image
@@ -25,12 +295,4 @@ arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
 Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
 Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
  
- 
-21:05:47 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  30840	    120	   4536	  35496	   8aa8	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
  
