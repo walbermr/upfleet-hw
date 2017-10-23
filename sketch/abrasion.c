@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "abrasion.h"
 
 short RPM_THRESHOLD[] = {1500, 2500, 3500};
@@ -35,12 +34,12 @@ void printhex(short *buf, char size)
 	int sum = 0;
 	for (int i = 0; i < size; i++)
 	{
-		if (i > 0) printf(":");
-		printf("%04X", buf[i]);
+		//if (i > 0) printf(":");
+		//printf("%04X", buf[i]);
 		sum += buf[i];
 	}
 
-	printf("\n");
+	//printf("\n");
 	return;
 }
 
@@ -74,13 +73,13 @@ void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desg
 	char brake_vars_bits[] = {2, 2};
 	char clutch_vars_bits[] = {2, 1};
 
-	printf("rpm: %d\nspd: %d\nbrk: %d\n", rpm, spd, brk);
+	//printf("rpm: %d\nspd: %d\nbrk: %d\n", rpm, spd, brk);
 
 	speed = discretize(spd, SPD_THRESHOLD, 3);
 	brake_rate = rate(last_brk, brk, BRK_RATE_THRESHOLD);
 	rpm_rate = rate(last_rpm, rpm, RPM_RATE_THRESHOLD);
 
-	printf("rpm_rate:%d\n", (rpm - last_rpm));
+	//printf("rpm_rate:%d\n", (rpm - last_rpm));
 	has_brake = (brk > 500)? 1: 0;
 
 	char brake_vars[] = {speed, brake_rate};

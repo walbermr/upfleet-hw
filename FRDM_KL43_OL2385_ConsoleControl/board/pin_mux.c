@@ -43,6 +43,9 @@ void BOARD_InitPins(void)
     CLOCK_EnableClock(kCLOCK_PortA);
     CLOCK_EnableClock(kCLOCK_PortD);
     CLOCK_EnableClock(kCLOCK_PortE);
+    CLOCK_EnableClock(kCLOCK_Uart2);
+
+    CLOCK_EnableClock(kCLOCK_BusClk);
 
     /* Initialize LPUART0 pins below */
     /* Affects PORTA_PCR1 register */
@@ -59,6 +62,6 @@ void BOARD_InitPins(void)
     /* Sigfox ACK pin. */
     PORT_SetPinMux(SF_ACK_PORT, SF_ACK_PIN, kPORT_MuxAsGpio);
 
-    PORT_SetPinMux(PORTE, 22u, kPORT_MuxAlt3);            /* PORTD2 (pin 59) is configured as UART2_RX */
-    PORT_SetPinMux(PORTE, 23u, kPORT_MuxAlt3);            /* PORTD3 (pin 60) is configured as UART2_TX */
+    PORT_SetPinMux(PORTE, 22u, kPORT_MuxAlt4);            /* PORTD2 (pin 59) is configured as UART2_RX */
+    PORT_SetPinMux(PORTE, 23u, kPORT_MuxAlt4);            /* PORTD3 (pin 60) is configured as UART2_TX */
 }

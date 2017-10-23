@@ -1,7 +1,7 @@
 #include <SPI.h>
 #include <SoftwareSerial.h>
 #include <TinyGPS.h>
-
+#include <string.h>
 #include "mcp_can.h"
  extern "C"
  {
@@ -23,9 +23,12 @@ union Pos LASTVALIDLON;
 union Pos LASTVALIDLAT;
 
 unsigned long LASTVALIDage = TinyGPS::GPS_INVALID_AGE;
-unsigned char count = 0;
+short count = 0;
 
 unsigned char stmp[8] = {0x02, 0x01, 0x0C, 0, 0, 0, 0, 0};
+
+char msg[12];
+
 
 // Set CS pin
 const int SPI_CS_PIN = 9;
@@ -43,6 +46,8 @@ static void print_float(float val, float invalid, int len, int prec);
 static void print_int(unsigned long val, unsigned long invalid, int len);
 
 void setup() {
+	pinMode(13, OUTPUT);
+	digitalWrite(13, LOW);
 	Serial.begin(115200); // use the same baud-rate as the python side
 	ssSigfox.begin(9600);
 	ssGps.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
@@ -60,34 +65,12 @@ void setup() {
 
 void loop() {
 	unsigned char len = 0;
-	unsigned char buf[8];
+	unsigned char data[2], buf[8];
 	float flat, flon;
 	unsigned long age;
 	int rpm_engine_value = 0;
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
-
-
-	//teste serial
-	Serial.println("Teste serial.\n");
-
-	while(1)
-	{
-		ssSigfox.write('a');
-		Serial.println("Data sent.");
-
-		char c = ssSigfox.read();
-		if(c != -1)
-		{
-			Serial.println(c);
-			Serial.print("\n");
-		}
-		else
-			Serial.println("Data not received.\n");
-
-		delay(1000);
-	}
-	//
 
 	while(count < 4096)
 	{
@@ -102,6 +85,7 @@ void loop() {
 		print_int(age, TinyGPS::GPS_INVALID_AGE, 5);
 
 		Serial.println();
+		Serial.println(count);
 
 		CAN.sendMsgBuf(0x7DF, 0, 0, 8, stmp);
 
@@ -111,14 +95,14 @@ void loop() {
 		// message does not clear the IRQ conditon.
 		while (CAN_MSGAVAIL == CAN.checkReceive()) 
 		{
-		// read data,  len: data length, buf: data buf
-		CAN.readMsgBuf(&len, buf);
+			// read data,  len: data length, buf: data buf
+			CAN.readMsgBuf(&len, buf);
 
-		// print the data
-		for(int i = 0; i<len; i++)
-		{
-			Serial.print(buf[i]);Serial.print("\t");
-		}
+			// print the data
+			for(int i = 0; i<len; i++)
+			{
+				Serial.print(buf[i]);Serial.print("\t");
+			}
 			Serial.println();
 
 			Serial.println();
@@ -131,22 +115,29 @@ void loop() {
 			Serial.print(rpm_engine_value);
 			Serial.println();
 		}
-
+		count++;
 		smartdelay(100); // atualiza dados a cada 100ms
 	}
 
+	wearData(data);
+	memcpy(msg, &data, 1);
+	memcpy(msg+1, LASTVALIDLAT.b, 4);
+	memcpy(msg+5, LASTVALIDLON.b, 4);
 	count = 0;
-	sendWear();
+	sendPKG();
 	resetWear(4);
 
 }
 
 
-static void sendWear()
+static void sendPKG()
 {
-	/*
-		ENVIA DADOS DO DESGASTE PARA A INTERNET
-	*/
+	digitalWrite(13, HIGH);
+	Serial.print("Data sent: ");
+	Serial.println(msg);
+	digitalWrite(13, LOW);
+
+	ssSigfox.write(msg);
 	return;
 }
 

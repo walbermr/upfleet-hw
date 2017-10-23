@@ -57,11 +57,6 @@
 #define GET_SPI_MODULE_CLK() \
     (CLOCK_GetFreq(kCLOCK_BusClk))
 
-/*!
- * @brief UART defs.
- */
-#define DEMO_UART_CLKSRC kCLOCK_BusClk
-
 union Pos {  // union consegue definir vários tipos de dados na mesma posição de memória
 	char b[4];
 	float f;
@@ -81,7 +76,7 @@ static status_t SetupSigfoxDriver(sf_drv_data_t *drvData);
  */
 int main(void)
 {
-    uint8_t ch;
+    uint8_t ch[] = "000000000";
     uart_config_t config;
 
     status_t serialStatus = kStatus_Success;
@@ -91,9 +86,7 @@ int main(void)
 	lat.f = -8.056157;
 	lon.f = -34.951114;
 
-	memcpy(msg, &desgaste, 1);
-	memcpy(msg+1, lat.b, 4);
-	memcpy(msg+5, lon.b, 4);
+
 
     status_t status = kStatus_Success;
     sf_drv_data_t sfDrvData;            /* Sigfox driver data needed by the
@@ -118,23 +111,47 @@ int main(void)
     config.baudRate_Bps = 9600U;
     config.enableTx = true;
     config.enableRx = true;
+    //CLOCK_GetBusClkFreq();
+    PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_BusClk));
+    //PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_PlatClk));
+	//PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_BusClk));
+	//PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_FlexBusClk));
+    //PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_FlashClk));
+    //PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_FastPeriphClk));
+    //PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_PllFllSelClk));
 
-    UART_Init(UART2, &config, CLOCK_GetFreq(DEMO_UART_CLKSRC));
+    UART_Init(UART2, &config, CLOCK_GetFreq(kCLOCK_BusClk));
+    //UART_EnableInterrupts(UART2, true);
 
     PRINTF("Serial test.\r\n");
 
     while (1)
     {
-        serialStatus = UART_ReadBlocking(UART2, &ch, 1);
+        serialStatus = UART_ReadBlocking(UART2, &ch, 12);
 
         if(serialStatus == kStatus_Success)
         {
-            PRINTF("Data received: %d", ch);
-            UART_WriteBlocking(UART2, &ch, 1);
+            PRINTF("Data received: %s\r\n", ch);
+            //UART_WriteBlocking(UART2, &ch, 1);
         }
         else
         {
-        	PRINTF("Serial error: %d", serialStatus);
+        	switch(serialStatus)
+        	{
+        		case kStatus_UART_RxHardwareOverrun:
+        			PRINTF("RX HW OVERRUN\r\n");
+        			break;
+        		case kStatus_UART_NoiseError:
+        			PRINTF("NOISE ERROR FLAG\r\n");
+        			break;
+        		case kStatus_UART_FramingError:
+        			PRINTF("FRAMING ERROR\r\n");
+        			break;
+        		case kStatus_UART_ParityError:
+        			PRINTF("PARITY ERROR\r\n");
+        			break;
+        	}
+        	PRINTF("Serial error: %d\r\n", serialStatus);
         }
 
     }
