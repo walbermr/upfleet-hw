@@ -64,12 +64,6 @@
 #define SF_CS_PIN                  4U
 /*! @} */
 
-/*! @name UART pins
- * UART for arduino com
- * @} */
-#define PIN2_IDX                         2u   /*!< Pin number for pin 2 in a port */
-#define PIN3_IDX                         3u   /*!< Pin number for pin 3 in a port */
-
 /*! SPI used by Sigfox device (SPI 1). */
 #define SF_SPI_INST                1U
 

@@ -1,0 +1,489 @@
+!SESSION 2017-10-22 18:16:59.207 -----------------------------------------------
+eclipse.buildId=3.2.0.201603041649
+java.version=1.7.0_76
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=pt_BR
+Framework arguments:  -product com.somniumtech.branding.kds.ide -product com.somniumtech.branding.kds.ide -product com.somniumtech.branding.kds.ide -showlocation
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product com.somniumtech.branding.kds.ide -product com.somniumtech.branding.kds.ide -data F:\Projetos\upfleet-hw\ -product com.somniumtech.branding.kds.ide -showlocation
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-10-22 18:17:06.258
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\walbe'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.processorexpert.core.ide.wizard.ui 2 0 2017-10-22 18:17:06.429
+!MESSAGE External elements location F:\Program Files (x86)\Freescale\eclipse\ProcessorExpert\BoardConfigurations/wizard_data does not exist
+
+!ENTRY org.eclipse.cdt.core 1 0 2017-10-22 18:17:50.260
+!MESSAGE Indexed 'FRDM_KL43_OL2385_ConsoleControl' (52 sources, 127 headers) in 3,81 sec: 13.635 declarations; 37.323 references; 0 unresolved inclusions; 59 syntax errors; 533 unresolved names (1%)
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 103 2017-10-22 18:19:32.969
+!MESSAGE Program file does not exist
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 103 2017-10-22 18:19:32.969
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:25:48.937
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:25:48.944
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:25:48.950
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@1cfacb1): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 18:25:48.960
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 18:25:48.962
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:28:22.815
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:28:22.832
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:28:22.838
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@16b40f0): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 18:28:22.846
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 18:28:22.846
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:28:59.061
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:28:59.069
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:28:59.076
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@90b02d): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 18:28:59.083
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 18:28:59.083
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:29:33.399
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:29:33.407
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:29:33.414
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@10f0a3d): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 18:29:33.422
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 18:29:33.422
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:29:43.883
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:29:43.890
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:29:43.897
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@119e2c0): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 18:29:43.905
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 18:29:43.906
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:37:15.150
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:37:15.159
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:37:15.165
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@416a62): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 18:37:15.174
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 18:37:15.174
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:47:26.070
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:47:26.077
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 18:47:26.084
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@1da8ee): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 18:47:26.091
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 18:47:26.092
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:00:36.341
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:00:36.351
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:00:36.358
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@fdd5a4): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 20:00:36.369
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 20:00:36.369
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:03:20.586
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:03:20.596
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:03:20.603
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@56e9e3): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 20:03:20.613
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 20:03:20.613
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:04:42.283
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:04:42.293
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:04:42.300
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@1c7ec0e): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 20:04:42.311
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 20:04:42.311
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:06:22.309
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:06:22.317
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:06:22.327
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@1a5fcd): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 20:06:22.339
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 20:06:22.339
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:17:54.214
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:17:54.225
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:17:54.232
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@568f7f): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 20:17:54.243
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 20:17:54.243
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:18:52.064
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:18:52.076
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:18:52.083
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@1a385da): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 20:18:52.093
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 20:18:52.093
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:36:16.470
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:36:16.483
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:36:16.493
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@18846fd): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 20:36:16.504
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 20:36:16.504
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:46:51.236
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:46:51.244
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-22 20:46:51.251
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@851a2): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-22 20:46:51.259
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-22 20:46:51.259
+!MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 104 2017-10-22 20:59:19.525
+!MESSAGE Program file does not exist
+!STACK 0
+java.io.FileNotFoundException: F:\Projetos\upfleet-hw\FRDM_KL43_OL2385_ConsoleControl\Debug\FRDM_KL43_OL2385_ConsoleControl.elf not found
+	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:131)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:298)
+	at com.pemicro.debug.gdbjtag.pne.LaunchConfigurationDelegate.launchDebugSession(LaunchConfigurationDelegate.java:124)
+	at com.pemicro.debug.gdbjtag.pne.LaunchConfigurationDelegate.launchDebugger(LaunchConfigurationDelegate.java:86)
+	at com.pemicro.debug.gdbjtag.pne.LaunchConfigurationDelegate.launch(LaunchConfigurationDelegate.java:73)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 104 2017-10-22 20:59:19.525
+!MESSAGE F:\Projetos\upfleet-hw\FRDM_KL43_OL2385_ConsoleControl\Debug\FRDM_KL43_OL2385_ConsoleControl.elf not found
+!STACK 0
+java.io.FileNotFoundException: F:\Projetos\upfleet-hw\FRDM_KL43_OL2385_ConsoleControl\Debug\FRDM_KL43_OL2385_ConsoleControl.elf not found
+	at org.eclipse.cdt.dsf.gdb.launching.LaunchUtils.verifyProgramPath(LaunchUtils.java:131)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.checkBinaryDetails(GdbLaunchDelegate.java:298)
+	at com.pemicro.debug.gdbjtag.pne.LaunchConfigurationDelegate.launchDebugSession(LaunchConfigurationDelegate.java:124)
+	at com.pemicro.debug.gdbjtag.pne.LaunchConfigurationDelegate.launchDebugger(LaunchConfigurationDelegate.java:86)
+	at com.pemicro.debug.gdbjtag.pne.LaunchConfigurationDelegate.launch(LaunchConfigurationDelegate.java:73)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)

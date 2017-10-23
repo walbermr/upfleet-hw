@@ -3,10 +3,10 @@
 #include <TinyGPS.h>
 
 #include "mcp_can.h"
-extern "C"
-{
-	#include "abrasion.h"	
-}
+ extern "C"
+ {
+ 	#include "abrasion.h"	
+ }
 
 union Pos {  // union consegue definir vários tipos de dados na mesma posição de memória
 	char b[4];
@@ -31,23 +31,22 @@ unsigned char stmp[8] = {0x02, 0x01, 0x0C, 0, 0, 0, 0, 0};
 const int SPI_CS_PIN = 9;
 MCP_CAN CAN(SPI_CS_PIN);    
 
+// GPS init
 TinyGPS gps;
-SoftwareSerial ss(TXPin, RXPin);
-//SoftwareSerial ssSigfox(SigTXPin, SigRXPin);
+SoftwareSerial ssGps(TXPin, RXPin);
+
+//SIGFOX init
+SoftwareSerial ssSigfox(SigTXPin, SigRXPin);
 
 static void smartdelay(unsigned long ms);
 static void print_float(float val, float invalid, int len, int prec);
 static void print_int(unsigned long val, unsigned long invalid, int len);
 
 void setup() {
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
-  delay(1000);
-  digitalWrite(13, HIGH);
 	Serial.begin(115200); // use the same baud-rate as the python side
-	Serial.println("TinyGPS library v. "); Serial.println(TinyGPS::library_version());
-	//ss.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
-  //ssSigfox.begin(9600);
+	ssSigfox.begin(9600);
+	ssGps.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
+	Serial.print("TinyGPS library v. "); Serial.println(TinyGPS::library_version());
 
 	while (CAN_OK != CAN.begin(CAN_500KBPS))              // init can bus : baudrate = 500k
 	{
@@ -68,14 +67,27 @@ void loop() {
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
 
-  Serial.println("Teste serial.\n");
-  
-  while(1)
-  {
-//    ssSigfox.write('a');
-//    char c = ssSigfox.read();
-//    Serial.println(c);
-  }
+
+	//teste serial
+	Serial.println("Teste serial.\n");
+
+	while(1)
+	{
+		ssSigfox.write('a');
+		Serial.println("Data sent.");
+
+		char c = ssSigfox.read();
+		if(c != -1)
+		{
+			Serial.println(c);
+			Serial.print("\n");
+		}
+		else
+			Serial.println("Data not received.\n");
+
+		delay(1000);
+	}
+	//
 
 	while(count < 4096)
 	{
@@ -144,8 +156,8 @@ static void smartdelay(unsigned long ms)
 	unsigned long start = millis();
 	do 
 	{
-		while (ss.available())
-		gps.encode(ss.read());
+		while (ssGps.available())
+		gps.encode(ssGps.read());
 	} while (millis() - start < ms);
 }
 

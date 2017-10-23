@@ -60,7 +60,6 @@
 /*!
  * @brief UART defs.
  */
-#define DEMO_UART UART2
 #define DEMO_UART_CLKSRC kCLOCK_BusClk
 
 union Pos {  // union consegue definir vários tipos de dados na mesma posição de memória
@@ -84,6 +83,8 @@ int main(void)
 {
     uint8_t ch;
     uart_config_t config;
+
+    status_t serialStatus = kStatus_Success;
 
 	char desgaste = 5;
     union Pos lon, lat;
@@ -118,12 +119,24 @@ int main(void)
     config.enableTx = true;
     config.enableRx = true;
 
-    UART_Init(DEMO_UART, &config, CLOCK_GetFreq(DEMO_UART_CLKSRC));
+    UART_Init(UART2, &config, CLOCK_GetFreq(DEMO_UART_CLKSRC));
+
+    PRINTF("Serial test.\r\n");
 
     while (1)
     {
-        UART_ReadBlocking(DEMO_UART, &ch, 1);
-        UART_WriteBlocking(DEMO_UART, &ch, 1);
+        serialStatus = UART_ReadBlocking(UART2, &ch, 1);
+
+        if(serialStatus == kStatus_Success)
+        {
+            PRINTF("Data received: %d", ch);
+            UART_WriteBlocking(UART2, &ch, 1);
+        }
+        else
+        {
+        	PRINTF("Serial error: %d", serialStatus);
+        }
+
     }
 
 

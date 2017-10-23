@@ -1,0 +1,11 @@
+21:05:47 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+make -j4 all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
+   text	   data	    bss	    dec	    hex	filename
+  30840	    120	   4536	  35496	   8aa8	FRDM_KL43_OL2385_ConsoleControl.elf
+Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
+ 
+
+21:05:48 Build Finished (took 1s.221ms)
+
