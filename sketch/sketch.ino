@@ -72,7 +72,7 @@ void loop() {
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
 
-	while(count < 4096)
+	while(count < 10)
 	{
 		gps.f_get_position(&flat, &flon, &age);
 
@@ -133,8 +133,9 @@ void loop() {
 static void sendPKG()
 {
 	digitalWrite(13, HIGH);
-	Serial.print("Data sent: ");
-	Serial.println(msg);
+	char bytes_sent = ssSigfox.write(msg, 12);
+	Serial.print("Bytes sent: ");
+	Serial.println(bytes_sent);
 	digitalWrite(13, LOW);
 
 	ssSigfox.write(msg);

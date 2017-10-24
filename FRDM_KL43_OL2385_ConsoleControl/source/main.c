@@ -131,7 +131,7 @@ int main(void)
 
         if(serialStatus == kStatus_Success)
         {
-            PRINTF("Data received: %s\r\n", ch);
+            PRINTF("Data received: %X\r\n", ch);
             //UART_WriteBlocking(UART2, &ch, 1);
         }
         else
