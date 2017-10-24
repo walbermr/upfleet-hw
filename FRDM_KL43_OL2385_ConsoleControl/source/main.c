@@ -143,6 +143,10 @@ int main(void)
 				PRINTF("Data received: ");
 				printHex(ch, 12);
 				decode(ch, &wear, lat.b, lon.b);
+				memcpy(msg, &wear, 1);
+				memcpy(msg+1, lat.b, 4);
+				memcpy(msg+5, lon.b, 4);
+
 				if((lat.f != GPS_INVALID_F_ANGLE) && (lon.f != GPS_INVALID_F_ANGLE))
 				{
 					lat.f += 1;
@@ -152,8 +156,7 @@ int main(void)
 				PRINTF("LAT: %f -- LON: %f\r\n\r\n", lat.f, lon.f);
 
 				/*SEND DATA TO SIGFOX*/
-				memcpy(msg+1, lat.b, 4);
-				memcpy(msg+5, lon.b, 4);
+
 				status = ProcessCommand(&sfDrvData, (sf_spi_cmd_t) 25);
 				if (status != kStatus_Success)
 				{
