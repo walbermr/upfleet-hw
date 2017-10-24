@@ -115,61 +115,77 @@ int main(void)
     config.baudRate_Bps = 9600U;
     config.enableTx = true;
     config.enableRx = true;
-    //CLOCK_GetBusClkFreq();
-    PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_BusClk));
-    //PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_PlatClk));
-	//PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_BusClk));
-	//PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_FlexBusClk));
-    //PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_FlashClk));
-    //PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_FastPeriphClk));
-    //PRINTF("%d\n\r", CLOCK_GetFreq(kCLOCK_PllFllSelClk));
 
     UART_Init(UART2, &config, CLOCK_GetFreq(kCLOCK_BusClk));
-    //UART_EnableInterrupts(UART2, true);
 
-    PRINTF("Serial test.\r\n");
-
-    while (1)
+    status = SetupSigfoxDriver(&sfDrvData);
+    if (status == kStatus_Success)
     {
-        serialStatus = UART_ReadBlocking(UART2, ch, 12);
+        PRINTF("An error occurred in SetupSigfoxDriver (%d)\r\n", status);
+    }
+    else
+    {
+		status = ProcessCommand(&sfDrvData, (sf_spi_cmd_t) 1);
+		if (status != kStatus_Success)
+		{
+			PRINTF("Wakeup failed: %d\r\n", status);
+		}
+		else
+		{
+			PRINTF("Wakeup sucess.\r\n");
+		}
+		while (1)
+		{
+			serialStatus = UART_ReadBlocking(UART2, ch, 12);
 
-        if(serialStatus == kStatus_Success)
-        {
-            PRINTF("Data received: ");
-            printHex(ch, 12);
-            decode(ch, &wear, lat.b, lon.b);
-            if((lat.f != GPS_INVALID_F_ANGLE) && (lon.f != GPS_INVALID_F_ANGLE))
-            {
-            	lat.f += 1;
-            	lon.f += 1;
-            }
+			if(serialStatus == kStatus_Success)
+			{
+				PRINTF("Data received: ");
+				printHex(ch, 12);
+				decode(ch, &wear, lat.b, lon.b);
+				if((lat.f != GPS_INVALID_F_ANGLE) && (lon.f != GPS_INVALID_F_ANGLE))
+				{
+					lat.f += 1;
+					lon.f += 1;
+				}
 
-            PRINTF("LAT: %f -- LON: %f\r\n\r\n", lat.f, lon.f);
+				PRINTF("LAT: %f -- LON: %f\r\n\r\n", lat.f, lon.f);
 
-            /*SEND DATA TO SIGFOX*/
+				/*SEND DATA TO SIGFOX*/
+				memcpy(msg+1, lat.b, 4);
+				memcpy(msg+5, lon.b, 4);
+				status = ProcessCommand(&sfDrvData, (sf_spi_cmd_t) 25);
+				if (status != kStatus_Success)
+				{
+					PRINTF("Package send fail with: %d\r\n", status);
+				}
+				else
+				{
+					PRINTF("Package sent.\r\n");
+				}
+				PRINTF("\r\n");
+			}
+			else
+			{
+				switch(serialStatus)
+				{
+					case kStatus_UART_RxHardwareOverrun:
+						PRINTF("RX HW OVERRUN\r\n");
+						break;
+					case kStatus_UART_NoiseError:
+						PRINTF("NOISE ERROR FLAG\r\n");
+						break;
+					case kStatus_UART_FramingError:
+						PRINTF("FRAMING ERROR\r\n");
+						break;
+					case kStatus_UART_ParityError:
+						PRINTF("PARITY ERROR\r\n");
+						break;
+				}
+				PRINTF("Serial error: %d\r\n", serialStatus);
+			}
 
-            //UART_WriteBlocking(UART2, &ch, 1);
-        }
-        else
-        {
-        	switch(serialStatus)
-        	{
-        		case kStatus_UART_RxHardwareOverrun:
-        			PRINTF("RX HW OVERRUN\r\n");
-        			break;
-        		case kStatus_UART_NoiseError:
-        			PRINTF("NOISE ERROR FLAG\r\n");
-        			break;
-        		case kStatus_UART_FramingError:
-        			PRINTF("FRAMING ERROR\r\n");
-        			break;
-        		case kStatus_UART_ParityError:
-        			PRINTF("PARITY ERROR\r\n");
-        			break;
-        	}
-        	PRINTF("Serial error: %d\r\n", serialStatus);
-        }
-
+		}
     }
 
 

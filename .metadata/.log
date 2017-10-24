@@ -1357,3 +1357,32 @@ org.eclipse.core.runtime.CoreException:
 	at java.lang.Thread.run(Unknown Source)
 !SUBENTRY 1 unknown 8 1 2017-10-24 09:09:25.704
 !MESSAGE 
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-24 10:04:18.425
+!MESSAGE Request monitor: 'Sequence "", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-24 10:04:18.435
+!MESSAGE Request monitor: 'Sequence "Initializing debugger services", result for executing step #0 = Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2017-10-24 10:04:18.442
+!MESSAGE Request monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitorWithProgress@167513e): Status CANCEL: unknown code=1  null' resulted in a cancel status: Status CANCEL: unknown code=1  null, even though the request is not set to cancel.
+
+!ENTRY com.pemicro.debug.gdbjtag.pne 4 5012 2017-10-24 10:04:18.451
+!MESSAGE Error in services launch sequence
+!STACK 1
+org.eclipse.core.runtime.CoreException: 
+	at org.eclipse.cdt.dsf.concurrent.Sequence.abortExecution(Sequence.java:582)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.access$4(Sequence.java:574)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleErrorOrWarning(Sequence.java:431)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleFailure(RequestMonitor.java:425)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:388)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:313)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(Unknown Source)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+!SUBENTRY 1 unknown 8 1 2017-10-24 10:04:18.451
+!MESSAGE 

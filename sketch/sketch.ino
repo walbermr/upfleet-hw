@@ -72,7 +72,7 @@ void loop() {
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
 
-	while(count < 10)
+	while(count < 100)
 	{
 		gps.f_get_position(&flat, &flon, &age);
 
