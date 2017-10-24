@@ -1,68 +1,4 @@
-15:49:46 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-Finished building: ../source/main.c
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  30376	    120	   4536	  35032	   88d8	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
- 
-15:49:55 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  30376	    120	   4536	  35032	   88d8	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-15:52:59 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-Finished building: ../source/main.c
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-   text	   data	    bss	    dec	    hex	filename
-  30368	    120	   4536	  35024	   88d0	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
- 
-15:54:48 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+23:05:37 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
 make -j4 all 
 Building file: ../source/main.c
 Invoking: Cross ARM C Compiler
@@ -85,53 +21,44 @@ arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
    text	   data	    bss	    dec	    hex	filename
-  30376	    120	   4536	  35032	   88d8	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
- 
-16:05:13 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  30376	    120	   4536	  35032	   88d8	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-16:14:49 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-Building file: ../board/pin_mux.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"board/pin_mux.d" -MT"board/pin_mux.o" -c -o "board/pin_mux.o" "../board/pin_mux.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-Finished building: ../board/pin_mux.c
-Finished building: ../source/main.c
- 
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
+  31512	    120	   4512	  36144	   8d30	FRDM_KL43_OL2385_ConsoleControl.elf
 Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
  
 Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
  
-16:48:21 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+23:05:42 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+make -j4 all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
+   text	   data	    bss	    dec	    hex	filename
+  31512	    120	   4512	  36144	   8d30	FRDM_KL43_OL2385_ConsoleControl.elf
+Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
+ 
+09:09:03 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+make -j4 all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
+   text	   data	    bss	    dec	    hex	filename
+  31512	    120	   4512	  36144	   8d30	FRDM_KL43_OL2385_ConsoleControl.elf
+Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
+ 
+09:09:22 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+make -j4 all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
+   text	   data	    bss	    dec	    hex	filename
+  31512	    120	   4512	  36144	   8d30	FRDM_KL43_OL2385_ConsoleControl.elf
+Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
+ 
+09:19:59 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+make -j4 all 
+Invoking: Cross ARM GNU Print Size
+arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
+   text	   data	    bss	    dec	    hex	filename
+  31512	    120	   4512	  36144	   8d30	FRDM_KL43_OL2385_ConsoleControl.elf
+Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
+ 
+09:37:01 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
 make -j4 all 
 Building file: ../source/main.c
 Invoking: Cross ARM C Compiler
@@ -154,300 +81,8 @@ Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
 arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
    text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
- 
-17:02:15 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-17:03:41 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-17:05:25 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-17:13:50 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-17:15:11 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-17:22:19 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-Finished building: ../source/main.c
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
+  32816	    120	   4512	  37448	   9248	FRDM_KL43_OL2385_ConsoleControl.elf
 Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
  
 Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
-18:54:43 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31056	    120	   4536	  35712	   8b80	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-19:23:31 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-../source/main.c: In function 'main':
-../source/main.c:132:9: warning: passing argument 2 of 'UART_ReadBlocking' from incompatible pointer type [enabled by default]
-         serialStatus = UART_ReadBlocking(UART2, &ch, 4);
-         ^
-In file included from ../source/main.c:48:0:
-../drivers/fsl_uart.h:571:10: note: expected 'uint8_t *' but argument is of type 'uint8_t (*)[5]'
- status_t UART_ReadBlocking(UART_Type *base, uint8_t *data, size_t length);
-          ^
-Finished building: ../source/main.c
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31072	    120	   4536	  35728	   8b90	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
-19:24:53 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-../source/main.c: In function 'main':
-../source/main.c:132:9: warning: passing argument 2 of 'UART_ReadBlocking' from incompatible pointer type [enabled by default]
-         serialStatus = UART_ReadBlocking(UART2, &ch, 4);
-         ^
-In file included from ../source/main.c:48:0:
-../drivers/fsl_uart.h:571:10: note: expected 'uint8_t *' but argument is of type 'uint8_t (*)[10]'
- status_t UART_ReadBlocking(UART_Type *base, uint8_t *data, size_t length);
-          ^
-Finished building: ../source/main.c
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31072	    120	   4536	  35728	   8b90	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
-19:25:24 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-../source/main.c: In function 'main':
-../source/main.c:132:9: warning: passing argument 2 of 'UART_ReadBlocking' from incompatible pointer type [enabled by default]
-         serialStatus = UART_ReadBlocking(UART2, &ch, 9);
-         ^
-In file included from ../source/main.c:48:0:
-../drivers/fsl_uart.h:571:10: note: expected 'uint8_t *' but argument is of type 'uint8_t (*)[10]'
- status_t UART_ReadBlocking(UART_Type *base, uint8_t *data, size_t length);
-          ^
-Finished building: ../source/main.c
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  31072	    120	   4536	  35728	   8b90	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
- 
-19:58:21 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Building file: ../source/sf_cmd.c
-Invoking: Cross ARM C Compiler
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/sf_cmd.d" -MT"source/sf_cmd.o" -c -o "source/sf_cmd.o" "../source/sf_cmd.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/sf_cmd.c:50:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-../source/main.c: In function 'main':
-../source/main.c:130:9: warning: passing argument 2 of 'UART_ReadBlocking' from incompatible pointer type [enabled by default]
-         serialStatus = UART_ReadBlocking(UART2, &ch, 12);
-         ^
-In file included from ../source/main.c:48:0:
-../drivers/fsl_uart.h:571:10: note: expected 'uint8_t *' but argument is of type 'uint8_t (*)[10]'
- status_t UART_ReadBlocking(UART_Type *base, uint8_t *data, size_t length);
-          ^
-../source/main.c:85:20: warning: variable 'lat' set but not used [-Wunused-but-set-variable]
-     union Pos lon, lat;
-                    ^
-../source/main.c:85:15: warning: variable 'lon' set but not used [-Wunused-but-set-variable]
-     union Pos lon, lat;
-               ^
-../source/main.c:84:7: warning: unused variable 'desgaste' [-Wunused-variable]
-  char desgaste = 5;
-       ^
-Finished building: ../source/main.c
- 
-Finished building: ../source/sf_cmd.c
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  30992	    120	   4512	  35624	   8b28	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
- 
- 
-22:24:07 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  30992	    120	   4512	  35624	   8b28	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
-22:29:30 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
-make -j4 all 
-Building file: ../source/main.c
-Invoking: Cross ARM C Compiler
-arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -D"CPU_MKL43Z256VMP4" -I../startup -I../source -I../board -I../utilities -I../CMSIS -I../drivers -std=gnu99 -MMD -MP -MF"source/main.d" -MT"source/main.o" -c -o "source/main.o" "../source/main.c"
-In file included from ../source/sf/sf.h:46:0,
-                 from ../source/main.c:51:
-../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
- #pragma message("Model OL2385 is selected.")
-         ^
-../source/main.c: In function 'main':
-../source/main.c:130:9: warning: passing argument 2 of 'UART_ReadBlocking' from incompatible pointer type [enabled by default]
-         serialStatus = UART_ReadBlocking(UART2, &ch, 12);
-         ^
-In file included from ../source/main.c:48:0:
-../drivers/fsl_uart.h:571:10: note: expected 'uint8_t *' but argument is of type 'uint8_t (*)[10]'
- status_t UART_ReadBlocking(UART_Type *base, uint8_t *data, size_t length);
-          ^
-../source/main.c:85:20: warning: variable 'lat' set but not used [-Wunused-but-set-variable]
-     union Pos lon, lat;
-                    ^
-../source/main.c:85:15: warning: variable 'lon' set but not used [-Wunused-but-set-variable]
-     union Pos lon, lat;
-               ^
-../source/main.c:84:7: warning: unused variable 'desgaste' [-Wunused-variable]
-  char desgaste = 5;
-       ^
-Finished building: ../source/main.c
- 
-Building target: FRDM_KL43_OL2385_ConsoleControl.elf
-Invoking: Cross ARM C++ Linker
-arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wall  -g3 -T "../MKL43Z256xxx4_flash.ld" -Xlinker --gc-sections -Wl,-Map,"FRDM_KL43_OL2385_ConsoleControl.map" -specs=nosys.specs -specs=nano.specs -Xlinker -z -Xlinker muldefs -o "FRDM_KL43_OL2385_ConsoleControl.elf"  ./utilities/fsl_debug_console.o ./utilities/fsl_notifier.o ./utilities/fsl_sbrk.o  ./startup/startup_MKL43Z4.o ./startup/system_MKL43Z4.o  ./source/sf/sf.o ./source/sf/sf_setup.o  ./source/aml/wait_aml/wait_aml.o  ./source/aml/spi_aml/spi_aml.o  ./source/main.o ./source/sf_cmd.o  ./drivers/fsl_adc16.o ./drivers/fsl_clock.o ./drivers/fsl_cmp.o ./drivers/fsl_common.o ./drivers/fsl_cop.o ./drivers/fsl_dac.o ./drivers/fsl_dma.o ./drivers/fsl_dmamux.o ./drivers/fsl_flash.o ./drivers/fsl_flexio.o ./drivers/fsl_flexio_i2c_master.o ./drivers/fsl_flexio_i2s.o ./drivers/fsl_flexio_i2s_dma.o ./drivers/fsl_flexio_spi.o ./drivers/fsl_flexio_spi_dma.o ./drivers/fsl_flexio_uart.o ./drivers/fsl_flexio_uart_dma.o ./drivers/fsl_gpio.o ./drivers/fsl_i2c.o ./drivers/fsl_i2c_dma.o ./drivers/fsl_llwu.o ./drivers/fsl_lptmr.o ./drivers/fsl_lpuart.o ./drivers/fsl_lpuart_dma.o ./drivers/fsl_pit.o ./drivers/fsl_pmc.o ./drivers/fsl_rcm.o ./drivers/fsl_rtc.o ./drivers/fsl_sai.o ./drivers/fsl_sai_dma.o ./drivers/fsl_sim.o ./drivers/fsl_slcd.o ./drivers/fsl_smc.o ./drivers/fsl_spi.o ./drivers/fsl_spi_dma.o ./drivers/fsl_tpm.o ./drivers/fsl_uart.o ./drivers/fsl_uart_dma.o ./drivers/fsl_vref.o  ./board/board.o ./board/clock_config.o ./board/pin_mux.o   
-d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/bin/ld.exe: Warning: size of symbol `s_dummyData' changed from 2 in ./drivers/fsl_flexio_spi_dma.o to 1 in ./drivers/fsl_spi_dma.o
-Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
- 
-Invoking: Cross ARM GNU Create Flash Image
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
-Invoking: Cross ARM GNU Print Size
-arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
-   text	   data	    bss	    dec	    hex	filename
-  30992	    120	   4512	  35624	   8b28	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
-Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
- 
  

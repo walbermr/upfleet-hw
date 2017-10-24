@@ -57,6 +57,8 @@
 #define GET_SPI_MODULE_CLK() \
     (CLOCK_GetFreq(kCLOCK_BusClk))
 
+#define GPS_INVALID_F_ANGLE 1000
+
 union Pos {  // union consegue definir vários tipos de dados na mesma posição de memória
 	char b[4];
 	float f;
@@ -71,22 +73,24 @@ union Pos {  // union consegue definir vários tipos de dados na mesma posição de
  */
 static status_t SetupSigfoxDriver(sf_drv_data_t *drvData);
 
+void printHex(uint8_t *buf, char size);
+void decode(uint8_t* raw, char* wear, char* f1, char* f2);
+
 /*!
  * @brief Application entry point.
  */
 int main(void)
 {
-    uint8_t ch[] = "000000000";
+    uint8_t ch[] = {0,0,0,0,0,0,0,0,0,0,0,0};
+    char wear = 0;
     uart_config_t config;
 
     status_t serialStatus = kStatus_Success;
 
-	char desgaste = 5;
     union Pos lon, lat;
-	lat.f = -8.056157;
-	lon.f = -34.951114;
 
-
+	lat.f = 0;
+	lon.f = 0;
 
     status_t status = kStatus_Success;
     sf_drv_data_t sfDrvData;            /* Sigfox driver data needed by the
@@ -127,11 +131,23 @@ int main(void)
 
     while (1)
     {
-        serialStatus = UART_ReadBlocking(UART2, &ch, 12);
+        serialStatus = UART_ReadBlocking(UART2, ch, 12);
 
         if(serialStatus == kStatus_Success)
         {
-            PRINTF("Data received: %X\r\n", ch);
+            PRINTF("Data received: ");
+            printHex(ch, 12);
+            decode(ch, &wear, lat.b, lon.b);
+            if((lat.f != GPS_INVALID_F_ANGLE) && (lon.f != GPS_INVALID_F_ANGLE))
+            {
+            	lat.f += 1;
+            	lon.f += 1;
+            }
+
+            PRINTF("LAT: %f -- LON: %f\r\n\r\n", lat.f, lon.f);
+
+            /*SEND DATA TO SIGFOX*/
+
             //UART_WriteBlocking(UART2, &ch, 1);
         }
         else
@@ -235,4 +251,26 @@ static status_t SetupSigfoxDriver(sf_drv_data_t *drvData)
     return SF_Init(drvData, &userConfig);
 }
 
+void printHex(unsigned char* buf, char size)
+{
+	int sum = 0;
+	for (int i = 0; i < size; i++)
+	{
+		if (i > 0) PRINTF(":");
+		PRINTF("%02X", buf[i]);
+		sum += buf[i];
+	}
+
+	PRINTF("\r\n");
+	return;
+}
+
+void decode(uint8_t* raw, char* wear, char* f1, char* f2)
+{
+	memcpy(wear, raw, 1);
+	memcpy(f1, raw+1, 4);
+	memcpy(f2, raw+5, 4);
+
+	return;
+}
 

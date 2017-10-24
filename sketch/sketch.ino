@@ -120,7 +120,7 @@ void loop() {
 	}
 
 	wearData(data);
-	memcpy(msg, &data, 1);
+	memcpy(msg, data, 1);
 	memcpy(msg+1, LASTVALIDLAT.b, 4);
 	memcpy(msg+5, LASTVALIDLON.b, 4);
 	count = 0;
@@ -135,7 +135,8 @@ static void sendPKG()
 	digitalWrite(13, HIGH);
 	char bytes_sent = ssSigfox.write(msg, 12);
 	Serial.print("Bytes sent: ");
-	Serial.println(bytes_sent);
+	printHex((int) msg, 12);
+	Serial.println();
 	digitalWrite(13, LOW);
 
 	ssSigfox.write(msg);
@@ -189,4 +190,15 @@ static void print_int(unsigned long val, unsigned long invalid, int len)
 		sz[len-1] = ' ';
 	Serial.print(sz);
 	smartdelay(0);
+}
+
+
+void printHex(int num, int precision) {
+     char tmp[16];
+     char format[128];
+
+     sprintf(format, "0x%%.%dX", precision);
+
+     sprintf(tmp, format, num);
+     Serial.print(tmp);
 }

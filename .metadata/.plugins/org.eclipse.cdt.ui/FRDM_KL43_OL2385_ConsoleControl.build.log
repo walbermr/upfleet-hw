@@ -1,4 +1,4 @@
-22:29:30 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
+09:37:01 **** Incremental Build of configuration Debug for project FRDM_KL43_OL2385_ConsoleControl ****
 make -j4 all 
 Building file: ../source/main.c
 Invoking: Cross ARM C Compiler
@@ -8,23 +8,6 @@ In file included from ../source/sf/sf.h:46:0,
 ../source/sf/sf_model.h:68:9: note: #pragma message: Model OL2385 is selected.
  #pragma message("Model OL2385 is selected.")
          ^
-../source/main.c: In function 'main':
-../source/main.c:130:9: warning: passing argument 2 of 'UART_ReadBlocking' from incompatible pointer type [enabled by default]
-         serialStatus = UART_ReadBlocking(UART2, &ch, 12);
-         ^
-In file included from ../source/main.c:48:0:
-../drivers/fsl_uart.h:571:10: note: expected 'uint8_t *' but argument is of type 'uint8_t (*)[10]'
- status_t UART_ReadBlocking(UART_Type *base, uint8_t *data, size_t length);
-          ^
-../source/main.c:85:20: warning: variable 'lat' set but not used [-Wunused-but-set-variable]
-     union Pos lon, lat;
-                    ^
-../source/main.c:85:15: warning: variable 'lon' set but not used [-Wunused-but-set-variable]
-     union Pos lon, lat;
-               ^
-../source/main.c:84:7: warning: unused variable 'desgaste' [-Wunused-variable]
-  char desgaste = 5;
-       ^
 Finished building: ../source/main.c
  
 Building target: FRDM_KL43_OL2385_ConsoleControl.elf
@@ -34,15 +17,15 @@ d:/program files (x86)/freescale/toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/..
 Finished building target: FRDM_KL43_OL2385_ConsoleControl.elf
  
 Invoking: Cross ARM GNU Create Flash Image
-arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
 Invoking: Cross ARM GNU Print Size
 arm-none-eabi-size --format=berkeley "FRDM_KL43_OL2385_ConsoleControl.elf"
+arm-none-eabi-objcopy -O ihex "FRDM_KL43_OL2385_ConsoleControl.elf"  "FRDM_KL43_OL2385_ConsoleControl.hex"
    text	   data	    bss	    dec	    hex	filename
-  30992	    120	   4512	  35624	   8b28	FRDM_KL43_OL2385_ConsoleControl.elf
-Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
+  32816	    120	   4512	  37448	   9248	FRDM_KL43_OL2385_ConsoleControl.elf
 Finished building: FRDM_KL43_OL2385_ConsoleControl.siz
  
+Finished building: FRDM_KL43_OL2385_ConsoleControl.hex
  
 
-22:29:32 Build Finished (took 1s.676ms)
+09:37:05 Build Finished (took 3s.194ms)
 
