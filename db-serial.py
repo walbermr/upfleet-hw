@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import scipy.stats as sts
 import matplotlib.pyplot as plt
+import matplotlib.mlab as mlab
 from setup import configEnvoirement, readVariables
 from math import floor
 
@@ -27,6 +28,13 @@ def plotVar(name, dpi, *argv):
 	#plt.figure(figsize = (15, 9.375)).savefig('teste.png', dpi=100)
 	return
 
+def plotHist(name, var_name, dpi, y):
+	n, bins, patches = plt.hist(y, 50, facecolor='blue', alpha=0.75)
+	plt.xlabel(var_name)
+	plt.ylabel('Frequency')
+	plt.savefig(('./figs/'+name), dpi=dpi)
+	plt.cla()
+	return
 
 def smooth(y, box_pts):
 	limit = (box_pts - 1)/2
@@ -133,7 +141,9 @@ def main():
 
 		if(setup.SAVEFIG):
 			size = len(output["eng"])
-			copy = round(_batch_size[1]/size)
+			if(size > 0):
+				copy = round(_batch_size[1]/size)
+
 			outputx = {}
 
 			max_value = max(batch["rpm"])
@@ -143,6 +153,11 @@ def main():
 					outputx["rpm"].append(floor(output["eng"][i]*max_value/3))
 			
 			for i in _variables:
+
+				# the histogram of the data
+				name = log_name[:len(log_name)-3]+'-'+i+'-hist.png'
+				print("Saving %s" %(name))
+				plotHist(name, i, dpi, batch[i])
 
 				name = log_name[:len(log_name)-3]+'-'+i+'.png'
 				print("Saving %s" %(name))
@@ -154,7 +169,6 @@ def main():
 					y2 = outputx[i]
 					trace2 = 'r--'
 
-
 					plotVar(name, dpi, (x1, y1, 'b'), (x2, y2, 'r'), (x2, [0]*len(x2), 'r--'), \
 					 (x2, [max_value/3]*len(x2), 'r--'), (x2, [2*max_value/3]*len(x2), 'r--'), \
 					  (x2, [max_value]*len(x2), 'r--'))
@@ -162,15 +176,16 @@ def main():
 				else:
 					plotVar(name, dpi, (x1, y1, 'b'))
 
-			var_names = ["rpm_rate", "brk_rate"]
-			rates= {"rpm_rate": rpm_rate, "brk_rate": brk_rate}
+			if(size > 0):
+				var_names = ["rpm_rate", "brk_rate"]
+				rates= {"rpm_rate": rpm_rate, "brk_rate": brk_rate}
 
-			for i in var_names:
-				y = smooth(rates[i], 31)
-				x = range(0, len(y))
-				name = log_name[:len(log_name)-3]+'-'+i+'.png'
-				print("Saving %s" %(name))
-				plotVar(name, dpi, (x, y, 'b'))
+				for i in var_names:
+					y = smooth(rates[i], 31)
+					x = range(0, len(y))
+					name = log_name[:len(log_name)-3]+'-'+i+'.png'
+					print("Saving %s" %(name))
+					plotVar(name, dpi, (x, y, 'b'))
 
 		_index += 1
 		time.sleep(5)
