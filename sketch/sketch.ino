@@ -8,6 +8,19 @@ extern "C"
 	#include "abrasion.h"	
 } 
 
+#define CAN_ID_PID			0x7DF
+#define PID_ENGINE_RPM		0x0C
+#define PID_VEHICLE_SPEED	0x0D
+#define PID_COOLANT_TEMP	0x05
+
+
+static void smartdelay(unsigned long ms);
+static void print_float(float val, float invalid, int len, int prec);
+static void print_int(unsigned long val, unsigned long invalid, int len);
+static void set_mask_filt();
+static void sendPid(unsigned char __pid)
+
+
 static const byte RXPin = 3;
 static const byte TXPin = 4;
 float LASTVALIDLON = TinyGPS::GPS_INVALID_F_ANGLE;
@@ -15,18 +28,12 @@ float LASTVALIDLAT = TinyGPS::GPS_INVALID_F_ANGLE;
 unsigned long LASTVALIDage = TinyGPS::GPS_INVALID_AGE;
 unsigned char count = 0;
 
-unsigned char stmp[8] = {0x02, 0x01, 0x0C, 0, 0, 0, 0, 0};
-
 // Set CS pin
 const int SPI_CS_PIN = 9;
 MCP_CAN CAN(SPI_CS_PIN);    
 
 TinyGPS gps;
 SoftwareSerial ss(TXPin, RXPin);
-
-static void smartdelay(unsigned long ms);
-static void print_float(float val, float invalid, int len, int prec);
-static void print_int(unsigned long val, unsigned long invalid, int len);
 
 void setup() {
 	Serial.begin(115200); // use the same baud-rate as the python side
@@ -40,15 +47,17 @@ void setup() {
 		delay(100);
 	}
 	Serial.println("CAN BUS Shield init ok!");
+	set_mask_filt();
 }
 
 
 void loop() {
-	unsigned char len = 0;
-	unsigned char buf[8];
+	unsigned char can_len = 0;
+	unsigned char can_buf[8];
 	float flat, flon;
 	unsigned long age;
 	int rpm_engine_value = 0;
+	unsigned char vehicle_speed_value = 0;
 
 	while(count < 4096)
 	{
@@ -64,34 +73,35 @@ void loop() {
 
 		Serial.println();
 
-		CAN.sendMsgBuf(0x7DF, 0, 0, 8, stmp);
-
-		// iterate over all pending messages
-		// If either the bus is saturated or the MCU is busy,
-		// both RX buffers may be in use and reading a single
-		// message does not clear the IRQ conditon.
+		sendPid(PID_ENGINE_RPM);
 		while (CAN_MSGAVAIL == CAN.checkReceive()) 
 		{
-		// read data,  len: data length, buf: data buf
-		CAN.readMsgBuf(&len, buf);
+			// read data,  len: data length, buf: data buf
+			CAN.readMsgBuf(&can_len, can_buf);
 
-		// print the data
-		for(int i = 0; i<len; i++)
-		{
-			Serial.print(buf[i]);Serial.print("\t");
-		}
-			Serial.println();
+			rpm_engine_value = (buf[3]*256+buf[4])/4;
 
-			Serial.println();
-			rpm_engine_value = 0;
-			rpm_engine_value = ((buf[3]*256)+buf[4])/4;
-
-			accumulateWear(rpm_engine_value, 0, 0);
 
 			Serial.print("RPM: ");
 			Serial.print(rpm_engine_value);
 			Serial.println();
 		}
+
+		sendPid(PID_ENGINE_RPM);
+		while (CAN_MSGAVAIL == CAN.checkReceive()) 
+		{
+			// read data,  len: data length, buf: data buf
+			CAN.readMsgBuf(&can_len, can_buf);
+
+			vehicle_speed_value = buf[3];
+
+
+			Serial.print("SPEED: ");
+			Serial.print(vehicle_speed_value);
+			Serial.println();
+		}
+
+		accumulateWear(rpm_engine_value, vehicle_speed_value, 0);
 
 		smartdelay(100); // atualiza dados a cada 100ms
 	}
@@ -158,4 +168,32 @@ static void print_int(unsigned long val, unsigned long invalid, int len)
 		sz[len-1] = ' ';
 	Serial.print(sz);
 	smartdelay(0);
+}
+
+void set_mask_filt()
+{
+    /*
+     * set mask, set both the mask to 0x3ff
+     */
+    CAN.init_Mask(0, 0, 0x7FC);
+    CAN.init_Mask(1, 0, 0x7FC);
+
+    /*
+     * set filter, we can receive id from 0x04 ~ 0x09
+     */
+    CAN.init_Filt(0, 0, 0x7E8);                 
+    CAN.init_Filt(1, 0, 0x7E8);
+
+    CAN.init_Filt(2, 0, 0x7E8);
+    CAN.init_Filt(3, 0, 0x7E8);
+    CAN.init_Filt(4, 0, 0x7E8); 
+    CAN.init_Filt(5, 0, 0x7E8);
+}
+
+void sendPid(unsigned char __pid)
+{
+    unsigned char tmp[8] = {0x02, 0x01, __pid, 0, 0, 0, 0, 0};
+    Serial.print("SEND PID: 0x");
+    Serial.println(__pid, HEX);
+    CAN.sendMsgBuf(CAN_ID_PID, 0, 8, tmp);
 }
