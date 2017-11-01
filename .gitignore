@@ -1,7 +1,5 @@
 #remove all log files from gitignore
 log/**
-#remove all image files from gitignore
-images/**
 
 RemoteSystemsTempFiles/**
 __pycache__/**
