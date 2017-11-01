@@ -3,10 +3,12 @@ log/**
 #remove all image files from gitignore
 images/**
 
+RemoteSystemsTempFiles/**
+__pycache__/**
 
 .metadata
-FRDM_KL43_OL2385_ConsoleControl/bin/
-FRDM_KL43_OL2385_ConsoleControl/tmp/
+FRDM_KL43_OL2385_ConsoleControl/bin/**
+FRDM_KL43_OL2385_ConsoleControl/tmp/**
 FRDM_KL43_OL2385_ConsoleControl/*.tmp
 FRDM_KL43_OL2385_ConsoleControl/*.bak
 FRDM_KL43_OL2385_ConsoleControl/*.swp
@@ -23,10 +25,10 @@ FRDM_KL43_OL2385_ConsoleControl/.recommenders
 FRDM_KL43_OL2385_ConsoleControl/.externalToolBuilders/
 
 # Locally stored "Eclipse launch configurations"
-*.launch
+FRDM_KL43_OL2385_ConsoleControl/*.launch
 
 # PyDev specific (Python IDE for Eclipse)
-*.pydevproject
+FRDM_KL43_OL2385_ConsoleControl/*.pydevproject
 
 # CDT-specific (C/C++ Development Tooling)
 #.cproject
@@ -53,7 +55,7 @@ FRDM_KL43_OL2385_ConsoleControl/.texlipse
 FRDM_KL43_OL2385_ConsoleControl/.springBeans
 
 # Code Recommenders
-FRDM_KL43_OL2385_ConsoleControl/.recommenders/
+FRDM_KL43_OL2385_ConsoleControl/.recommenders/**
 
-FRDM_KL43_OL2385_ConsoleControl/Debug/
-FRDM_KL43_OL2385_ConsoleControl/Release/
+FRDM_KL43_OL2385_ConsoleControl/Debug/**
+FRDM_KL43_OL2385_ConsoleControl/Release/**
