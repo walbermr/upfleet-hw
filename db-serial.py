@@ -5,7 +5,7 @@ import scipy.stats as sts
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 from setup import configEnvoirement, readVariables
-from math import floor
+from math import floor, ceil
 
 
 def data2bytes(rpm, spd, brk):
@@ -19,10 +19,12 @@ def data2bytes(rpm, spd, brk):
 	return b
 
 
-def plotVar(name, dpi, *argv):
+def plotVar(name, var_name, dpi, *argv):
 	for x, y, trace in argv:
 		plt.plot(x, y, trace)
 
+	plt.ylabel(var_name)
+	plt.xlabel("Samples")
 	plt.savefig(('./figs/'+name), dpi=dpi)
 	plt.cla()
 	#plt.figure(figsize = (15, 9.375)).savefig('teste.png', dpi=100)
@@ -52,9 +54,18 @@ def decode(data):	#decodifica a informação recebida nos 3 valores de desgaste
 
 	return brk, clu, eng
 
+def plotFracHist(name, var_name, dpi, y, size):
+	for i in range(0, ceil(len(y)/size)):
+		part_name = var_name+'/'+name+'-part'+str(i)+'hist.png'
+		print("Saving: %s" %(part_name))
+		plotHist(part_name, var_name, dpi, y[(i*size):((i+1)*size)])
+
+	return
+
+
 
 def main():
-	plt.rcParams["figure.figsize"] = [6, 4.5]
+	plt.rcParams["figure.figsize"] = [6.125, 4.5]
 	batch = {}				#contem todos os valores das variaveis para aquele arquivo de log
 
 	device = None 			#dispositivo pelo qual se enviara os dados
@@ -148,9 +159,14 @@ def main():
 
 			max_value = max(batch["rpm"])
 			outputx["rpm"] = []
+			outputx["brk_rate"] = []
+			outputx["rpm_rate"] = []
+
 			for i in range(0, size):
 				for j in range(0, copy):
 					outputx["rpm"].append(floor(output["eng"][i]*max_value/3))
+					outputx["brk_rate"].append(floor(output["brk"][i]))
+					outputx["rpm_rate"].append(floor(output["clu"][i]))
 			
 			for i in _variables:
 
@@ -159,22 +175,24 @@ def main():
 				print("Saving %s" %(name))
 				plotHist(name, i, dpi, batch[i])
 
+				name = log_name[:len(log_name)-3]+'-'+i
+				#plotFracHist(name, i, dpi, batch[i], 1024)
+
 				name = log_name[:len(log_name)-3]+'-'+i+'.png'
 				print("Saving %s" %(name))
 				x1 = range(0, len(batch[i]))
 				y1 = smooth(batch[i], 31)
 
-				if(i == "rpm"):
+				if(i == "rpm"):				#desgaste de motor
 					x2 = range(0,len(outputx[i]))
 					y2 = outputx[i]
-					trace2 = 'r--'
 
-					plotVar(name, dpi, (x1, y1, 'b'), (x2, y2, 'r'), (x2, [0]*len(x2), 'r--'), \
+					plotVar(name, i, dpi, (x1, y1, 'b'), (x2, y2, 'r'), (x2, [0]*len(x2), 'r--'), \
 					 (x2, [max_value/3]*len(x2), 'r--'), (x2, [2*max_value/3]*len(x2), 'r--'), \
 					  (x2, [max_value]*len(x2), 'r--'))
 
 				else:
-					plotVar(name, dpi, (x1, y1, 'b'))
+					plotVar(name, i, dpi, (x1, y1, 'b'))
 
 			if(size > 0):
 				var_names = ["rpm_rate", "brk_rate"]
@@ -185,8 +203,30 @@ def main():
 					x = range(0, len(y))
 					name = log_name[:len(log_name)-3]+'-'+i+'.png'
 					print("Saving %s" %(name))
-					plotVar(name, dpi, (x, y, 'b'))
 
+					if(i == "rpm_rate"):	#desgaste de embreagem
+						y = (y/np.linalg.norm(y))
+						max_value = max(y)
+						x2 = range(0,len(outputx[i]))
+						y2 = outputx[i]
+						plotVar(name, i, dpi, (x, y, 'b'), (x2, [n*max_value/3 for n in y2], 'r'), \
+							(x2, [max_value/3]*len(x2), 'r--'), (x2, [2*max_value/3]*len(x2), 'r--'), \
+							(x2, [max_value]*len(x2), 'r--'))
+
+					elif(i == "brk_rate"):	#desgaste de freio
+						x2 = range(0,len(outputx[i]))
+						y2 = outputx[i]
+
+						y = (y1/np.linalg.norm(y1))
+						max_value = max(y)
+					
+						plotVar(name, i, dpi, (x1, y, 'b'), (x2, [n*max_value/3 for n in y2], 'r'), \
+							(x2, [max_value/3]*len(x2), 'r--'), (x2, [2*max_value/3]*len(x2), 'r--'), \
+							(x2, [max_value]*len(x2), 'r--'), \
+							(x1, batch["speed"]/np.linalg.norm(batch["speed"]), 'g'))
+
+					else:
+						plotVar(name, i, dpi, (x, y, 'b'))
 		_index += 1
 		time.sleep(5)
 
