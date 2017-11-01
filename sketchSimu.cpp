@@ -5,7 +5,7 @@
 #include "./ipc/tcpclient.hpp"
 #include "./sketch/abrasion.h"
 
-const char IP[] = "192.168.25.13";	//MODIFIQUE O IP ANTES DE EXECUTAR
+const char IP[] = "192.168.25.5";	//MODIFIQUE O IP ANTES DE EXECUTAR
 
 unsigned short count;
 
