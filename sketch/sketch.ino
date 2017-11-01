@@ -23,7 +23,7 @@ static void smartdelay(unsigned long ms);
 static void print_float(float val, float invalid, int len, int prec);
 static void print_int(unsigned long val, unsigned long invalid, int len);
 static void set_mask_filt();
-static void sendPid(unsigned char __pid)
+static void sendPid(unsigned char __pid);
 
 
 static const byte RXPin = 3;
@@ -48,6 +48,7 @@ SoftwareSerial ssGps(TXPin, RXPin);
 
 //SIGFOX init
 SoftwareSerial ssSigfox(SigTXPin, SigRXPin);
+char msg[12];
 
 void setup() {
 	pinMode(13, OUTPUT);
@@ -204,7 +205,7 @@ static void print_int(unsigned long val, unsigned long invalid, int len)
 	smartdelay(0);
 }
 
-void printHex(int num, int precision) {
+static void printHex(int num, int precision) {
      char tmp[16];
      char format[128];
 
@@ -214,7 +215,7 @@ void printHex(int num, int precision) {
      Serial.print(tmp);
 }
 
-void set_mask_filt()
+static void set_mask_filt()
 {
     /*
      * set mask, set both the mask to 0x3ff
@@ -234,7 +235,7 @@ void set_mask_filt()
     CAN.init_Filt(5, 0, 0x7E8);
 }
 
-void sendPid(unsigned char __pid)
+static void sendPid(unsigned char __pid)
 {
     unsigned char tmp[8] = {0x02, 0x01, __pid, 0, 0, 0, 0, 0};
     Serial.print("SEND PID: 0x");
