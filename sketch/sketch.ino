@@ -1,16 +1,16 @@
 #include <SPI.h>
 #include <SoftwareSerial.h>
 #include <TinyGPS.h>
-
+#include <string.h>
 #include "mcp_can.h"
-extern "C"
-{
-	#include "abrasion.h"	
-}
+ extern "C"
+ {
+ 	#include "abrasion.h"	
+ }
 
 union Pos {  // union consegue definir vários tipos de dados na mesma posição de memória
-  char b[4];
-  float f;
+	char b[4];
+	float f;
 };
 
 #define CAN_ID_PID			0x7DF
@@ -29,23 +29,33 @@ static void sendPid(unsigned char __pid)
 static const byte RXPin = 3;
 static const byte TXPin = 4;
 
+static const byte SigRXPin = 5;
+static const byte SigTXPin = 6;
+
 union Pos LASTVALIDLON;
 union Pos LASTVALIDLAT;
 
 unsigned long LASTVALIDage = TinyGPS::GPS_INVALID_AGE;
-unsigned char count = 0;
+short count = 0;
 
 // Set CS pin
 const int SPI_CS_PIN = 9;
 MCP_CAN CAN(SPI_CS_PIN);    
 
+// GPS init
 TinyGPS gps;
-SoftwareSerial ss(TXPin, RXPin);
+SoftwareSerial ssGps(TXPin, RXPin);
+
+//SIGFOX init
+SoftwareSerial ssSigfox(SigTXPin, SigRXPin);
 
 void setup() {
+	pinMode(13, OUTPUT);
+	digitalWrite(13, LOW);
 	Serial.begin(115200); // use the same baud-rate as the python side
+	ssSigfox.begin(9600);
+	ssGps.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
 	Serial.print("TinyGPS library v. "); Serial.println(TinyGPS::library_version());
-	ss.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
 
 	while (CAN_OK != CAN.begin(CAN_500KBPS))              // init can bus : baudrate = 500k
 	{
@@ -59,6 +69,8 @@ void setup() {
 
 
 void loop() {
+	unsigned char len = 0;
+	unsigned char data[2], buf[8];
 	unsigned char can_len = 0;
 	unsigned char can_buf[8];
 	float flat, flon;
@@ -69,7 +81,7 @@ void loop() {
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	unsigned char vehicle_speed_value = 0;
 
-	while(count < 4096)
+	while(count < 100)
 	{
 		gps.f_get_position(&flat, &flon, &age);
 
@@ -82,6 +94,7 @@ void loop() {
 		print_int(age, TinyGPS::GPS_INVALID_AGE, 5);
 
 		Serial.println();
+		Serial.println(count);
 
 		sendPid(PID_ENGINE_RPM);
 		while (CAN_MSGAVAIL == CAN.checkReceive()) 
@@ -96,7 +109,9 @@ void loop() {
 			Serial.print(rpm_engine_value);
 			Serial.println();
 		}
-
+    
+		count++;
+    
 		sendPid(PID_ENGINE_RPM);
 		while (CAN_MSGAVAIL == CAN.checkReceive()) 
 		{
@@ -116,18 +131,27 @@ void loop() {
 		smartdelay(100); // atualiza dados a cada 100ms
 	}
 
+	wearData(data);
+	memcpy(msg, data, 1);
+	memcpy(msg+1, LASTVALIDLAT.b, 4);
+	memcpy(msg+5, LASTVALIDLON.b, 4);
 	count = 0;
-	sendWear();
+	sendPKG();
 	resetWear(4);
 
 }
 
 
-static void sendWear()
+static void sendPKG()
 {
-	/*
-		ENVIA DADOS DO DESGASTE PARA A INTERNET
-	*/
+	digitalWrite(13, HIGH);
+	char bytes_sent = ssSigfox.write(msg, 12);
+	Serial.print("Bytes sent: ");
+	printHex((int) msg, 12);
+	Serial.println();
+	digitalWrite(13, LOW);
+
+	ssSigfox.write(msg);
 	return;
 }
 
@@ -137,8 +161,8 @@ static void smartdelay(unsigned long ms)
 	unsigned long start = millis();
 	do 
 	{
-		while (ss.available())
-		gps.encode(ss.read());
+		while (ssGps.available())
+		gps.encode(ssGps.read());
 	} while (millis() - start < ms);
 }
 
@@ -178,6 +202,16 @@ static void print_int(unsigned long val, unsigned long invalid, int len)
 		sz[len-1] = ' ';
 	Serial.print(sz);
 	smartdelay(0);
+}
+
+void printHex(int num, int precision) {
+     char tmp[16];
+     char format[128];
+
+     sprintf(format, "0x%%.%dX", precision);
+
+     sprintf(tmp, format, num);
+     Serial.print(tmp);
 }
 
 void set_mask_filt()

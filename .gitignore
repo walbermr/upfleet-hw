@@ -2,3 +2,58 @@
 log/**
 #remove all image files from gitignore
 images/**
+
+
+.metadata
+FRDM_KL43_OL2385_ConsoleControl/bin/
+FRDM_KL43_OL2385_ConsoleControl/tmp/
+FRDM_KL43_OL2385_ConsoleControl/*.tmp
+FRDM_KL43_OL2385_ConsoleControl/*.bak
+FRDM_KL43_OL2385_ConsoleControl/*.swp
+FRDM_KL43_OL2385_ConsoleControl/*~.nib
+FRDM_KL43_OL2385_ConsoleControl/local.properties
+FRDM_KL43_OL2385_ConsoleControl/.settings/
+FRDM_KL43_OL2385_ConsoleControl/.loadpath
+FRDM_KL43_OL2385_ConsoleControl/.recommenders
+
+# Eclipse Core
+# .project
+
+# External tool builders
+FRDM_KL43_OL2385_ConsoleControl/.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
+
+# CDT-specific (C/C++ Development Tooling)
+#.cproject
+
+# JDT-specific (Eclipse Java Development Tools)
+FRDM_KL43_OL2385_ConsoleControl/.classpath
+
+# Java annotation processor (APT)
+FRDM_KL43_OL2385_ConsoleControl/.factorypath
+
+# PDT-specific (PHP Development Tools)
+FRDM_KL43_OL2385_ConsoleControl/.buildpath
+
+# sbteclipse plugin
+FRDM_KL43_OL2385_ConsoleControl/.target
+
+# Tern plugin
+FRDM_KL43_OL2385_ConsoleControl/.tern-project
+
+# TeXlipse plugin
+FRDM_KL43_OL2385_ConsoleControl/.texlipse
+
+# STS (Spring Tool Suite)
+FRDM_KL43_OL2385_ConsoleControl/.springBeans
+
+# Code Recommenders
+FRDM_KL43_OL2385_ConsoleControl/.recommenders/
+
+FRDM_KL43_OL2385_ConsoleControl/Debug/
+FRDM_KL43_OL2385_ConsoleControl/Release/
