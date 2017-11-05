@@ -38,6 +38,10 @@ union Pos LASTVALIDLAT;
 unsigned long LASTVALIDage = TinyGPS::GPS_INVALID_AGE;
 short count = 0;
 
+int rpm_engine_value = 0;
+int vehicle_speed_value = 0;
+unsigned char can_len = 0;
+
 // Set CS pin
 const int SPI_CS_PIN = 9;
 MCP_CAN CAN(SPI_CS_PIN);    
@@ -71,18 +75,14 @@ void setup() {
 
 void loop() {
 	unsigned char len = 0;
-	unsigned char data[2], buf[8];
-	unsigned char can_len = 0;
-	unsigned char can_buf[8];
+	unsigned char data[2], an_buf[8];
 	float flat, flon;
 	unsigned long age;
-	int rpm_engine_value = 0;
   
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
-	unsigned char vehicle_speed_value = 0;
 
-	while(count < 100)
+	while(count < 200)
 	{
 		gps.f_get_position(&flat, &flon, &age);
 
@@ -103,7 +103,7 @@ void loop() {
 			// read data,  len: data length, buf: data buf
 			CAN.readMsgBuf(&can_len, can_buf);
 
-			rpm_engine_value = (buf[3]*256+buf[4])/4;
+			rpm_engine_value = (can_buf[3]*256+can_buf[4])/4;
 
 
 			Serial.print("RPM: ");
@@ -111,15 +111,14 @@ void loop() {
 			Serial.println();
 		}
     
-		count++;
     
-		sendPid(PID_ENGINE_RPM);
+		sendPid(PID_VEHICLE_SPEED);
 		while (CAN_MSGAVAIL == CAN.checkReceive()) 
 		{
 			// read data,  len: data length, buf: data buf
 			CAN.readMsgBuf(&can_len, can_buf);
 
-			vehicle_speed_value = buf[3];
+			vehicle_speed_value = can_buf[3];
 
 
 			Serial.print("SPEED: ");
@@ -128,6 +127,7 @@ void loop() {
 		}
 
 		accumulateWear(rpm_engine_value, vehicle_speed_value, 0);
+		count++;
 
 		smartdelay(100); // atualiza dados a cada 100ms
 	}

@@ -147,6 +147,9 @@ int main(void)
 				memcpy(msg+1, lat.b, 4);
 				memcpy(msg+5, lon.b, 4);
 
+				memcpy(msg, ch, 12);
+				printHex(msg, 12);
+
 				if((lat.f != GPS_INVALID_F_ANGLE) && (lon.f != GPS_INVALID_F_ANGLE))
 				{
 					lat.f += 1;
