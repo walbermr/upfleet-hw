@@ -12,9 +12,9 @@ def data2bytes(rpm, spd, brk):
 	if(setup.DEBUG):
 		print("rpm: %d; spd: %d; brk: %d;" %(rpm, spd, brk))
 
-	b = int(rpm).to_bytes(2, byteorder='big', signed=False)
-	b = b + int(spd).to_bytes(2, byteorder='big', signed=True)
-	b = b + int(brk).to_bytes(2, byteorder='big', signed=False)
+	b = int(rpm).to_bytes(2, byteorder='little', signed=True)
+	b = b + int(spd).to_bytes(2, byteorder='little', signed=True)
+	b = b + int(brk).to_bytes(2, byteorder='little', signed=True)
 
 	return b
 
@@ -46,7 +46,7 @@ def smooth(y, box_pts):
 	return y_smooth
 
 def decode(data):	#decodifica a informação recebida nos 3 valores de desgaste
-	d = int.from_bytes(data, byteorder='big')
+	d = int.from_bytes(data, byteorder='little')
 	print("DATA: %d" %(d))
 	brk = (d >> 4) & 0x3
 	clu = (d >> 2) & 0x3
@@ -113,11 +113,11 @@ def main():
 					#if(j == "spd"):
 					#	batch[j][i] = batch[j][i] * 1.6
 					#existem problemas nas leituras do freio, isso acaba com tudo
-					if(j == "brake_user"):
+					if(j in ["brake_user", "speed"]):
 						if(batch[j][i] > 4096):
 							batch[j][i] = 4096
 						if(batch[j][i] < 0):
-							batch[j][i] = 0;
+							batch[j][i] = 0
 
 					d.append(batch[j][i])
 
@@ -137,16 +137,19 @@ def main():
 
 				data = data2bytes(d[0], d[1], d[2])
 				send_function(device, data)
-				print("Data sent %s" %(data))
-
 				data_received = recv_function(device)
+				print("Data sent %s" %(data))
+				print("Data recv %s" %(data_received))
 
-				if(data_received != str.encode('ok')):
-					print("Data received %s\n" %(data_received))
-					brk, clu, eng = decode(data_received)
-					output["brk"].append(brk)
-					output["clu"].append(clu)
-					output["eng"].append(eng)
+				if data == data_received:
+					print("OK!")
+
+				# if(data_received != str.encode('ok')):
+					# print("Data received %s\n" %(data_received))
+					# brk, clu, eng = decode(data_received)
+					# output["brk"].append(brk)
+					# output["clu"].append(clu)
+					# output["eng"].append(eng)
 		
 		print(output)
 

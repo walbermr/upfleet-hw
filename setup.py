@@ -70,7 +70,7 @@ def configEnvoirement(_config_file):
 
 	#inicializa o arduino
 	if(SERIAL):
-		new_arduino = serial.Serial(port, boud_rate, timeout=timeout)
+		new_arduino = serial.Serial(port, boud_rate)#, timeout=timeout)
 		if(new_arduino is not None):
 			print("Arduino serial ready...")
 		return new_arduino, _logs_path, _log_names, _log_files, _variables, sendSerialData, getSerialData
@@ -111,17 +111,16 @@ def readVariables(log_file, variables, filename):
 def sendSerialData(arduino, data):
 	wb = arduino.write(data)
 
-	if(DEBUG):
-		if(wb == 4):
-			print("%d bytes sent." %(wb))
-		else:
-			print("Data size missmatched. Data size %d." %(wb))
+	# if(DEBUG):
+	# 	if(wb == 6):
+	# 		print("%d bytes sent." %(wb))
+	# 	else:
+	# 		print("Data size missmatched. Data size %d." %(wb))
 
-	return
+	return wb
 
 def getSerialData(arduino):
-	data = arduino.readline()[:-2] #the last bit gets rid of the new-line chars
-	return data
+	return arduino.read(6)
 
 def restartSerial(arduino):
 	arduino.close()
