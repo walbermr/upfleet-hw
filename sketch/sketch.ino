@@ -75,7 +75,7 @@ void setup() {
 
 void loop() {
 	unsigned char len = 0;
-	unsigned char data[2], an_buf[8];
+	unsigned char data[2], can_buf[8];
 	float flat, flon;
 	unsigned long age;
   
