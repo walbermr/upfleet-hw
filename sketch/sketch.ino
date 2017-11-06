@@ -8,10 +8,15 @@ extern "C"
 	#include "abrasion.h"
 }
 
-union Pos {  // union consegue definir vários tipos de dados na mesma posição de memória
+typedef union pos {  // union consegue definir vários tipos de dados na mesma posição de memória
 	char b[4];
 	float f;
-};
+} Pos;
+
+typedef union buffer {
+	byte buf[6];
+	int measure[3];
+} Buffer;
 
 #define CAN_ID_PID		  	0x7DF
 #define PID_ENGINE_RPM		0x0C
@@ -34,8 +39,8 @@ static const byte TXPin = 4;
 static const byte SigRXPin = 5;
 static const byte SigTXPin = 6;
 
-union Pos LASTVALIDLON;
-union Pos LASTVALIDLAT;
+Pos LASTVALIDLON;
+Pos LASTVALIDLAT;
 
 unsigned long LASTVALIDage = TinyGPS::GPS_INVALID_AGE;
 short count = 0;
@@ -60,11 +65,10 @@ char msg[12];
 void setup() {
 	pinMode(13, OUTPUT);
 	digitalWrite(13, LOW);
-	Serial.begin(115200); // use the same baud-rate as the python side
-	Serial.setTimeout(200);
+	Serial.begin(9600); // use the same baud-rate as the python side
+	Serial.setTimeout(80);
 	ssSigfox.begin(9600);
 	ssGps.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
-	// Serial.print("TinyGPS library v. "); Serial.println(TinyGPS::library_version());
 
 #ifdef CAN_DECODER	// Only if can decoder is connected to a car
 
@@ -78,6 +82,8 @@ void setup() {
 	set_mask_filt();
 	
 #endif
+	// Buffer t = {5};
+	// Serial.write(t.buf, 6);
 }
 
 
@@ -86,11 +92,9 @@ void loop() {
 	unsigned char data[2], can_buf[8];
 	float flat, flon;
 	unsigned long age;
-	union {
-		byte buf[6];
-		int measure[3];
-	} stream = {};
+	Buffer stream = {0x05};
 	unsigned long time;
+	int length = 0;
   
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
@@ -130,7 +134,7 @@ void loop() {
     
     
 		sendPid(PID_VEHICLE_SPEED);
-		while (CAN_MSGAVAIL == CAN.checkReceive()) 
+		while (CAN_MSGAVAIL == CAN.checkReceive())
 		{
 			// read data,  len: data length, buf: data buf
 			CAN.readMsgBuf(&can_len, can_buf);
@@ -147,8 +151,14 @@ void loop() {
 
 #ifdef SERIAL_DB
 
-		Serial.readBytes(stream.buf, 6);
-		Serial.write(stream.buf, 6);
+		while (length < 6) {
+			if (Serial.available() > 0) {
+				stream.buf[length++] = Serial.read();
+				Serial.write(stream.buf[length-1]);
+			}
+		}
+
+		length = 0;
 
 		rpm_value = stream.measure[0];
 		speed_value = stream.measure[1];
@@ -156,7 +166,7 @@ void loop() {
 
 #endif
 
-		// accumulateWear(rpm_value, speed_value, brake_value);
+		accumulateWear(rpm_value, speed_value, brake_value);
 		count++;
 
 		time = millis() - time;
@@ -171,9 +181,7 @@ void loop() {
 	memcpy(msg+5, LASTVALIDLON.b, 4);
 	count = 0;
 
-#ifdef CAN_DECODER
 	sendPKG();
-#endif
 
 	resetWear(4);
 
@@ -184,9 +192,13 @@ static void sendPKG()
 {
 	digitalWrite(13, HIGH);
 	char bytes_sent = ssSigfox.write(msg, 12);
+
+#ifdef CAN_DECODER
 	Serial.print("Bytes sent: ");
 	printHex((int) msg, 12);
 	Serial.println();
+#endif
+
 	digitalWrite(13, LOW);
 
 	ssSigfox.write(msg);

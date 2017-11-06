@@ -1,7 +1,7 @@
 {
 	"serial_port"		: "COM7",
-	"serial_boud_rate"	: "115200",
-	"serial_timeout"	: "1.2",
+	"serial_boud_rate"	: "9600",
+	"serial_timeout"	: "0.8",
 	"logs_path"			: "./log/",
 	"log_names"			: [
 							"2016-06-08--11-46-01.h5"

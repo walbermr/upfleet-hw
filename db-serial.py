@@ -137,8 +137,8 @@ def main():
 
 				data = data2bytes(d[0], d[1], d[2])
 				send_function(device, data)
-				data_received = recv_function(device)
 				print("Data sent %s" %(data))
+				data_received = recv_function(device)
 				print("Data recv %s" %(data_received))
 
 				if data == data_received:

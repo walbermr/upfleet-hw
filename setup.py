@@ -70,7 +70,7 @@ def configEnvoirement(_config_file):
 
 	#inicializa o arduino
 	if(SERIAL):
-		new_arduino = serial.Serial(port, boud_rate)#, timeout=timeout)
+		new_arduino = serial.Serial(port, boud_rate, timeout = timeout)
 		if(new_arduino is not None):
 			print("Arduino serial ready...")
 		return new_arduino, _logs_path, _log_names, _log_files, _variables, sendSerialData, getSerialData
