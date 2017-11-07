@@ -1,10 +1,11 @@
 {
 	"serial_port"		: "COM7",
-	"serial_boud_rate"	: "9600",
-	"serial_timeout"	: "0.8",
+	"serial_boud_rate"	: "4800",
+	"serial_timeout"	: "10",
 	"logs_path"			: "./log/",
 	"log_names"			: [
 							"2016-06-08--11-46-01.h5"
 						],
-	"variables"			: ["rpm", "speed", "brake_user"]
+	"variables"			: ["rpm", "speed", "brake_user"],
+	"sample_size"		: "200"
 }

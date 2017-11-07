@@ -46,8 +46,8 @@ def smooth(y, box_pts):
 	return y_smooth
 
 def decode(data):	#decodifica a informação recebida nos 3 valores de desgaste
-	d = int.from_bytes(data, byteorder='little')
-	print("DATA: %d" %(d))
+	d = int.from_bytes(data, byteorder='big')
+	# print("DATA: %d" %(d))
 	brk = (d >> 4) & 0x3
 	clu = (d >> 2) & 0x3
 	eng = d & 0x3
@@ -78,11 +78,12 @@ def main():
 	_log_names = []			#nome dos arquivos de log
 	_log_files = []			#descritores dos arquivos de logs
 	_variables = []
+	_sample = 0
 	#########################
 
 	_index = 0
 	try:
-		device, _logs_path, _log_names, _log_files, _variables, send_function, recv_function = configEnvoirement(_config_file)
+		device, _logs_path, _log_names, _log_files, _variables, send_function, recv_function, _sample = configEnvoirement(_config_file)
 			
 	except:
 		raise
@@ -135,21 +136,32 @@ def main():
 				last_brk = batch["brake_user"][i]
 				#################################
 
+				bytes2send = 6
 				data = data2bytes(d[0], d[1], d[2])
-				send_function(device, data)
-				print("Data sent %s" %(data))
+				send_data = data[:]
+
+				while (bytes2send > 0):
+					bytes2send -= send_function(device, data)
+					data = data[len(data)-bytes2send:]
+				
+				# print("Data sent %s" %(send_data))
+				data_received = device.read(6)
+				# print("Data recv %s" %(data_received))
+				# if (send_data == data_received):
+				# 	print("OK")
+
 				data_received = recv_function(device)
-				print("Data recv %s" %(data_received))
 
-				if data == data_received:
-					print("OK!")
+				# print(".", end = "")
+				# if data == data_received:
+				# 	print("OK!")
 
-				# if(data_received != str.encode('ok')):
-					# print("Data received %s\n" %(data_received))
-					# brk, clu, eng = decode(data_received)
-					# output["brk"].append(brk)
-					# output["clu"].append(clu)
-					# output["eng"].append(eng)
+				if(data_received not in [str.encode('ok'), str.encode('@')]):
+					print("Data received %s" %(data_received))
+					brk, clu, eng = decode(data_received)
+					output["brk"].append(brk)
+					output["clu"].append(clu)
+					output["eng"].append(eng)
 		
 		print(output)
 

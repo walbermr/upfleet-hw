@@ -38,6 +38,7 @@ def configEnvoirement(_config_file):
 	boud_rate = int(data["serial_boud_rate"])
 	port = str(data["serial_port"])
 	timeout = float(data["serial_timeout"])
+	sample_size = int(data["sample_size"])
 
 	_logs_path = data["logs_path"]
 	_log_names = data["log_names"]
@@ -73,18 +74,18 @@ def configEnvoirement(_config_file):
 		new_arduino = serial.Serial(port, boud_rate, timeout = timeout)
 		if(new_arduino is not None):
 			print("Arduino serial ready...")
-		return new_arduino, _logs_path, _log_names, _log_files, _variables, sendSerialData, getSerialData
+		return new_arduino, _logs_path, _log_names, _log_files, _variables, sendSerialData, getSerialData, sample_size
 
 	#inicializa conexao tcp		
 	elif(TCP):
 		print("Strating tcp connection.")
 		socket = tcpServer()
 		socket.listen(1)
-		return socket, _logs_path, _log_names, _log_files, _variables, sendTCPData, getTCPData
+		return socket, _logs_path, _log_names, _log_files, _variables, sendTCPData, getTCPData, sample_size
 
 	#nao retorna nenhum dispotivivo conectado
 	else:
-		return None, _logs_path, _log_names, _log_files, _variables, None, None
+		return None, _logs_path, _log_names, _log_files, _variables, None, None, sample_size
 		
 def readVariables(log_file, variables, filename):
 	json = {}
@@ -120,7 +121,7 @@ def sendSerialData(arduino, data):
 	return wb
 
 def getSerialData(arduino):
-	return arduino.read(6)
+	return arduino.read(1)
 
 def restartSerial(arduino):
 	arduino.close()

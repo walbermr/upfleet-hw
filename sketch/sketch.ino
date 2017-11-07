@@ -65,7 +65,7 @@ char msg[12];
 void setup() {
 	pinMode(13, OUTPUT);
 	digitalWrite(13, LOW);
-	Serial.begin(9600); // use the same baud-rate as the python side
+	Serial.begin(4800); // use the same baud-rate as the python side
 	Serial.setTimeout(80);
 	ssSigfox.begin(9600);
 	ssGps.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
@@ -89,7 +89,7 @@ void setup() {
 
 void loop() {
 	unsigned char len = 0;
-	unsigned char data[2], can_buf[8];
+	unsigned char data[2], can_buf[8], last_data = 0xFF;
 	float flat, flon;
 	unsigned long age;
 	Buffer stream = {0x05};
@@ -99,7 +99,7 @@ void loop() {
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
 
-	while(count < 200)
+	while(count < 4096)
 	{
 		time = millis();
 
@@ -158,6 +158,9 @@ void loop() {
 			}
 		}
 
+		if (count < 4095) {
+			Serial.write("@");
+		}
 		length = 0;
 
 		rpm_value = stream.measure[0];
@@ -170,18 +173,25 @@ void loop() {
 		count++;
 
 		time = millis() - time;
-		time = (time > 100)? 0: 100-time;
+		time = (time > 10)? 0: 10-time;
 
 		smartdelay(time); // atualiza dados a cada 100ms
 	}
-
-	wearData(data);
-	memcpy(msg, data, 1);
-	memcpy(msg+1, LASTVALIDLAT.b, 4);
-	memcpy(msg+5, LASTVALIDLON.b, 4);
+	
 	count = 0;
 
-	sendPKG();
+	wearData(data);
+	Serial.write(data[0]);
+
+	if (data[0] != last_data) {
+		memcpy(msg, data, 1);
+		memcpy(msg+1, LASTVALIDLAT.b, 4);
+		memcpy(msg+5, LASTVALIDLON.b, 4);
+
+		sendPKG();
+
+		last_data = data[0];
+	}
 
 	resetWear(4);
 
