@@ -78,12 +78,11 @@ def main():
 	_log_names = []			#nome dos arquivos de log
 	_log_files = []			#descritores dos arquivos de logs
 	_variables = []
-	_sample = 0
 	#########################
 
 	_index = 0
 	try:
-		device, _logs_path, _log_names, _log_files, _variables, send_function, recv_function, _sample = configEnvoirement(_config_file)
+		device, _logs_path, _log_names, _log_files, _variables, send_function, recv_function = configEnvoirement(_config_file)
 			
 	except:
 		raise

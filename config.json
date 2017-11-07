@@ -6,6 +6,5 @@
 	"log_names"			: [
 							"2016-06-08--11-46-01.h5"
 						],
-	"variables"			: ["rpm", "speed", "brake_user"],
-	"sample_size"		: "200"
+	"variables"			: ["rpm", "speed", "brake_user"]
 }

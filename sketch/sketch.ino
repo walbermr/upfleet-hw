@@ -68,7 +68,7 @@ void setup() {
 	digitalWrite(13, LOW);
 	Serial.begin(4800); // use the same baud-rate as the python side
 	Serial.setTimeout(80);
-	ssSigfox.begin(9600);
+	ssSigfox.begin(4800);
 	ssGps.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
 
 #ifdef CAN_DECODER	// Only if can decoder is connected to a car
@@ -208,7 +208,8 @@ static void sendPKG()
 {
 	digitalWrite(13, HIGH);
 
-	ssSigfox.write(msg, 12);
+	ssSigfox.write(0xFF);
+	ssSigfox.write(msg, 9);
 
 #ifdef CAN_DECODER
 	Serial.print("Bytes sent: ");

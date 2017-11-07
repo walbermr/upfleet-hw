@@ -84,7 +84,7 @@ int main(void)
     uint8_t ch[] = {0,0,0,0,0,0,0,0,0,0,0,0};
     char wear = 0;
     uart_config_t config;
-    int i, j;
+//    int i, j;
 
     status_t serialStatus = kStatus_Success;
 
@@ -113,7 +113,7 @@ int main(void)
      * config.enableRx = false;
      */
     UART_GetDefaultConfig(&config);
-    config.baudRate_Bps = 9600U;
+    config.baudRate_Bps = 4800U;
     config.enableTx = true;
     config.enableRx = true;
 
@@ -137,19 +137,24 @@ int main(void)
 		}
 		while (1)
 		{
-			serialStatus = UART_ReadBlocking(UART2, ch, 12);
-
-			i = 12;
-			while (!ch[--i]);
-			i = (i < 8)? 0: i-8;
-
-			for (j = 0; j < 9; j++) {
-				ch[j] = ch[j+i];
+			do {
+				UART_ReadBlocking(UART2, ch, 1);
 			}
+			while (ch[0] != 0xFF);
 
-			for (; j < 12; j++) {
-				ch[j] = 0;
-			}
+			serialStatus = UART_ReadBlocking(UART2, ch, 9);
+
+//			i = 12;
+//			while (!ch[--i]);
+//			i = (i < 8)? 0: i-8;
+//
+//			for (j = 0; j < 9; j++) {
+//				ch[j] = ch[j+i];
+//			}
+//
+//			for (; j < 12; j++) {
+//				ch[j] = 0;
+//			}
 
 			if(serialStatus == kStatus_Success)
 			{
