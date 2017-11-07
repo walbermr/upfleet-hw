@@ -188,6 +188,9 @@ int main(void)
 					PRINTF("Package sent.\r\n");
 				}
 				PRINTF("\r\n");
+
+				status = ProcessCommand(&sfDrvData, (sf_spi_cmd_t) 21);
+				status = ProcessCommand(&sfDrvData, (sf_spi_cmd_t) 22);
 			}
 			else
 			{

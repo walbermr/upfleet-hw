@@ -93,9 +93,9 @@ void loop() {
 	unsigned char data[2], can_buf[8];
 	float flat, flon;
 	unsigned long age;
-	Buffer stream = {0x05};
+	Buffer stream = {};
 	unsigned long time;
-	int length = 0;
+	int length;
   
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
@@ -103,6 +103,7 @@ void loop() {
 	while(count < 4096)
 	{
 		time = millis();
+		length = 0;
 
 		gps.f_get_position(&flat, &flon, &age);
 
