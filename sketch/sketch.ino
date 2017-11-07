@@ -60,7 +60,8 @@ SoftwareSerial ssGps(TXPin, RXPin);
 
 //SIGFOX init
 SoftwareSerial ssSigfox(SigTXPin, SigRXPin);
-char msg[12];
+char msg[12] = {}, timeout = 0;
+unsigned char last_data = 0xFF;
 
 void setup() {
 	pinMode(13, OUTPUT);
@@ -89,7 +90,7 @@ void setup() {
 
 void loop() {
 	unsigned char len = 0;
-	unsigned char data[2], can_buf[8], last_data = 0xFF;
+	unsigned char data[2], can_buf[8];
 	float flat, flon;
 	unsigned long age;
 	Buffer stream = {0x05};
@@ -161,7 +162,6 @@ void loop() {
 		if (count < 4095) {
 			Serial.write("@");
 		}
-		length = 0;
 
 		rpm_value = stream.measure[0];
 		speed_value = stream.measure[1];
@@ -179,6 +179,11 @@ void loop() {
 	}
 	
 	count = 0;
+	timeout++;
+
+	if (timeout >= 20) {
+		last_data = 0xFF;
+	}
 
 	wearData(data);
 	Serial.write(data[0]);
@@ -191,6 +196,7 @@ void loop() {
 		sendPKG();
 
 		last_data = data[0];
+		timeout = 0;
 	}
 
 	resetWear(4);
@@ -201,7 +207,8 @@ void loop() {
 static void sendPKG()
 {
 	digitalWrite(13, HIGH);
-	char bytes_sent = ssSigfox.write(msg, 12);
+
+	ssSigfox.write(msg, 12);
 
 #ifdef CAN_DECODER
 	Serial.print("Bytes sent: ");
@@ -211,7 +218,6 @@ static void sendPKG()
 
 	digitalWrite(13, LOW);
 
-	ssSigfox.write(msg);
 	return;
 }
 

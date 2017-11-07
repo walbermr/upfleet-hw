@@ -136,14 +136,9 @@ def main():
 				last_brk = batch["brake_user"][i]
 				#################################
 
-				bytes2send = 6
 				data = data2bytes(d[0], d[1], d[2])
-				send_data = data[:]
 
-				while (bytes2send > 0):
-					bytes2send -= send_function(device, data)
-					data = data[len(data)-bytes2send:]
-				
+				send_function(device, data)				
 				# print("Data sent %s" %(send_data))
 				data_received = device.read(6)
 				# print("Data recv %s" %(data_received))

@@ -84,6 +84,7 @@ int main(void)
     uint8_t ch[] = {0,0,0,0,0,0,0,0,0,0,0,0};
     char wear = 0;
     uart_config_t config;
+    int i, j;
 
     status_t serialStatus = kStatus_Success;
 
@@ -138,17 +139,29 @@ int main(void)
 		{
 			serialStatus = UART_ReadBlocking(UART2, ch, 12);
 
+			i = 12;
+			while (!ch[--i]);
+			i = (i < 8)? 0: i-8;
+
+			for (j = 0; j < 9; j++) {
+				ch[j] = ch[j+i];
+			}
+
+			for (; j < 12; j++) {
+				ch[j] = 0;
+			}
+
 			if(serialStatus == kStatus_Success)
 			{
 				PRINTF("Data received: ");
 				printHex(ch, 12);
 				decode(ch, &wear, lat.b, lon.b);
-				memcpy(msg, &wear, 1);
-				memcpy(msg+1, lat.b, 4);
-				memcpy(msg+5, lon.b, 4);
+//				memcpy(msg, &wear, 1);
+//				memcpy(msg+1, lat.b, 4);
+//				memcpy(msg+5, lon.b, 4);
 
 				memcpy(msg, ch, 12);
-				printHex(msg, 12);
+//				printHex(msg, 12);
 
 				if((lat.f != GPS_INVALID_F_ANGLE) && (lon.f != GPS_INVALID_F_ANGLE))
 				{
