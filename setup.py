@@ -4,12 +4,13 @@ from ipc.tcpserver import tcpServer
 FAIL = False
 
 def Init(ARGS):
-	global DEBUG, SERIAL, TCP, SAVEFIG
+	global DEBUG, SERIAL, TCP, SAVEFIG, DSETPLOT
 
 	DEBUG = False
 	SERIAL = False
 	TCP = False
 	SAVEFIG = False
+	DSETPLOT = False
 
 	args = sys.argv[1:]	#captura os parametros para execucao
 
@@ -22,6 +23,8 @@ def Init(ARGS):
 			TCP = True
 		elif(a == ARGS[3]):
 			SAVEFIG = True
+		elif(a == ARGS[4]):
+			DSETPLOT = True
 
 	if(SERIAL and TCP):
 		print("Can't send through serial and tcp at the same time.")
@@ -85,15 +88,15 @@ def configEnvoirement(_config_file):
 	#nao retorna nenhum dispotivivo conectado
 	else:
 		return None, _logs_path, _log_names, _log_files, _variables, None, None
-		
+
 def readVariables(log_file, variables, filename):
 	json = {}
-	size = [0, 0]
+	sizes = [0, 0]
 	for i in range(0, len(variables)):
 		try:
 			print("Reading " + variables[i]),
 			json[variables[i]] = list(log_file[variables[i]])
-			size[1] = len(json[variables[i]])
+			sizes[1] = len(json[variables[i]])
 			print("DONE")
 
 			if(DEBUG):
@@ -104,9 +107,9 @@ def readVariables(log_file, variables, filename):
 		except:
 			raise
 
-	size[0] = len(json)
+	sizes[0] = len(json)
 
-	return json, size
+	return json, sizes
 
 def sendSerialData(arduino, data):
 	wb = arduino.write(data)

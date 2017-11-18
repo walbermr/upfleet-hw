@@ -68,6 +68,13 @@ char verifyWear(char param[], char param_bits[], char n_param, char wear[]) {
 }
 
 
+char rate(short x1, short x2, short vect[]) {
+	char dx = discretize(x2-x1, vect, 3);
+
+	return (dx >= 0)? dx: 0;
+}
+
+
 void accumulateWear(short rpm, short spd, short brk) {	//acumula valores de desgaste
 	char speed, has_brake, brake_rate, rpm_rate;
 	char brake_vars_bits[] = {2, 2};
@@ -118,13 +125,6 @@ void resetWear(char v_len) {
 }
 
 
-char rate(short x1, short x2, short vect[]) {
-	char dx = discretize(x2-x1, vect, 3);
-
-	return (dx >= 0)? dx: 0;
-}
-
-
 char average(short vect[], short weight[]) {
 	char i;
 	short total = 0, value = 0, step;
@@ -138,6 +138,20 @@ char average(short vect[], short weight[]) {
 	step = 3*total / 4;
 	short v[] = {step, (short)(2*step), (short)(3*step)};
 	return discretize(value, v, 3);
+}
+
+
+char percent(short vect[], char idx, char len) {
+	char i;
+	short total = 0, step;
+
+	for (i = 0; i < 4; i++) {
+		total += vect[i];
+	}
+
+	step = total / 4;
+	short v[] = {step, (short)(2*step), (short)(3*step)};
+	return discretize(vect[idx], v, 3);
 }
 
 
@@ -159,16 +173,3 @@ void wearData(unsigned char* data_ret) {
 	data_ret[1] = '\0';
 }
 
-
-char percent(short vect[], char idx, char len) {
-	char i;
-	short total = 0, step;
-
-	for (i = 0; i < 4; i++) {
-		total += vect[i];
-	}
-
-	step = total / 4;
-	short v[] = {step, (short)(2*step), (short)(3*step)};
-	return discretize(vect[idx], v, 3);
-}
