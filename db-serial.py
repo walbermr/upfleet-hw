@@ -118,16 +118,13 @@ def main():
 					#converte de mph para kph
 					#if(j == "spd"):
 					#	batch[j][i] = batch[j][i] * 1.6
-<<<<<<< HEAD
-=======
 					#existem problemas nas leituras do freio, isso acaba com tudo
 					if(j in ["brake_user", "speed"]):
 						if(batch[j][i] > 4096):
 							batch[j][i] = 4096
 						if(batch[j][i] < 0):
 							batch[j][i] = 0
->>>>>>> serial_db
-
+							
 					d.append(batch[j][i])
 
 				#cria as variaveis de derivada
