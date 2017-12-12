@@ -65,9 +65,6 @@ def plotFracHist(name, var_name, dpi, y, size):
 
 	return
 
->>>>>>> serial_db
-
-
 def main():
 	plt.rcParams["figure.figsize"] = [6.125, 4.5]
 	batch = {}				#contem todos os valores das variaveis para aquele arquivo de log
@@ -124,7 +121,7 @@ def main():
 							batch[j][i] = 4096
 						if(batch[j][i] < 0):
 							batch[j][i] = 0
-							
+
 					d.append(batch[j][i])
 
 				#cria as variaveis de derivada
