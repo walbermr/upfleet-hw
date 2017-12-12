@@ -11,6 +11,63 @@ from lib.plots import *
 from lib.utils import *
 
 
+def data2bytes(rpm, spd, brk):
+	if(setup.DEBUG):
+		print("rpm: %d; spd: %d; brk: %d;" %(rpm, spd, brk))
+
+	b = int(rpm).to_bytes(2, byteorder='little', signed=True)
+	b = b + int(spd).to_bytes(2, byteorder='little', signed=True)
+	b = b + int(brk).to_bytes(2, byteorder='little', signed=True)
+
+	return b
+
+
+def plotVar(name, var_name, dpi, *argv):
+	for x, y, trace in argv:
+		plt.plot(x, y, trace)
+
+	plt.ylabel(var_name)
+	plt.xlabel("Samples")
+	plt.savefig(('./figs/'+name), dpi=dpi)
+	plt.cla()
+	#plt.figure(figsize = (15, 9.375)).savefig('teste.png', dpi=100)
+	return
+
+def plotHist(name, var_name, dpi, y):
+	n, bins, patches = plt.hist(y, 50, facecolor='blue', alpha=0.75)
+	plt.xlabel(var_name)
+	plt.ylabel('Frequency')
+	plt.savefig(('./figs/'+name), dpi=dpi)
+	plt.cla()
+	return
+
+def smooth(y, box_pts):
+	limit = (box_pts - 1)/2
+	x = np.linspace(-limit, limit, box_pts)
+	box = sts.norm.pdf(x, 0, 2)
+	y_smooth = np.convolve(y, box, mode='same')
+	return y_smooth
+
+def decode(data):	#decodifica a informação recebida nos 3 valores de desgaste
+	d = int.from_bytes(data, byteorder='big')
+	# print("DATA: %d" %(d))
+	brk = (d >> 4) & 0x3
+	clu = (d >> 2) & 0x3
+	eng = d & 0x3
+
+	return brk, clu, eng
+
+def plotFracHist(name, var_name, dpi, y, size):
+	for i in range(0, ceil(len(y)/size)):
+		part_name = var_name+'/'+name+'-part'+str(i)+'hist.png'
+		print("Saving: %s" %(part_name))
+		plotHist(part_name, var_name, dpi, y[(i*size):((i+1)*size)])
+
+	return
+
+>>>>>>> serial_db
+
+
 def main():
 	plt.rcParams["figure.figsize"] = [6.125, 4.5]
 	batch = {}				#contem todos os valores das variaveis para aquele arquivo de log
@@ -61,6 +118,15 @@ def main():
 					#converte de mph para kph
 					#if(j == "spd"):
 					#	batch[j][i] = batch[j][i] * 1.6
+<<<<<<< HEAD
+=======
+					#existem problemas nas leituras do freio, isso acaba com tudo
+					if(j in ["brake_user", "speed"]):
+						if(batch[j][i] > 4096):
+							batch[j][i] = 4096
+						if(batch[j][i] < 0):
+							batch[j][i] = 0
+>>>>>>> serial_db
 
 					d.append(batch[j][i])
 
@@ -78,14 +144,24 @@ def main():
 				last_brk = batch["brake_user"][i]
 				#################################
 
-				data = data_to_bytes(d[0], d[1], d[2])
-				send_function(device, data)
+				data = data2bytes(d[0], d[1], d[2])
+
+				send_function(device, data)				
+				data_received = device.read(6)
+
 				print("Data sent %s" %(data))
+				print("Data recv %s" %(data_received))
+				if (data == data_received):
+					print("OK")
 
 				data_received = recv_function(device)
 
-				if(data_received != str.encode('ok')):
-					print("Data received %s\n" %(data_received))
+				# print(".", end = "")
+				# if data == data_received:
+				# 	print("OK!")
+
+				if(data_received not in [str.encode('ok'), str.encode('@')]):
+					print("Data received %s" %(data_received))
 					brk, clu, eng = decode(data_received)
 					output["brk"].append(brk)
 					output["clu"].append(clu)

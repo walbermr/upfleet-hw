@@ -3,20 +3,27 @@
 #include <TinyGPS.h>
 #include <string.h>
 #include "mcp_can.h"
- extern "C"
- {
- 	#include "abrasion.h"	
- }
+extern "C"
+{
+	#include "abrasion.h"
+}
 
-union Pos {  // union consegue definir vários tipos de dados na mesma posição de memória
+typedef union pos {  // union consegue definir vários tipos de dados na mesma posição de memória
 	char b[4];
 	float f;
-};
+} Pos;
 
-#define CAN_ID_PID			0x7DF
+typedef union buffer {
+	byte buf[6];
+	int measure[3];
+} Buffer;
+
+#define CAN_ID_PID		  	0x7DF
 #define PID_ENGINE_RPM		0x0C
 #define PID_VEHICLE_SPEED	0x0D
 #define PID_COOLANT_TEMP	0x05
+
+#define SERIAL_DB
 
 
 static void smartdelay(unsigned long ms);
@@ -32,14 +39,15 @@ static const byte TXPin = 4;
 static const byte SigRXPin = 5;
 static const byte SigTXPin = 6;
 
-union Pos LASTVALIDLON;
-union Pos LASTVALIDLAT;
+Pos LASTVALIDLON;
+Pos LASTVALIDLAT;
 
 unsigned long LASTVALIDage = TinyGPS::GPS_INVALID_AGE;
 short count = 0;
 
-int rpm_engine_value = 0;
-int vehicle_speed_value = 0;
+int rpm_value = 0;
+int speed_value = 0;
+int brake_value = 0;
 unsigned char can_len = 0;
 
 // Set CS pin
@@ -52,15 +60,18 @@ SoftwareSerial ssGps(TXPin, RXPin);
 
 //SIGFOX init
 SoftwareSerial ssSigfox(SigTXPin, SigRXPin);
-char msg[12];
+char msg[12] = {}, timeout = 0;
+unsigned char last_data = 0xFF;
 
 void setup() {
 	pinMode(13, OUTPUT);
 	digitalWrite(13, LOW);
-	Serial.begin(115200); // use the same baud-rate as the python side
-	ssSigfox.begin(9600);
+	Serial.begin(4800); // use the same baud-rate as the python side
+	Serial.setTimeout(80);
+	ssSigfox.begin(4800);
 	ssGps.begin(9600); //diferentes baudrates para diferentes gps, checar datasheet
-	Serial.print("TinyGPS library v. "); Serial.println(TinyGPS::library_version());
+
+#ifdef CAN_DECODER	// Only if can decoder is connected to a car
 
 	while (CAN_OK != CAN.begin(CAN_500KBPS))              // init can bus : baudrate = 500k
 	{
@@ -70,6 +81,10 @@ void setup() {
 	}
 	Serial.println("CAN BUS Shield init ok!");
 	set_mask_filt();
+	
+#endif
+	// Buffer t = {5};
+	// Serial.write(t.buf, 6);
 }
 
 
@@ -78,17 +93,25 @@ void loop() {
 	unsigned char data[2], can_buf[8];
 	float flat, flon;
 	unsigned long age;
+	Buffer stream = {};
+	unsigned long time;
+	int length;
   
 	LASTVALIDLON.f = TinyGPS::GPS_INVALID_F_ANGLE;
 	LASTVALIDLAT.f = TinyGPS::GPS_INVALID_F_ANGLE;
 
-	while(count < 200)
+	while(count < 4096)
 	{
+		time = millis();
+		length = 0;
+
 		gps.f_get_position(&flat, &flon, &age);
 
 		LASTVALIDLAT.f = (flat == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLAT.f : flat;
 		LASTVALIDLON.f = (flon == TinyGPS::GPS_INVALID_F_ANGLE) ? LASTVALIDLON.f : flon;
 		LASTVALIDage = (age == TinyGPS::GPS_INVALID_AGE) ? LASTVALIDage : age;
+
+#ifdef CAN_DECODER	// can reading rpm and speed
 
 		print_float(LASTVALIDLAT.f, TinyGPS::GPS_INVALID_F_ANGLE, 10, 6);
 		print_float(LASTVALIDLON.f, TinyGPS::GPS_INVALID_F_ANGLE, 11, 6);
@@ -103,41 +126,80 @@ void loop() {
 			// read data,  len: data length, buf: data buf
 			CAN.readMsgBuf(&can_len, can_buf);
 
-			rpm_engine_value = (can_buf[3]*256+can_buf[4])/4;
+			rpm_value = (can_buf[3]*256+can_buf[4])/4;
 
 
 			Serial.print("RPM: ");
-			Serial.print(rpm_engine_value);
+			Serial.print(rpm_value);
 			Serial.println();
 		}
     
     
 		sendPid(PID_VEHICLE_SPEED);
-		while (CAN_MSGAVAIL == CAN.checkReceive()) 
+		while (CAN_MSGAVAIL == CAN.checkReceive())
 		{
 			// read data,  len: data length, buf: data buf
 			CAN.readMsgBuf(&can_len, can_buf);
 
-			vehicle_speed_value = can_buf[3];
+			speed_value = can_buf[3];
 
 
 			Serial.print("SPEED: ");
-			Serial.print(vehicle_speed_value);
+			Serial.print(speed_value);
 			Serial.println();
 		}
 
-		accumulateWear(rpm_engine_value, vehicle_speed_value, 0);
+#endif
+
+#ifdef SERIAL_DB
+
+		while (length < 6) {
+			if (Serial.available() > 0) {
+				stream.buf[length++] = Serial.read();
+				Serial.write(stream.buf[length-1]);
+			}
+		}
+
+		if (count < 4095) {
+			Serial.write("@");
+		}
+
+		rpm_value = stream.measure[0];
+		speed_value = stream.measure[1];
+		brake_value = stream.measure[2];
+
+#endif
+
+		accumulateWear(rpm_value, speed_value, brake_value);
 		count++;
 
-		smartdelay(100); // atualiza dados a cada 100ms
+		time = millis() - time;
+		time = (time > 10)? 0: 10-time;
+
+		smartdelay(time); // atualiza dados a cada 100ms
+	}
+	
+	count = 0;
+	timeout++;
+
+	if (timeout >= 20) {
+		last_data = 0xFF;
 	}
 
 	wearData(data);
-	memcpy(msg, data, 1);
-	memcpy(msg+1, LASTVALIDLAT.b, 4);
-	memcpy(msg+5, LASTVALIDLON.b, 4);
-	count = 0;
-	sendPKG();
+	Serial.write(data[0]);
+
+	if (data[0] != last_data) {
+		memcpy(msg, data, 1);
+		memcpy(msg+1, LASTVALIDLAT.b, 4);
+		memcpy(msg+5, LASTVALIDLON.b, 4);
+
+		sendPKG();
+
+		last_data = data[0];
+		timeout = 0;
+	}
+
 	resetWear(4);
 
 }
@@ -146,13 +208,18 @@ void loop() {
 static void sendPKG()
 {
 	digitalWrite(13, HIGH);
-	char bytes_sent = ssSigfox.write(msg, 12);
+
+	ssSigfox.write(0xFF);
+	ssSigfox.write(msg, 9);
+
+#ifdef CAN_DECODER
 	Serial.print("Bytes sent: ");
 	printHex((int) msg, 12);
 	Serial.println();
+#endif
+
 	digitalWrite(13, LOW);
 
-	ssSigfox.write(msg);
 	return;
 }
 
@@ -173,7 +240,7 @@ static void print_float(float val, float invalid, int len, int prec)
 	if (val == invalid)
 	{
 		while (len-- > 1)
-		Serial.print('*');
+			Serial.print('*');
 		Serial.print(' ');
 	}
 	else
@@ -183,7 +250,7 @@ static void print_float(float val, float invalid, int len, int prec)
 		int flen = prec + (val < 0.0 ? 2 : 1); // . and -
 		flen += vi >= 1000 ? 4 : vi >= 100 ? 3 : vi >= 10 ? 2 : 1;
 		for (int i=flen; i<len; ++i)
-		Serial.print(' ');
+			Serial.print(' ');
 	}
 	smartdelay(0);
 }
@@ -226,12 +293,12 @@ static void set_mask_filt()
     /*
      * set filter, we can receive id from 0x04 ~ 0x09
      */
-    CAN.init_Filt(0, 0, 0x7E8);                 
+    CAN.init_Filt(0, 0, 0x7E8);
     CAN.init_Filt(1, 0, 0x7E8);
 
     CAN.init_Filt(2, 0, 0x7E8);
     CAN.init_Filt(3, 0, 0x7E8);
-    CAN.init_Filt(4, 0, 0x7E8); 
+    CAN.init_Filt(4, 0, 0x7E8);
     CAN.init_Filt(5, 0, 0x7E8);
 }
 
