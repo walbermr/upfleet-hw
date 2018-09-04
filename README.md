@@ -1,6 +1,6 @@
 # configuração do ambiente
 
-Primeiramente, boa noite.
+Primeiramente, boa noite nação brasileira.
 
 O projeto utiliza pythonn 3.6.2 e as seguintes dependências:
 
